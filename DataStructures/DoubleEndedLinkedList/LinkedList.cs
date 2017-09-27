@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace DataStructures.LinkedList
+namespace DataStructures.DoubleEndedLinkedList
 {
     public class LinkedList<T> : ICollection<T>
     {
 
         public Node<T> Head { get; set; }
+        public Node<T> Tail { get; set; }
         public int Count { get; private set; }
 
         public void AddHead(T value)
@@ -18,12 +19,27 @@ namespace DataStructures.LinkedList
         public void AddHead(Node<T> node)
         {
             throw new NotImplementedException();
-        }        
+        }
+
+        public void AddTail(T value)
+        {
+            AddTail(new Node<T>() { Value = value });
+        }
+
+        public void AddTail(Node<T> node)
+        {
+            throw new NotImplementedException();
+        }
 
         public void RemoveHead()
         {
             throw new NotImplementedException();
-        }       
+        }
+
+        public void RemoveTail()
+        {
+            throw new NotImplementedException();
+        }
 
         public bool IsReadOnly
         {
