@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DSA = DataStructures.LinkedList;
 
 namespace DataStructures.Queue.ArrayBased
 {
@@ -10,7 +11,7 @@ namespace DataStructures.Queue.ArrayBased
 
         public Queue()
         {
-            queue = new DSA.LinkedList<T>();
+           
         }
 
         public T Peek()

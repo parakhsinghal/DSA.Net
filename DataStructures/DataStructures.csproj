@@ -42,6 +42,11 @@
   <ItemGroup>
     <Compile Include="DoubleEndedLinkedList\LinkedList.cs" />
     <Compile Include="DoubleEndedLinkedList\Node.cs" />
+    <Compile Include="ErrorMessages\ErrorMessages_US-en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorMessages_US-en.resx</DependentUpon>
+    </Compile>
     <Compile Include="LinkedList\LinkedList.cs" />
     <Compile Include="LinkedList\Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,6 +61,12 @@
     <Folder Include="DoublyLinkedList\" />
     <Folder Include="PriorityQueue\" />
     <Folder Include="RedBlackTree\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ErrorMessages\ErrorMessages_US-en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorMessages_US-en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

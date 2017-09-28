@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DataStructures.DoubleEndedLinkedList
 {
-    public class LinkedList<T> : ICollection<T>
+    public class DoubleEndedLinkedList<T> : ICollection<T>
     {
 
         public Node<T> Head { get; set; }

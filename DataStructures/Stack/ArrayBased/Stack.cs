@@ -10,7 +10,7 @@ namespace DataStructures.Stack.ArrayBased
 
         public Stack()
         {
-            stack = new DSA.LinkedList<T>();
+            
         }
 
         public T Peek()
