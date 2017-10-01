@@ -70,6 +70,15 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The passed array is not having sufficient length to accomodate the members of the linked list, or the passed index is wrong..
+        /// </summary>
+        internal static string LinkedList_CopyTo_InvalidArguments {
+            get {
+                return ResourceManager.GetString("LinkedList_CopyTo_InvalidArguments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The linked list is already empty, hence nothing can be removed..
         /// </summary>
         internal static string LinkedList_Remove_EmptyList {
@@ -84,6 +93,15 @@ namespace DataStructures.ErrorMessages {
         internal static string LinkedList_RemoveHead_EmptyList {
             get {
                 return ResourceManager.GetString("LinkedList_RemoveHead_EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The passed node to be added is not valid..
+        /// </summary>
+        internal static string Node_IsValid_IsNotValid {
+            get {
+                return ResourceManager.GetString("Node_IsValid_IsNotValid", resourceCulture);
             }
         }
     }

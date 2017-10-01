@@ -51,8 +51,24 @@ namespace DataStructures.DoubleEndedLinkedList
 
         public void Add(T item)
         {
-            throw new NotImplementedException();
-        }        
+            Node<T> nodeToBeAdded = new Node<T>() { Value = item };
+
+            if (Count == 0)
+            {
+                Head = nodeToBeAdded;
+            }
+            else
+            {
+                Node<T> currentNode = Head;
+                while (currentNode.Next != null)
+                {
+                    currentNode = currentNode.Next;
+                }
+                currentNode.Next = nodeToBeAdded;
+            }
+
+            Count++;
+        }
 
         public void Clear()
         {

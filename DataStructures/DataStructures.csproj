@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DoubleEndedLinkedList\LinkedList.cs" />
+    <Compile Include="DoubleEndedLinkedList\DoubleEndedLinkedList.cs" />
     <Compile Include="DoubleEndedLinkedList\Node.cs" />
     <Compile Include="ErrorMessages\ErrorMessages_US-en.Designer.cs">
       <AutoGen>True</AutoGen>

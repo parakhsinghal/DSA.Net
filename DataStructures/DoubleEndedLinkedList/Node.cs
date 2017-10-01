@@ -6,6 +6,7 @@ namespace DataStructures.DoubleEndedLinkedList
     {
         public Node<T> Next { get; set; }
         public T Value { get; set; }
+        public bool IsValid { get { return this == null; } }
 
         public Node()
         {
