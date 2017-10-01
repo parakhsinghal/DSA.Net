@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
+
 
 namespace DataStructures.DoubleEndedLinkedList
 {
@@ -18,7 +21,34 @@ namespace DataStructures.DoubleEndedLinkedList
 
         public void AddHead(Node<T> node)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (node.IsValid)
+                {
+                    if (Count == 0)
+                    {
+                        Head = node;    // Make the node the new Head
+                        Count++;        // Increase the node count
+                    }
+                    else
+                    {
+                        node.Next = Head;       // Make the new node point to old head
+                        Head.Previous = node;   // Make the existing head's previous pointer point to the new node
+                        Head = node;            // Make the new node the new Head
+                        Count++;                // Increase the node count
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException(ErrMsgs.Node_IsValid_IsNotValid);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         public void AddTail(T value)
@@ -37,6 +67,26 @@ namespace DataStructures.DoubleEndedLinkedList
         }
 
         public void RemoveTail()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddAfter(T item)
+        {
+            return AddAfter(new Node<T>() { Value = item });
+        }
+
+        public bool AddAfter(Node<T> node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddBefore(T item)
+        {
+            return AddBefore(new Node<T>() { Value = item });
+        }
+
+        public bool AddBefore(Node<T> node)
         {
             throw new NotImplementedException();
         }
@@ -85,12 +135,12 @@ namespace DataStructures.DoubleEndedLinkedList
             throw new NotImplementedException();
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public bool Remove(T item)
         {
             throw new NotImplementedException();
         }
 
-        public bool Remove(T item)
+        public IEnumerator<T> GetEnumerator()
         {
             throw new NotImplementedException();
         }

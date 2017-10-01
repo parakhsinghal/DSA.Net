@@ -40,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinaryTree\BinaryTree.cs" />
+    <Compile Include="CircularQueue\CircularQueue.cs" />
     <Compile Include="DoubleEndedLinkedList\DoubleEndedLinkedList.cs" />
     <Compile Include="DoubleEndedLinkedList\Node.cs" />
+    <Compile Include="DoublyLinkedList\DoublyLinkedList.cs" />
+    <Compile Include="DoublyLinkedList\Node.cs" />
     <Compile Include="ErrorMessages\ErrorMessages_US-en.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -49,18 +53,20 @@
     </Compile>
     <Compile Include="LinkedList\LinkedList.cs" />
     <Compile Include="LinkedList\Node.cs" />
+    <Compile Include="OrderedArray\OrderedArray.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queue\ArrayBased\Queue.cs" />
     <Compile Include="Queue\LinkedListBased\Queue.cs" />
+    <Compile Include="RedBlackTree\RedBlackTree.cs" />
+    <Compile Include="SimpleArray\SimpleArray.cs" />
     <Compile Include="Stack\ArrayBased\Stack.cs" />
     <Compile Include="Stack\LinkedListBased\Stack.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="234Tree\" />
-    <Folder Include="BinaryTree\" />
-    <Folder Include="DoublyLinkedList\" />
+    <Folder Include="Graph\" />
+    <Folder Include="Heap\" />
     <Folder Include="PriorityQueue\" />
-    <Folder Include="RedBlackTree\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ErrorMessages\ErrorMessages_US-en.resx">

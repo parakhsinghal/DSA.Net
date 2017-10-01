@@ -46,7 +46,6 @@ namespace DataStructures.LinkedList
                 Debug.WriteLine(ex.Message);
                 throw;
             }
-
         }
 
         public void RemoveHead()
@@ -70,7 +69,6 @@ namespace DataStructures.LinkedList
                 Debug.WriteLine(ex.Message);
                 throw;
             }
-
         }
 
         public bool IsReadOnly
