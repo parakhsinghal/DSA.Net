@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures.DoublyLinkedList
 {
-    publis sealed class Node
+    public sealed class Node
     {
     }
 }
