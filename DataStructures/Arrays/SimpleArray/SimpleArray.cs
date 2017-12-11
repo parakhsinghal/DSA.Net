@@ -9,12 +9,20 @@ using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.Arrays.SimpleArray
 {
+    /// <summary>
+    /// The SimpleArray class offers the functionality of a simple un-ordered array.
+    /// </summary>
+    /// <typeparam name="T">The type of which the array is desired.</typeparam>
     public class SimpleArray<T>
-    {
+    {        
         T[] array;
-        int noOfElements;
+        uint noOfElements;
 
-        public SimpleArray(int arraySize)
+        /// <summary>
+        /// Parameterized constructor that allows instantiate an array of a given size.
+        /// </summary>
+        /// <param name="arraySize">Array size as a valid positive integral number.</param>
+        public SimpleArray(uint arraySize)
         {
             array = new T[arraySize];
             noOfElements = 0;
@@ -45,13 +53,13 @@ namespace DataStructures.Arrays.SimpleArray
 
                 if (itemIndex > 0)
                 {
-                    for (int i = itemIndex; i < noOfElements; i++)
+                    for (int index = itemIndex; index < noOfElements; index++)
                     {
-                        if (i == noOfElements-1)
+                        if (index == noOfElements-1)
                         {
                             break;
                         }
-                        array[i] = array[i + 1];
+                        array[index] = array[index + 1];
                     }
                     // Reduce the count by 1
                     // Note that the value in the last cell is still there but not accessible 
@@ -76,11 +84,11 @@ namespace DataStructures.Arrays.SimpleArray
             if (array.Length > 0)
             {
                 // Simple search
-                for (int i = 0; i < noOfElements; i++)
+                for (int index = 0; index < noOfElements; index++)
                 {
-                    if (array[i].Equals(item))
+                    if (array[index].Equals(item))
                     {
-                        return i;
+                        return index;
                     }
                 }
                 return -1;
