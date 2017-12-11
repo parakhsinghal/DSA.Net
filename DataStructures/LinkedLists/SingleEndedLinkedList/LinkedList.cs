@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
-namespace DataStructures.LinkedList
+namespace DataStructures.LinkedLists.LinkedList
 {
     public class LinkedList<T> : ICollection<T>
     {

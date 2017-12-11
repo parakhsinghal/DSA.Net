@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.DoublyLinkedList
+namespace DataStructures.LinkedLists.DoublyLinkedList
 {
-    public sealed class Node
+    public class DoublyLinkedList
     {
     }
 }

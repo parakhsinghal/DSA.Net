@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
-namespace DataStructures.OrderedArray
+namespace DataStructures.Arrays.OrderedArray
 {
     public class OrderedArray<T>
     {

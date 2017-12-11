@@ -5,7 +5,7 @@ using System.Diagnostics;
 using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 
-namespace DataStructures.DoubleEndedLinkedList
+namespace DataStructures.LinkedLists.DoubleEndedLinkedList
 {
     public class DoubleEndedLinkedList<T> : ICollection<T>
     {

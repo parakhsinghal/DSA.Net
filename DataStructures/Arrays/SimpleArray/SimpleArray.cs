@@ -7,7 +7,7 @@ using System.Diagnostics;
 using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 
-namespace DataStructures.SimpleArray
+namespace DataStructures.Arrays.SimpleArray
 {
     public class SimpleArray<T>
     {

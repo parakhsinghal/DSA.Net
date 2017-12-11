@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using DSA = DataStructures.LinkedList;
+using DSA = DataStructures.LinkedLists.LinkedList;
 
-namespace DataStructures.Stack.LinkedListBased
+namespace DataStructures.Queue.ArrayBased
 {
-    public class Stack<T> : IEnumerable<T>
+    public class Queue<T> : IEnumerable<T>
     {
-        private DSA.LinkedList<T> stack;
+        private T[] queue;
 
-        public Stack()
+        public Queue()
         {
-            stack = new DSA.LinkedList<T>();
+           
         }
 
         public T Peek()
@@ -19,12 +19,12 @@ namespace DataStructures.Stack.LinkedListBased
             throw new NotImplementedException();
         }
 
-        public void Push(T value)
+        public void Enqueue(T value)
         {
             throw new NotImplementedException();
         }
 
-        public void Pop()
+        public void Dequeue()
         {
             throw new NotImplementedException();
         }

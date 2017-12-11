@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using DSA = DataStructures.LinkedList;
+using DSA = DataStructures.LinkedLists.LinkedList;
 
-namespace DataStructures.Queue.ArrayBased
+namespace DataStructures.Queue.LinkedListBased
 {
     public class Queue<T> : IEnumerable<T>
     {
-        private T[] queue;
+        private DSA.LinkedList<T> queue;
 
         public Queue()
         {
-           
+            queue = new DSA.LinkedList<T>();
         }
 
         public T Peek()
@@ -27,7 +27,7 @@ namespace DataStructures.Queue.ArrayBased
         public void Dequeue()
         {
             throw new NotImplementedException();
-        }
+        }   
 
         public int Count()
         {

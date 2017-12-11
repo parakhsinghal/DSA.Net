@@ -40,34 +40,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryTree\BinaryTree.cs" />
-    <Compile Include="BinaryTree\Node.cs" />
-    <Compile Include="CircularQueue\CircularQueue.cs" />
-    <Compile Include="DoubleEndedLinkedList\DoubleEndedLinkedList.cs" />
-    <Compile Include="DoubleEndedLinkedList\Node.cs" />
-    <Compile Include="DoublyLinkedList\DoublyLinkedList.cs" />
-    <Compile Include="DoublyLinkedList\Node.cs" />
+    <Compile Include="Trees\BinaryTree\BinaryTree.cs" />
+    <Compile Include="Trees\BinaryTree\Node.cs" />
+    <Compile Include="Queues\CircularQueue\CircularQueue.cs" />
+    <Compile Include="LinkedLists\DoubleEndedLinkedList\DoubleEndedLinkedList.cs" />
+    <Compile Include="LinkedLists\DoubleEndedLinkedList\Node.cs" />
+    <Compile Include="LinkedLists\DoublyLinkedList\DoublyLinkedList.cs" />
+    <Compile Include="LinkedLists\DoublyLinkedList\Node.cs" />
     <Compile Include="ErrorMessages\ErrorMessages_US-en.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorMessages_US-en.resx</DependentUpon>
     </Compile>
-    <Compile Include="LinkedList\LinkedList.cs" />
-    <Compile Include="LinkedList\Node.cs" />
-    <Compile Include="OrderedArray\OrderedArray.cs" />
+    <Compile Include="LinkedLists\SingleEndedLinkedList\LinkedList.cs" />
+    <Compile Include="LinkedLists\SingleEndedLinkedList\Node.cs" />
+    <Compile Include="Arrays\OrderedArray\OrderedArray.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queue\ArrayBased\Queue.cs" />
-    <Compile Include="Queue\LinkedListBased\Queue.cs" />
-    <Compile Include="RedBlackTree\RedBlackTree.cs" />
-    <Compile Include="SimpleArray\SimpleArray.cs" />
-    <Compile Include="Stack\ArrayBased\Stack.cs" />
-    <Compile Include="Stack\LinkedListBased\Stack.cs" />
+    <Compile Include="Queues\Queue\ArrayBased\Queue.cs" />
+    <Compile Include="Queues\Queue\LinkedListBased\Queue.cs" />
+    <Compile Include="Trees\RedBlackTree\RedBlackTree.cs" />
+    <Compile Include="Arrays\SimpleArray\SimpleArray.cs" />
+    <Compile Include="Stacks\Stack\ArrayBased\Stack.cs" />
+    <Compile Include="Stacks\Stack\LinkedListBased\Stack.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="234Tree\" />
     <Folder Include="Graph\" />
     <Folder Include="Heap\" />
+    <Folder Include="LinkedLists\CircularDoublyLinkedList\" />
+    <Folder Include="LinkedLists\CircularSingleEndedLinkedList\" />
     <Folder Include="PriorityQueue\" />
+    <Folder Include="Trees\234Tree\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ErrorMessages\ErrorMessages_US-en.resx">

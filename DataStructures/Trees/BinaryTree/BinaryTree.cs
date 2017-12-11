@@ -29,7 +29,7 @@ namespace DataStructures.BinaryTree
 
         public void TraverseInOrder()
         {
-            throw new NotImplementedException()
+            throw new NotImplementedException();
         }
 
         public void TraversePreOrder()
