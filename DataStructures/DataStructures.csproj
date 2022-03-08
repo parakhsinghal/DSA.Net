@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Graphs\" />
+    <Folder Include="LinkedLists\DoublyLinkedList\" />
+    <Folder Include="LinkedLists\CircularSingleEndedLinkedList\" />
+    <Folder Include="LinkedLists\CircularDoublyLinkedList\" />
+    <Folder Include="Queues\CircularQueue\" />
+    <Folder Include="Trees\BinaryTree\" />
+    <Folder Include="Trees\234Tree\" />
+    <Folder Include="Trees\RedBlackTree\" />
+  </ItemGroup>
+
+</Project>
