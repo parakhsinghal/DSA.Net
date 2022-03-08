@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.LinkedLists.DoubleEndedLinkedList

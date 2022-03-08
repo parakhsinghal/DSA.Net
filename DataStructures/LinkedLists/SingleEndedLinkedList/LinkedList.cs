@@ -59,7 +59,7 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
                 }
                 else
                 {
-                    // If the count is greater than 1, point the head to he next node
+                    // If the count is greater than 1, point the head to the next node
                     // If the count is equal to 1, i.e. only Head exists, point the Head to null (given by Next property)
                     Head = Head.Next;
                     Count--;
