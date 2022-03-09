@@ -368,7 +368,6 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 Debug.WriteLine(ex.Message);
                 throw;
             }
-
         }
 
         public IEnumerator<T> GetEnumerator()
