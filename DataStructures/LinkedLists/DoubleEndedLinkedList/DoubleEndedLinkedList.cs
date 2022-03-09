@@ -124,7 +124,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                     if (Count == 1)
                     {
                         Head = null;
-                        Tail = null;                        
+                        Tail = null;
                     }
                     else
                     {
@@ -171,17 +171,15 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 else // If every condition is met then parse nodes all the way to the neighbour node and then add the new node and point appropriately
                 {
                     Node<T> currentNode = Head;
-                    Node<T> neighborToRight = neighborToLeft.Next;
 
                     while (currentNode.Value.Equals(neighborToLeft.Value))
                     {
-                        neighborToLeft.Next = nodeToBeAdded;
-                        nodeToBeAdded.Previous = neighborToLeft;
-
-                        neighborToRight.Previous = nodeToBeAdded;
-                        nodeToBeAdded.Next = neighborToRight;
-                        Count++;
+                        currentNode = currentNode.Next;
                     }
+
+                    nodeToBeAdded.Next = currentNode.Next;
+                    currentNode.Next = nodeToBeAdded;
+                    Count++;
                 }
             }
             catch (Exception ex)
@@ -211,18 +209,17 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 else // If every condition is met then parse nodes all the way to the neighbour node and then add the new node and point appropriately
                 {
                     Node<T> currentNode = Head;
-                    Node<T> neighborToLeft = neighborToRight.Previous;
 
-                    while (currentNode.Value.Equals(neighborToRight.Value))
+                    while (currentNode.Next.Equals(neighborToRight))
                     {
-                        neighborToLeft.Next = nodeToBeAdded;
-                        nodeToBeAdded.Previous = neighborToLeft;
-
-                        neighborToRight.Previous = nodeToBeAdded;
-                        nodeToBeAdded.Next = neighborToRight;
-                        Count++;
+                        currentNode = currentNode.Next;
                     }
+
+                    nodeToBeAdded.Next = currentNode.Next;
+                    currentNode.Next = nodeToBeAdded;
+                    Count++;
                 }
+
             }
             catch (Exception ex)
             {
@@ -250,7 +247,6 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
             else
             {
-                Head.Previous = nodeToBeAdded;
                 nodeToBeAdded.Next = Head;
                 Head = nodeToBeAdded;
             }
@@ -330,35 +326,36 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 {
                     Node<T> currentNode = Head;
 
-                    while (currentNode != null) // When the list has elements
+                    while (currentNode != null)
                     {
                         if (currentNode.Value.Equals(item))
                         {
-                            if (currentNode.Next == null) // We are at tail node
+                            // If the value happens to be part of the last node then
+                            // create a temporary node that will become the second to last node
+                            // and release the last node
+                            if (currentNode.Next == null)
                             {
-                                // If the value happens to be part of the last node then
-                                // create a temporary node that will become the second to last node
-                                // and release the last node
-
-                                Node<T> neighborToLeft = currentNode.Previous;
-                                currentNode.Previous = null;
-                                neighborToLeft.Next = null;
+                                Node<T> penultimateNode = Head;
+                                while (penultimateNode.Next != currentNode)
+                                {
+                                    penultimateNode = penultimateNode.Next;
+                                }
+                                penultimateNode.Next = null;
                             }
                             else
                             {
-                                // If the value found happens to be in the between the Head and the Tail node
-                                // then create two temporary node that will form neighbours to the node that needs to be deleted.
-                                // They will refer each other appropriately.
-
-                                Node<T> neighborToLeft = currentNode.Previous;
-                                Node<T> neighborToRight = currentNode.Next;
-
-                                neighborToLeft.Next = neighborToRight;
-                                neighborToRight.Previous = neighborToLeft;
-                                Count--;
+                                // If the value found happens to be in the between the Head and the last node
+                                // then create a temporary node that will become node that occurs before the 
+                                // node that contains the value. Then change the references appropriately
+                                Node<T> previousNode = Head;
+                                while (previousNode.Next == currentNode)
+                                {
+                                    previousNode = previousNode.Next;
+                                }
+                                previousNode.Next = currentNode.Next;
                             }
-
                         }
+
                         currentNode = currentNode.Next;
                     }
 
@@ -366,11 +363,12 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                     return true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Debug.WriteLine(ex.Message);
                 throw;
             }
+
         }
 
         public IEnumerator<T> GetEnumerator()
