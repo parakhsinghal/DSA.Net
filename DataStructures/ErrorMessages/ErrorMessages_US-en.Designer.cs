@@ -19,10 +19,10 @@ namespace DataStructures.ErrorMessages {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ErrorMessages_US_en {
+    public class ErrorMessages_US_en {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace DataStructures.ErrorMessages {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DataStructures.ErrorMessages.ErrorMessages_US-en", typeof(ErrorMessages_US_en).Assembly);
@@ -51,7 +51,7 @@ namespace DataStructures.ErrorMessages {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,27 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The linked list is empty, hence addition of the desired element adjacent to the provided element is not possible..
+        /// </summary>
+        public static string LinkedList_AddAfter_EmptyList {
+            get {
+                return ResourceManager.GetString("LinkedList_AddAfter_EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The neighbour of the desired addition was not found..
+        /// </summary>
+        public static string LinkedList_AddAfter_NeighborNodeNotFound {
+            get {
+                return ResourceManager.GetString("LinkedList_AddAfter_NeighborNodeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The linked list is empty, hence a search cannot be carried out..
         /// </summary>
-        internal static string LinkedList_Contains_EmptyList {
+        public static string LinkedList_Contains_EmptyList {
             get {
                 return ResourceManager.GetString("LinkedList_Contains_EmptyList", resourceCulture);
             }
@@ -72,7 +90,7 @@ namespace DataStructures.ErrorMessages {
         /// <summary>
         ///   Looks up a localized string similar to The passed array is not having sufficient length to accomodate the members of the linked list, or the passed index is wrong..
         /// </summary>
-        internal static string LinkedList_CopyTo_InvalidArguments {
+        public static string LinkedList_CopyTo_InvalidArguments {
             get {
                 return ResourceManager.GetString("LinkedList_CopyTo_InvalidArguments", resourceCulture);
             }
@@ -81,7 +99,7 @@ namespace DataStructures.ErrorMessages {
         /// <summary>
         ///   Looks up a localized string similar to The linked list is already empty, hence nothing can be removed..
         /// </summary>
-        internal static string LinkedList_Remove_EmptyList {
+        public static string LinkedList_Remove_EmptyList {
             get {
                 return ResourceManager.GetString("LinkedList_Remove_EmptyList", resourceCulture);
             }
@@ -90,16 +108,25 @@ namespace DataStructures.ErrorMessages {
         /// <summary>
         ///   Looks up a localized string similar to The linked list is empty with no head present to be removed..
         /// </summary>
-        internal static string LinkedList_RemoveHead_EmptyList {
+        public static string LinkedList_RemoveHead_EmptyList {
             get {
                 return ResourceManager.GetString("LinkedList_RemoveHead_EmptyList", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The linked list is empty with no tail to be removed..
+        /// </summary>
+        public static string LinkedList_RemoveTail_EmptyList {
+            get {
+                return ResourceManager.GetString("LinkedList_RemoveTail_EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The passed node to be added is not valid..
         /// </summary>
-        internal static string Node_IsValid_IsNotValid {
+        public static string Node_IsValid_IsNotValid {
             get {
                 return ResourceManager.GetString("Node_IsValid_IsNotValid", resourceCulture);
             }

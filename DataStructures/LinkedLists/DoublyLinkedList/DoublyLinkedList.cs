@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
-namespace DataStructures.LinkedLists.DoubleEndedLinkedList
+namespace DataStructures.LinkedLists.DoublyLinkedList
 {
-    public class DoubleEndedLinkedList<T> : ICollection<T>
+    public class DoublyLinkedList<T> : ICollection<T>
     {
-
         public Node<T> Head { get; set; }
         public Node<T> Tail { get; set; }
         public int Count { get; private set; }
@@ -27,12 +26,12 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                     if (Count == 0)
                     {
                         Head = node;    // Make the node the new Head
-                        Tail = node;    // Tail also need to point to the node
                         Count++;        // Increase the node count
                     }
                     else
                     {
-                        node.Next = Head;       // Make the new node point to old head                        
+                        node.Next = Head;       // Make the new node point to old head
+                        Head.Previous = node;   // Make the existing head's previous pointer point to the new node
                         Head = node;            // Make the new node the new Head
                         Count++;                // Increase the node count
                     }
@@ -63,13 +62,14 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 {
                     if (Count == 0) // If the linked list happens to be empty, then both head and tail will be the same.
                     {
-                        Head = node;
+                        AddHead(node);
                         Tail = node;
                         Count++;
                     }
                     else // If the list is not empty then point existing tail's next pointer to the node and make node the new tail.
                     {
                         Tail.Next = node;
+                        node.Previous = Tail;
                         Tail = node;
                         Count++;
                     }
@@ -94,18 +94,9 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
             else
             {
-                // If the count is equal to 1 then, point both the Head and Tail to null and decrement the counter.
-                if (Count == 1)
-                {
-                    Head = null;
-                    Tail = null;
-                }
-                else // If the count is greater than 1, point the head to the next node and decrement the counter.
-                {
-                    Head = Head.Next;
-                }
-
-                // Decrement the counter
+                // If the count is greater than 1, point the head to the next node
+                // If the count is equal to 1, i.e. only Head exists, point the Head to null (given by Next property)
+                Head = Head.Next;
                 Count--;
             }
         }
@@ -120,27 +111,19 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 }
                 else // If the list is not empty
                 {
-                    // If there's only one node then make both the head and tail null
-                    if (Count == 1)
+                    if (Count == 1) // If there's only one node then make both the head and tail null
                     {
                         Head = null;
-                        Tail = null;                        
+                        Tail = null;
+                        Count--;
                     }
-                    else
+                    else // If the count is greater than 1 and there are elements in the linked list
                     {
-                        // If the count is greater than 1 and there are elements in the linked list
-                        // Traverse till the penultimate node and then change the Tail to point to the penultimate
-                        // node.
-                        Node<T> penultimateNode = Head;
-                        while (penultimateNode.Next != Tail)
-                        {
-                            penultimateNode = penultimateNode.Next;
-                        }
-                        Tail = penultimateNode;
+                        Node<T> tempNode = Tail.Previous;
+                        Tail.Previous = null;
+                        Tail = tempNode;
+                        Count--;
                     }
-
-                    // Decrement the counter
-                    Count--;
                 }
 
             }

@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="LinkedList_AddAfter_EmptyList" xml:space="preserve">
+    <value>The linked list is empty, hence addition of the desired element adjacent to the provided element is not possible.</value>
+    <comment>The error message needs to be presented when an attempt is made to add an element adjacent to another element, when the list is empty to begin with.</comment>
+  </data>
+  <data name="LinkedList_AddAfter_NeighborNodeNotFound" xml:space="preserve">
+    <value>The neighbour of the desired addition was not found.</value>
+    <comment>The error message needs to presented when the neighbor to which an addition is desired is not found.</comment>
+  </data>
   <data name="LinkedList_Contains_EmptyList" xml:space="preserve">
     <value>The linked list is empty, hence a search cannot be carried out.</value>
     <comment>The error message needs to be presented when an attempt is made to search for a value in an empty list.</comment>
@@ -127,6 +135,10 @@
   <data name="LinkedList_RemoveHead_EmptyList" xml:space="preserve">
     <value>The linked list is empty with no head present to be removed.</value>
     <comment>The error message needs to be presented when an attempt is made to delete a head when the list is empty.</comment>
+  </data>
+  <data name="LinkedList_RemoveTail_EmptyList" xml:space="preserve">
+    <value>The linked list is empty with no tail to be removed.</value>
+    <comment>The error message needs to be presented when an attempt is made to delete a tail when the list is empty.</comment>
   </data>
   <data name="LinkedList_Remove_EmptyList" xml:space="preserve">
     <value>The linked list is already empty, hence nothing can be removed.</value>

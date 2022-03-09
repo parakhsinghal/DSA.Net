@@ -85,6 +85,7 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
             try
             {
                 Head = null;
+                Count = 0;
             }
             catch (Exception ex)
             {
@@ -157,12 +158,12 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
                     Node<T> currentNode = Head;
 
                     while (currentNode != null)
-                    {
-                        // If the value happens to be part of the last node then
-                        // create a temporary node that will become the second to last node
-                        // and release the last node
+                    {                       
                         if (currentNode.Value.Equals(item))
                         {
+                            // If the value happens to be part of the last node then
+                            // create a temporary node that will become the second to last node
+                            // and release the last node
                             if (currentNode.Next == null)
                             {
                                 Node<T> penultimateNode = Head;

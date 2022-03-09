@@ -6,13 +6,27 @@
 
   <ItemGroup>
     <Folder Include="Graphs\" />
-    <Folder Include="LinkedLists\DoublyLinkedList\" />
     <Folder Include="LinkedLists\CircularSingleEndedLinkedList\" />
     <Folder Include="LinkedLists\CircularDoublyLinkedList\" />
     <Folder Include="Queues\CircularQueue\" />
     <Folder Include="Trees\BinaryTree\" />
     <Folder Include="Trees\234Tree\" />
     <Folder Include="Trees\RedBlackTree\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ErrorMessages\ErrorMessages_US-en.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ErrorMessages_US-en.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="ErrorMessages\ErrorMessages_US-en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorMessages_US-en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
