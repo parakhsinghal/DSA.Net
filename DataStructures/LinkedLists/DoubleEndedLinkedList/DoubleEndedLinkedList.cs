@@ -7,9 +7,11 @@ using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 namespace DataStructures.LinkedLists.DoubleEndedLinkedList
 {
     /// <summary>
-    /// 
+    /// The double ended linked list is a variation of the normal linked list.
+    /// The variation is the additional reference to the Tail node available separately, which may be helpful in 
+    /// certain scenarios.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The data type defined by the user at runtime.</typeparam>
     public class DoubleEndedLinkedList<T> : ICollection<T>
     {
 
@@ -17,17 +19,21 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         public Node<T> Tail { get; set; }
         public int Count { get; private set; }
 
+        #region Standard linked list functionality
+
         /// <summary>
-        /// 
+        /// Push method is a standard method available on a linked list and creates a node in a linked list.
+        /// The node is created in position of a new head, if the list is empty, or in place of an existing one, if 
+        /// the list is not empty.
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="item">The </param>
         public void Push(T item)
         { 
             AddHead(item);
         }
 
         /// <summary>
-        /// 
+        /// Pop method is a standard method available on a linked list and removes the top node i.e. head.
         /// </summary>
         public void Pop()
         { 
@@ -35,28 +41,34 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         }
 
         /// <summary>
-        /// 
+        /// Peek is a standard method available ona  linked list and returns the value of the head node.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The value of the head node.</returns>
         public T Peek()
         {
             return Head.Value;
         }
 
+        #endregion
+
+        #region Additional linked list functionality
+
         /// <summary>
-        /// 
+        /// AddHead is an additional method available in this implementation of a double ended linked list.
+        /// The method adds a node at the head position, pushing the existing head node down in the linked list.
         /// </summary>
-        /// <param name="value"></param>
-        public void AddHead(T value)
+        /// <param name="value">The value of the node that needs to be added as a head.</param>
+        private void AddHead(T value)
         {
             AddHead(new Node<T>() { Value = value });
         }
 
         /// <summary>
-        /// 
+        /// AddHead is a method available in this implementation of a double ended linked list.
+        /// The method adds a node at the head position, pushing the existing head node down in the linked list.
         /// </summary>
-        /// <param name="node"></param>
-        public void AddHead(Node<T> node)
+        /// <param name="node">The node that needs to be added as a head.</param>
+        private void AddHead(Node<T> node)
         {
             try
             {
@@ -89,18 +101,20 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         }
 
         /// <summary>
-        /// 
+        /// AddTail is an additional method available in this implementation of a double ended linked list.
+        /// The method adds a node at the tail position, pushing the existing tail node up in the linked list.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value of the node that needs to be added as a tail.</param>
         public void AddTail(T value)
         {
             AddTail(new Node<T>() { Value = value });
         }
 
         /// <summary>
-        /// 
+        /// AddTail is an additional method available in this implementation of a double ended linked list.
+        /// The method adds a node at the tail position, pushing the existing tail node up in the linked list.
         /// </summary>
-        /// <param name="node"></param>
+        /// <param name="value">The node that needs to be added as a tail.</param>
         public void AddTail(Node<T> node)
         {
             try
@@ -130,38 +144,12 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 Debug.WriteLine(ex.Message);
                 throw;
             }
-        }
+        }        
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="InvalidOperationException"></exception>
-        public void RemoveHead()
-        {
-            if (Count == 0) // If the linked list is empty, throw an error message
-            {
-                throw new InvalidOperationException(ErrMsgs.LinkedList_RemoveHead_EmptyList);
-            }
-            else
-            {
-                // If the count is equal to 1 then, point both the Head and Tail to null and decrement the counter.
-                if (Count == 1)
-                {
-                    Head = null;
-                    Tail = null;
-                }
-                else // If the count is greater than 1, point the head to the next node and decrement the counter.
-                {
-                    Head = Head.Next;
-                }
-
-                // Decrement the counter
-                Count--;
-            }
-        }
-
-        /// <summary>
-        /// 
+        /// RemoveTail is an additional method available in this implementation of a double ended linked list.
+        /// The method removes the node referenced as tail, and pusing the reference the penultimate node available 
+        /// in the linked list.
         /// </summary>
         public void RemoveTail()
         {
@@ -181,7 +169,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                     }
                     else
                     {
-                        // If the count is greater than 1 and there are elements in the linked list
+                        // If the count is greater than 1 and there are nodes in the linked list
                         // Traverse till the penultimate node and then change the Tail to point to the penultimate
                         // node.
                         Node<T> penultimateNode = Head;
@@ -205,20 +193,24 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         }
 
         /// <summary>
-        /// 
+        /// AddAfter is an additional method available in this implementation of a double ended linked list.
+        /// The method is used to add a node adjacent to the provided node. The adjacent node can be thought of as
+        /// the neighbour to the left of the node to be added.
         /// </summary>
-        /// <param name="neighborToLeft"></param>
-        /// <param name="itemToBeAdded"></param>
+        /// <param name="neighborToLeft">The value of the adjacent node after which a node is required to be added.</param>
+        /// <param name="itemToBeAdded">The value of the node that needs to be added.</param>
         public void AddAfter(T neighborToLeft, T itemToBeAdded)
         {
             AddAfter(new Node<T>() { Value = neighborToLeft }, new Node<T>() { Value = itemToBeAdded });
         }
 
         /// <summary>
-        /// 
+        /// AddAfter is an additional method available in this implementation of a double ended linked list.
+        /// The method is used to add a node adjacent to the provided node. The adjacent node can be thought of as
+        /// the neighbour to the left of the node to be added.
         /// </summary>
-        /// <param name="neighborToLeft"></param>
-        /// <param name="nodeToBeAdded"></param>
+        /// <param name="neighborToLeft">The value of the adjacent node after which a node is required to be added.</param>
+        /// <param name="itemToBeAdded">The value of the node that needs to be added.</param>
         public void AddAfter(Node<T> neighborToLeft, Node<T> nodeToBeAdded)
         {
             try
@@ -253,20 +245,24 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         }
 
         /// <summary>
-        /// 
+        /// AddAfter is an additional method available in this implementation of a double ended linked list.
+        /// The method is used to add a node adjacent to the provided node. The adjacent node can be thought of as
+        /// the neighbour to the right of the node to be added.
         /// </summary>
-        /// <param name="neighborToRight"></param>
-        /// <param name="itemToBeAdded"></param>
+        /// <param name="neighborToLeft">The value of the adjacent node before which a node is required to be added.</param>
+        /// <param name="itemToBeAdded">The value of the node that needs to be added.</param>
         public void AddBefore(T neighborToRight, T itemToBeAdded)
         {
             AddBefore(new Node<T>() { Value = neighborToRight }, new Node<T>() { Value = itemToBeAdded });
         }
 
         /// <summary>
-        /// 
+        /// AddAfter is an additional method available in this implementation of a double ended linked list.
+        /// The method is used to add a node adjacent to the provided node. The adjacent node can be thought of as
+        /// the neighbour to the right of the node to be added.
         /// </summary>
-        /// <param name="neighborToRight"></param>
-        /// <param name="nodeToBeAdded"></param>
+        /// <param name="neighborToLeft">The value of the adjacent node before which a node is required to be added.</param>
+        /// <param name="itemToBeAdded">The value of the node that needs to be added.</param>
         public void AddBefore(Node<T> neighborToRight, Node<T> nodeToBeAdded)
         {
             try
@@ -301,8 +297,12 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
         }
 
+        #endregion
+
+        #region ICollection implementation
         /// <summary>
-        /// 
+        /// IsReadOnly is then method implementation of the IsReadOnly method declared in the ICollection interface.
+        /// The method provides information is the underlying collection is read-only in nature or not.
         /// </summary>
         public bool IsReadOnly
         {
@@ -313,29 +313,18 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         }
 
         /// <summary>
-        /// 
+        /// Add is the method implemention of the Add method declared in the ICollection interface. 
+        /// The implementation simply calls the Push method which adds a node at the head position.
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="item">The value of the node to be added as a head.</param>
         public void Add(T item)
         {
-            Node<T> nodeToBeAdded = new Node<T>() { Value = item };
-
-            if (Count == 0)
-            {
-                Head = nodeToBeAdded;
-                Tail = nodeToBeAdded;
-            }
-            else
-            {
-                nodeToBeAdded.Next = Head;
-                Head = nodeToBeAdded;
-            }
-
-            Count++;
+            Push(item);
         }
 
         /// <summary>
-        /// 
+        /// Clear is a method implementation of the Clear method declared in the ICollection interface.
+        /// The methods clears the members of the underlying collection.
         /// </summary>
         public void Clear()
         {
@@ -353,10 +342,11 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         }
 
         /// <summary>
-        /// 
+        /// Contains is a method implementation of the Contains method declared in the ICollection interface.
+        /// The method returns a boolean response if the value supplied as an argument is found in the linked list.
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
+        /// <param name="item">The value of the node to be searched.</param>
+        /// <returns>Returns a boolean response with true if the value is found in the underlying collection.</returns>
         public bool Contains(T item)
         {
             try
@@ -387,11 +377,13 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         }
 
         /// <summary>
-        /// 
+        /// The CopyTo method is the method implementation of the CopyTo method declared in the ICollection interface.
+        /// The method is used to copy over the values of the underlying collection to the supplied array from the index desired.
         /// </summary>
-        /// <param name="array"></param>
-        /// <param name="arrayIndex"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <param name="array">The array to which the values of all the nodes need to be copied to.</param>
+        /// <param name="arrayIndex">The starting value against which the values in the linkedlist needs to be copied to the supplied array.</param>
+        /// <exception cref="ArgumentOutOfRangeException">The ArgumentOutOfRangeException is thrown if the length of the underlying collection
+        /// is a negative number or the sum of the index and the total number of values exceed the length of the array.</exception>
         public void CopyTo(T[] array, int arrayIndex)
         {
             if (arrayIndex < 0 || arrayIndex + Count > array.Length)
@@ -408,10 +400,11 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         }
 
         /// <summary>
-        /// 
+        /// Remove is a method implementation of the Remove method declaration in the ICollection interface.
+        /// Remove eliminates the supplied value from the linked list and arranges the references accordingly.
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
+        /// <param name="item">The value of the node to be removed.</param>
+        /// <returns>Returns a boolean response of true if the removal was successful and false otherwise.</returns>
         public bool Remove(T item)
         {
             try
@@ -470,7 +463,8 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         }
 
         /// <summary>
-        /// 
+        /// GetEnumerator is the method implementation of the GetEnumerator method in the ICollection interface.
+        /// The method provides all the values in the underlying collection.
         /// </summary>
         /// <returns></returns>
         public IEnumerator<T> GetEnumerator()
@@ -491,5 +485,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         {
             return ((System.Collections.Generic.IEnumerable<T>)this).GetEnumerator();
         }
+
+        #endregion
     }
 }
