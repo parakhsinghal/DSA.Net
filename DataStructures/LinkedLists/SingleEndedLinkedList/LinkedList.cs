@@ -13,7 +13,6 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
     /// <typeparam name="T"></typeparam>
     public class LinkedList<T> : ICollection<T>
     {
-
         public Node<T> Head { get; set; }
         public int Count { get; private set; }
 
@@ -35,7 +34,25 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
         /// </summary>
         public void Pop()
         {
-            RemoveHead();
+            try
+            {
+                if (Count == 0) //If the linked list is empty, throw an error message
+                {
+                    throw new InvalidOperationException(ErrMsgs.LinkedList_RemoveHead_EmptyList);
+                }
+                else
+                {
+                    // If the count is greater than 1, point the head to the next node
+                    // If the count is equal to 1, i.e. only Head exists, point the Head to null (given by Next property)
+                    Head = Head.Next;
+                    Count--;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -93,33 +110,7 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
                 Debug.WriteLine(ex.Message);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void RemoveHead()
-        {
-            try
-            {
-                if (Count == 0) //If the linked list is empty, throw an error message
-                {
-                    throw new InvalidOperationException(ErrMsgs.LinkedList_RemoveHead_EmptyList);
-                }
-                else
-                {
-                    // If the count is greater than 1, point the head to the next node
-                    // If the count is equal to 1, i.e. only Head exists, point the Head to null (given by Next property)
-                    Head = Head.Next;
-                    Count--;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                throw;
-            }
-        }
+        }       
 
         #endregion
 

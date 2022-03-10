@@ -14,7 +14,6 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
     /// <typeparam name="T">The data type defined by the user at runtime.</typeparam>
     public class DoubleEndedLinkedList<T> : ICollection<T>
     {
-
         public Node<T> Head { get; set; }
         public Node<T> Tail { get; set; }
         public int Count { get; private set; }
@@ -36,12 +35,30 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         /// Pop method is a standard method available on a linked list and removes the top node i.e. head.
         /// </summary>
         public void Pop()
-        { 
-            RemoveHead();
+        {
+            try
+            {
+                if (Count == 0) //If the linked list is empty, throw an error message
+                {
+                    throw new InvalidOperationException(ErrMsgs.LinkedList_RemoveHead_EmptyList);
+                }
+                else
+                {
+                    // If the count is greater than 1, point the head to the next node
+                    // If the count is equal to 1, i.e. only Head exists, point the Head to null (given by Next property)
+                    Head = Head.Next;
+                    Count--;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Peek is a standard method available ona  linked list and returns the value of the head node.
+        /// Peek is a standard method available on a linked list and returns the value of the head node.
         /// </summary>
         /// <returns>The value of the head node.</returns>
         public T Peek()
