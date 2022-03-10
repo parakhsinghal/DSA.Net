@@ -6,6 +6,10 @@ using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.LinkedLists.DoubleEndedLinkedList
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class DoubleEndedLinkedList<T> : ICollection<T>
     {
 
@@ -13,11 +17,45 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         public Node<T> Tail { get; set; }
         public int Count { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        public void Push(T item)
+        { 
+            AddHead(item);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Pop()
+        { 
+            RemoveHead();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public T Peek()
+        {
+            return Head.Value;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         public void AddHead(T value)
         {
             AddHead(new Node<T>() { Value = value });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         public void AddHead(Node<T> node)
         {
             try
@@ -50,11 +88,19 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         public void AddTail(T value)
         {
             AddTail(new Node<T>() { Value = value });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         public void AddTail(Node<T> node)
         {
             try
@@ -86,6 +132,10 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <exception cref="InvalidOperationException"></exception>
         public void RemoveHead()
         {
             if (Count == 0) // If the linked list is empty, throw an error message
@@ -110,6 +160,9 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void RemoveTail()
         {
             try
@@ -151,11 +204,21 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="neighborToLeft"></param>
+        /// <param name="itemToBeAdded"></param>
         public void AddAfter(T neighborToLeft, T itemToBeAdded)
         {
             AddAfter(new Node<T>() { Value = neighborToLeft }, new Node<T>() { Value = itemToBeAdded });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="neighborToLeft"></param>
+        /// <param name="nodeToBeAdded"></param>
         public void AddAfter(Node<T> neighborToLeft, Node<T> nodeToBeAdded)
         {
             try
@@ -189,11 +252,21 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="neighborToRight"></param>
+        /// <param name="itemToBeAdded"></param>
         public void AddBefore(T neighborToRight, T itemToBeAdded)
         {
             AddBefore(new Node<T>() { Value = neighborToRight }, new Node<T>() { Value = itemToBeAdded });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="neighborToRight"></param>
+        /// <param name="nodeToBeAdded"></param>
         public void AddBefore(Node<T> neighborToRight, Node<T> nodeToBeAdded)
         {
             try
@@ -228,6 +301,9 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsReadOnly
         {
             get
@@ -236,6 +312,10 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
         public void Add(T item)
         {
             Node<T> nodeToBeAdded = new Node<T>() { Value = item };
@@ -254,6 +334,9 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             Count++;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Clear()
         {
             try
@@ -269,6 +352,11 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public bool Contains(T item)
         {
             try
@@ -298,6 +386,12 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="arrayIndex"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void CopyTo(T[] array, int arrayIndex)
         {
             if (arrayIndex < 0 || arrayIndex + Count > array.Length)
@@ -313,6 +407,11 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public bool Remove(T item)
         {
             try
@@ -370,6 +469,10 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator<T> GetEnumerator()
         {
             Node<T> current = Head;
@@ -380,6 +483,10 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((System.Collections.Generic.IEnumerable<T>)this).GetEnumerator();

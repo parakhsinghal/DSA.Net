@@ -7,17 +7,55 @@ using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.LinkedLists.SingleEndedLinkedList
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class LinkedList<T> : ICollection<T>
     {
 
         public Node<T> Head { get; set; }
         public int Count { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        public void Push(T item)
+        { 
+            AddHead(item);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Pop()
+        {
+            RemoveHead();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public T Peek()
+        { 
+            return Head.Value;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         public void AddHead(T value)
         {
             AddHead(new Node<T>() { Value = value });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         public void AddHead(Node<T> node)
         {
             try
@@ -49,6 +87,9 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void RemoveHead()
         {
             try
@@ -71,7 +112,10 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
                 throw;
             }
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsReadOnly
         {
             get
@@ -80,6 +124,9 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Clear()
         {
             try
@@ -94,11 +141,20 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
         public void Add(T item)
         {
             AddHead(new Node<T>() { Value = item });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public bool Contains(T item)
         {
             try
@@ -129,6 +185,12 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="arrayIndex"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void CopyTo(T[] array, int arrayIndex)
         {
             if (arrayIndex < 0 || arrayIndex + Count > array.Length)
@@ -144,6 +206,11 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public bool Remove(T item)
         {
             try
@@ -201,6 +268,10 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator<T> GetEnumerator()
         {
             Node<T> current = Head;
@@ -211,6 +282,10 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((System.Collections.Generic.IEnumerable<T>)this).GetEnumerator();
