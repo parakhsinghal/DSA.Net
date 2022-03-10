@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataStructures.LinkedLists.DoubleEndedLinkedList
+﻿namespace DataStructures.LinkedLists.DoubleEndedLinkedList
 {
     /// <summary>
     /// This node class represents a node used in a generic linked list.

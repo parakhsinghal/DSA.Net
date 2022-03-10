@@ -27,7 +27,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         /// </summary>
         /// <param name="item">The </param>
         public void Push(T item)
-        { 
+        {
             AddHead(item);
         }
 
@@ -161,7 +161,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 Debug.WriteLine(ex.Message);
                 throw;
             }
-        }        
+        }
 
         /// <summary>
         /// RemoveTail is an additional method available in this implementation of a double ended linked list.
@@ -463,13 +463,15 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                                 }
                                 previousNode.Next = currentNode.Next;
                             }
+
+                            Count--;
+                            return true;
                         }
 
                         currentNode = currentNode.Next;
                     }
 
-                    Count--;
-                    return true;
+                    return false;
                 }
             }
             catch (Exception ex)

@@ -7,11 +7,11 @@ namespace DataStructures.Queues.SimpleQueue.LinkedListBased
 {
     public class Queue<T> : IEnumerable<T>
     {
-        private DSA.LinkedList<T> queue;
+        private DSA.SingleEndedLinkedList<T> queue;
 
         public Queue()
         {
-            queue = new DSA.LinkedList<T>();
+            queue = new DSA.SingleEndedLinkedList<T>();
         }
 
         public T Peek()

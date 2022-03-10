@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.LinkedLists.SingleEndedLinkedList
@@ -11,7 +10,7 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class LinkedList<T> : ICollection<T>
+    public class SingleEndedLinkedList<T> : ICollection<T>
     {
         public Node<T> Head { get; set; }
         public int Count { get; private set; }
@@ -25,8 +24,36 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
         /// </summary>
         /// <param name="item">The </param>
         public void Push(T item)
-        { 
-            AddHead(item);
+        {
+            Node<T> node = new Node<T>(item);
+
+            try
+            {
+                if (node.IsValid)
+                {
+                    if (Count == 0)
+                    {
+                        Head = node;    // Make the node the new Head
+                        Count++;        // Increase the node count
+                    }
+                    else
+                    {
+                        node.Next = Head;   // Make the new node point to old head
+                        Head = node;        // Make the new node the new Head
+                        Count++;            // Increase the node count
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException(ErrMsgs.Node_IsValid_IsNotValid);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -56,61 +83,13 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
         }
 
         /// <summary>
-        /// Peek is a standard method available ona  linked list and returns the value of the head node.
+        /// Peek is a standard method available on a linked list and returns the value of the head node.
         /// </summary>
         /// <returns>The value of the head node.</returns>
         public T Peek()
-        { 
+        {
             return Head.Value;
         }
-
-        #endregion
-
-        #region Additional linked list functionality
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="value"></param>
-        public void AddHead(T value)
-        {
-            AddHead(new Node<T>() { Value = value });
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        public void AddHead(Node<T> node)
-        {
-            try
-            {
-                if (node.IsValid)
-                {
-                    if (Count == 0)
-                    {
-                        Head = node;    // Make the node the new Head
-                        Count++;        // Increase the node count
-                    }
-                    else
-                    {
-                        node.Next = Head;   // Make the new node point to old head
-                        Head = node;        // Make the new node the new Head
-                        Count++;            // Increase the node count
-                    }
-                }
-                else
-                {
-                    throw new InvalidOperationException(ErrMsgs.Node_IsValid_IsNotValid);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                throw;
-            }
-        }       
 
         #endregion
 
@@ -152,7 +131,7 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
         /// <param name="item">The value of the node to be added as a head.</param>
         public void Add(T item)
         {
-            AddHead(new Node<T>() { Value = item });
+            Push(item);
         }
 
         /// <summary>
@@ -234,7 +213,7 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
                     Node<T> currentNode = Head;
 
                     while (currentNode != null)
-                    {                       
+                    {
                         if (currentNode.Value.Equals(item))
                         {
                             // If the value happens to be part of the last node then
@@ -261,13 +240,15 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
                                 }
                                 previousNode.Next = currentNode.Next;
                             }
-                        }
+
+                            Count--;
+                            return true;
+                        }                        
 
                         currentNode = currentNode.Next;
                     }
 
-                    Count--;
-                    return true;
+                    return false;
                 }
             }
             catch (Exception ex)

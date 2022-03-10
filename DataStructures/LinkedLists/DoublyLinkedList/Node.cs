@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataStructures.LinkedLists.DoublyLinkedList
+﻿namespace DataStructures.LinkedLists.DoublyLinkedList
 {
+    /// <summary>
+    /// This node class represents a node used in a generic linked list.
+    /// </summary>
+    /// <typeparam name="T">The type to be provided bt the user at runtime.</typeparam>
     public sealed class Node<T>
     {
         public Node<T> Next { get; set; }
@@ -14,6 +14,7 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
         public Node()
         {
             Next = null;
+            Previous = null;    
         }
 
         public Node(T value)

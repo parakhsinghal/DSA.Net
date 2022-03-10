@@ -7,11 +7,11 @@ namespace DataStructures.Stacks.LinkedListBased
 {
     public class Stack<T> : IEnumerable<T>
     {
-        private DSA.LinkedList<T> stack;
+        private DSA.SingleEndedLinkedList<T> stack;
 
         public Stack()
         {
-            stack = new DSA.LinkedList<T>();
+            stack = new DSA.SingleEndedLinkedList<T>();
         }
 
         public T Peek()
