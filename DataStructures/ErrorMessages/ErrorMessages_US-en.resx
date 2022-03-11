@@ -132,6 +132,10 @@
   <data name="LinkedList_CopyTo_InvalidArguments" xml:space="preserve">
     <value>The passed array is not having sufficient length to accomodate the members of the linked list, or the passed index is wrong.</value>
   </data>
+  <data name="LinkedList_Peek_EmptyList" xml:space="preserve">
+    <value>The linked list is empty.</value>
+    <comment>The error message needs to be presented when an attempt is made to peek into an empty linked list.</comment>
+  </data>
   <data name="LinkedList_RemoveHead_EmptyList" xml:space="preserve">
     <value>The linked list is empty with no head present to be removed.</value>
     <comment>The error message needs to be presented when an attempt is made to delete a head when the list is empty.</comment>

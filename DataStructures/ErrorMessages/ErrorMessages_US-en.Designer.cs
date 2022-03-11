@@ -97,6 +97,15 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The linked list is empty..
+        /// </summary>
+        public static string LinkedList_Peek_EmptyList {
+            get {
+                return ResourceManager.GetString("LinkedList_Peek_EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The linked list is already empty, hence nothing can be removed..
         /// </summary>
         public static string LinkedList_Remove_EmptyList {
