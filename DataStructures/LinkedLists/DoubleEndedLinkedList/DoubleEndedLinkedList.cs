@@ -63,7 +63,18 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         /// <returns>The value of the head node.</returns>
         public T Peek()
         {
+<<<<<<< HEAD
             return Head.Value;
+=======
+            if (Count == 0) //If the linked list is empty, throw an error message
+            {
+                throw new InvalidOperationException(ErrMsgs.LinkedList_Peek_EmptyList);
+            }
+            else
+            {
+                return Head.Value;
+            }
+>>>>>>> dev
         }
 
         #endregion
@@ -242,6 +253,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 }
                 else // If every condition is met then parse nodes all the way to the neighbour node and then add the new node and point appropriately
                 {
+<<<<<<< HEAD
                     Node<T> currentNode = Head;
 
                     while (currentNode.Value.Equals(neighborToLeft.Value))
@@ -251,6 +263,26 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
 
                     nodeToBeAdded.Next = currentNode.Next;
                     currentNode.Next = nodeToBeAdded;
+=======
+                    if (Tail.Value.Equals(neighborToLeft.Value))
+                    {
+                        Tail.Next = nodeToBeAdded;
+                        Tail = nodeToBeAdded;
+                    }
+                    else
+                    {
+                        Node<T> currentNode = Head;
+
+                        while (!currentNode.Value.Equals(neighborToLeft.Value))
+                        {
+                            currentNode = currentNode.Next;
+                        }
+
+                        nodeToBeAdded.Next = currentNode.Next;
+                        currentNode.Next = nodeToBeAdded;
+                    }
+
+>>>>>>> dev
                     Count++;
                 }
             }
@@ -294,6 +326,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 }
                 else // If every condition is met then parse nodes all the way to the neighbour node and then add the new node and point appropriately
                 {
+<<<<<<< HEAD
                     Node<T> currentNode = Head;
 
                     while (currentNode.Next.Equals(neighborToRight))
@@ -303,6 +336,25 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
 
                     nodeToBeAdded.Next = currentNode.Next;
                     currentNode.Next = nodeToBeAdded;
+=======
+                    if (Head.Value.Equals(neighborToRight.Value))
+                    {
+                        nodeToBeAdded.Next = Head;
+                        Head = nodeToBeAdded;
+                    }
+                    else
+                    {
+                        Node<T> currentNode = Head;
+                        while (!currentNode.Value.Equals(neighborToRight.Value))
+                        {
+                            currentNode = currentNode.Next;
+                        }
+
+                        nodeToBeAdded.Next = currentNode.Next;
+                        currentNode.Next = nodeToBeAdded;
+                    }
+
+>>>>>>> dev
                     Count++;
                 }
 
@@ -439,11 +491,24 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                     {
                         if (currentNode.Value.Equals(item))
                         {
+<<<<<<< HEAD
                             // If the value happens to be part of the last node then
                             // create a temporary node that will become the second to last node
                             // and release the last node
                             if (currentNode.Next == null)
                             {
+=======
+                            if (Count == 1)
+                            {
+                                Head = null;
+                                Tail = null;
+                            }
+                            // If the value happens to be part of the last node then
+                            // create a temporary node that will become the second to last node
+                            // and release the last node
+                            else if (currentNode.Next == null)
+                            {
+>>>>>>> dev
                                 Node<T> penultimateNode = Head;
                                 while (penultimateNode.Next != currentNode)
                                 {

@@ -1,0 +1,24 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ],
+
+  "General": 
+  {
+    "FirstTenInts": "1,2,3,4,5,6,7,8,9,10",
+    "Fruits": "apple,mango,grapes,pomegranate,watermelon,guava"
+  },
+  "Array": {},
+  "LinkedList": 
+  {
+    "Names": "Ram,Shyam,Suresh,Ramesh,Dinesh,Mahesh"
+  },
+  "Stack": {},
+  "Queue": {},
+  "Tree": {}
+}

@@ -15,8 +15,19 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
         public Node<T> Head { get; set; }
         public int Count { get; private set; }
 
+<<<<<<< HEAD:DataStructures/LinkedLists/SingleEndedLinkedList/SingleEndedLinkedList.cs
         #region Standard linked list functionality
 
+=======
+        public SingleEndedLinkedList()
+        {
+            Head = null;
+            Count = 0;
+        }
+
+        #region Standard linked list functionality
+
+>>>>>>> dev:DataStructures/LinkedLists/SingleEndedLinkedList/LinkedList.cs
         /// <summary>
         /// Push method is a standard method available on a linked list and creates a node in a linked list.
         /// The node is created in position of a new head, if the list is empty, or in place of an existing one, if 
@@ -88,7 +99,18 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
         /// <returns>The value of the head node.</returns>
         public T Peek()
         {
+<<<<<<< HEAD:DataStructures/LinkedLists/SingleEndedLinkedList/SingleEndedLinkedList.cs
             return Head.Value;
+=======
+            if (Count == 0) //If the linked list is empty, throw an error message
+            {
+                throw new InvalidOperationException(ErrMsgs.LinkedList_Peek_EmptyList);
+            }
+            else
+            {
+                return Head.Value;
+            }
+>>>>>>> dev:DataStructures/LinkedLists/SingleEndedLinkedList/LinkedList.cs
         }
 
         #endregion
@@ -216,10 +238,14 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
                     {
                         if (currentNode.Value.Equals(item))
                         {
+                            if (Count == 1)
+                            {
+                                Head = null;
+                            }
                             // If the value happens to be part of the last node then
                             // create a temporary node that will become the second to last node
                             // and release the last node
-                            if (currentNode.Next == null)
+                            else if (currentNode.Next == null)
                             {
                                 Node<T> penultimateNode = Head;
                                 while (penultimateNode.Next != currentNode)
