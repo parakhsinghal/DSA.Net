@@ -5,18 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataStructures.LinkedLists.SingleEndedLinkedList;
+using DataStructures.LinkedLists.DoublyLinkedList;
 
-namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
+namespace UnitTests.DataStructures.LinkedLists.DoublyLinkedList
 {
     [TestClass]
-    public class SingleEndedLinkedListTests
+    public class DoublyLinkedListTests
     {
         #region Local fields, test initialization and test clean up setup
 
         //Variables declaration
-        private SingleEndedLinkedList<int> intLinkedList;
-        private SingleEndedLinkedList<string> stringLinkedList;
+        private DoublyLinkedList<int> intLinkedList;
+        private DoublyLinkedList<string> stringLinkedList;
 
         private readonly IConfiguration generalSection, linkedlistSection;
 
@@ -24,7 +24,7 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
         List<string> names, fruits;
 
         //Constructor to pick up the data from the JSON file from the right sections.
-        public SingleEndedLinkedListTests()
+        public DoublyLinkedListTests()
         {
             var configuration = new ConfigurationBuilder()
                                 .AddJsonFile("TestData.json").Build();
@@ -32,8 +32,8 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
             generalSection = configuration.GetSection("General");
             linkedlistSection = configuration.GetSection("LinkedList");
 
-            intLinkedList = new SingleEndedLinkedList<int>();
-            stringLinkedList = new SingleEndedLinkedList<string>();
+            intLinkedList = new DoublyLinkedList<int>();
+            stringLinkedList = new DoublyLinkedList<string>();
         }
 
         //Test initialization with data
@@ -231,6 +231,173 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
             //Assert
             Assert.IsTrue(intCountResult);
             Assert.IsTrue(stringCountResult);
+        }
+
+        #endregion
+
+        #region Additional linked list functionality
+
+        [TestMethod, TestCategory("Additional linked list functionality")]
+        public void AddTail_AddAnInvalidNode_ThrowsException()
+        {
+            //Arrange            
+            Node<string> nodeToBeAdded = new Node<string>();
+            nodeToBeAdded.Value = null;
+
+            //Act
+
+            //Assert
+            Assert.ThrowsException<InvalidOperationException>(()=>stringLinkedList.AddTail(nodeToBeAdded));
+        }
+
+
+        [TestMethod, TestCategory("Additional linked list functionality")]
+        public void AddTail_AddingATailToAnEmptyList_IsSuccessful()
+        {
+            //Arrange
+            intLinkedList.AddTail(10);
+            stringLinkedList.AddTail("plum");
+
+            //Act
+            bool intCountResult = intLinkedList.Count > 0;
+            bool stringCountResult = stringLinkedList.Count > 0;
+            bool intTailResult = intLinkedList.Tail.Value == 10;
+            bool stringTailResult = stringLinkedList.Tail.Value == "plum";
+
+            //Assert
+            Assert.IsTrue(intCountResult);
+            Assert.IsTrue(stringCountResult);
+            Assert.IsTrue(intTailResult);
+            Assert.IsTrue(stringTailResult);
+        }
+
+        [TestMethod, TestCategory("Additional linked list functionality")]
+        public void AddTail_AddingATailToANonEmptyLinkedList_IsSuccessful()
+        {
+            //Arrange
+            for (int i = 0; i < range.Count; i++)
+            {
+                intLinkedList.Push(range[i]);
+                stringLinkedList.Push(fruits[i]);
+            }
+
+            intLinkedList.AddTail(10);
+            stringLinkedList.AddTail("plum");
+
+            //Act
+            bool intCountResult = intLinkedList.Count > 0;
+            bool stringCountResult = stringLinkedList.Count > 0;
+            bool intTailResult = intLinkedList.Tail.Value == 10;
+            bool stringTailResult = stringLinkedList.Tail.Value == "plum";
+
+            //Assert
+            Assert.IsTrue(intCountResult);
+            Assert.IsTrue(stringCountResult);
+            Assert.IsTrue(intTailResult);
+            Assert.IsTrue(stringTailResult);
+        }
+
+        [TestMethod, TestCategory("Additional linked list functionality")]
+        public void AddAfter_AddingItemInAnEmptyList_ThrowsException()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+            Assert.ThrowsException<InvalidOperationException>(()=>intLinkedList.AddAfter(10,11));
+            Assert.ThrowsException<InvalidOperationException>(() => stringLinkedList.AddAfter("plum", "grapefruit"));
+        }
+
+        [TestMethod, TestCategory("Additional linked list functionality")]
+        public void AddAfter_AddAnItemAfterHead_IsSuccessful()
+        {
+            //Arrange
+            for (int i = 0; i < range.Count; i++)
+            {
+                intLinkedList.Push(range[i]);
+                stringLinkedList.Push(fruits[i]);
+            }
+            
+            intLinkedList.AddAfter(intLinkedList.Head.Value, 10);
+            stringLinkedList.AddAfter(stringLinkedList.Head.Value, "plum");
+
+            //Act
+            bool intContainsResult = intLinkedList.Contains(10);
+            bool intHeadNextResult = intLinkedList.Head.Next.Value == 10;
+            bool stringContainsResult = stringLinkedList.Contains("plum");
+            bool stringHeadNextResult = stringLinkedList.Head.Next.Value == "plum";
+
+            //Assert
+            Assert.IsTrue(intContainsResult);
+            Assert.IsTrue(intHeadNextResult);
+            Assert.IsTrue(stringContainsResult);
+            Assert.IsTrue(stringHeadNextResult);
+        }
+
+        [TestMethod, TestCategory("Additional linked list functionality")]
+        public void AddAfter_AddAnItemAfterTail_IsSuccessful()
+        {
+            //Arrange
+            for (int i = 0; i < range.Count; i++)
+            {
+                intLinkedList.Push(range[i]);
+                stringLinkedList.Push(fruits[i]);
+            }
+
+            intLinkedList.AddAfter(intLinkedList.Tail.Value, 10);
+            stringLinkedList.AddAfter(stringLinkedList.Tail.Value, "plum");
+
+            //Act
+            bool intContainsResult = intLinkedList.Contains(10);
+            bool intTailResult = intLinkedList.Tail.Value == 10;
+            bool stringContainsResult = stringLinkedList.Contains("plum");
+            bool stringTailResult = stringLinkedList.Tail.Value == "plum";
+
+            //Assert
+            Assert.IsTrue(intContainsResult);
+            Assert.IsTrue(intTailResult);
+            Assert.IsTrue(stringContainsResult);
+            Assert.IsTrue(stringTailResult);
+        }
+
+        [TestMethod, TestCategory("Additional linked list functionality")]
+        public void AddAfter_AddAnItemInTheMiddle_IsSuccessFul()
+        {
+            //Arrange
+            for (int i = 0; i < range.Count; i++)
+            {
+                intLinkedList.Push(range[i]);
+                stringLinkedList.Push(fruits[i]);
+            }
+
+            intLinkedList.AddAfter(3, 10);
+            stringLinkedList.AddAfter("pomegranate", "plum");
+
+            //Act
+            bool intContainsResult = intLinkedList.Contains(10);
+            bool stringContainsResult = stringLinkedList.Contains("plum");                      
+
+            //Assert
+            Assert.IsTrue(intContainsResult);           
+            Assert.IsTrue(stringContainsResult);
+        }
+
+        [TestMethod, TestCategory("Additional linked list functionality")]
+        public void AddAfter_AddAnItemNextToNonExistingNeighbor_ThrowsException()
+        {
+            //Arrange
+            for (int i = 0; i < range.Count; i++)
+            {
+                intLinkedList.Push(range[i]);
+                stringLinkedList.Push(fruits[i]);
+            }
+
+            //Act
+
+            //Assert
+            Assert.ThrowsException<InvalidOperationException>(()=>intLinkedList.AddAfter(100,10)); ;
+            Assert.ThrowsException<InvalidOperationException>(()=>stringLinkedList.AddAfter("plum","dragonfruit"));
         }
 
         #endregion

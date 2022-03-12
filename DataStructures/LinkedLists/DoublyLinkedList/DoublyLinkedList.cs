@@ -78,7 +78,14 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
 
         public T Peek()
         {
-            return Head.Value;
+            if (Count == 0) //If the linked list is empty, throw an error message
+            {
+                throw new InvalidOperationException(ErrMsgs.LinkedList_Peek_EmptyList);
+            }
+            else
+            {
+                return Head.Value;
+            }
         }
 
         #endregion
@@ -100,15 +107,15 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                     {
                         Push(node.Value);
                         Tail = node;
-                        Count++;
                     }
                     else // If the list is not empty then point existing tail's next pointer to the node and make node the new tail.
                     {
                         Tail.Next = node;
                         node.Previous = Tail;
                         Tail = node;
-                        Count++;
                     }
+
+                    Count++;
                 }
                 else
                 {
@@ -141,6 +148,7 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                     {
                         Node<T> tempNode = Tail.Previous;
                         Tail.Previous = null;
+                        tempNode.Next = null;
                         Tail = tempNode;
                     }
 
@@ -175,57 +183,30 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                 else // If every condition is met then parse nodes all the way to the neighbour node and then add the new node and point appropriately
                 {
                     Node<T> currentNode = Head;
-                    Node<T> neighborToRight = neighborToLeft.Next;
 
-                    while (currentNode.Value.Equals(neighborToLeft.Value))
+                    while (!currentNode.Value.Equals(neighborToLeft.Value))
                     {
-                        neighborToLeft.Next = nodeToBeAdded;
-                        nodeToBeAdded.Previous = neighborToLeft;
-
-                        neighborToRight.Previous = nodeToBeAdded;
-                        nodeToBeAdded.Next = neighborToRight;
-                        Count++;
+                        if (currentNode != Tail)
+                        {
+                            currentNode = currentNode.Next;
+                        }
                     }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                throw;
-            }
-        }
 
-        public void AddBefore(T neighborToRight, T itemToBeAdded)
-        {
-            AddBefore(new Node<T>() { Value = neighborToRight }, new Node<T>() { Value = itemToBeAdded });
-        }
-
-        public void AddBefore(Node<T> neighborToRight, Node<T> nodeToBeAdded)
-        {
-            try
-            {
-                if (Count == 0) // If the list is empty throw an appropriate exception
-                {
-                    throw new InvalidOperationException(ErrMsgs.LinkedList_AddAfter_EmptyList);
-                }
-                else if (!this.Contains(neighborToRight.Value)) // If the list does not contain the neighbour node, throw an appropriate exception
-                {
-                    throw new InvalidOperationException(ErrMsgs.LinkedList_AddAfter_NeighborNodeNotFound);
-                }
-                else // If every condition is met then parse nodes all the way to the neighbour node and then add the new node and point appropriately
-                {
-                    Node<T> currentNode = Head;
-                    Node<T> neighborToLeft = neighborToRight.Previous;
-
-                    while (currentNode.Value.Equals(neighborToRight.Value))
+                    if (currentNode == Tail)
                     {
-                        neighborToLeft.Next = nodeToBeAdded;
-                        nodeToBeAdded.Previous = neighborToLeft;
-
-                        neighborToRight.Previous = nodeToBeAdded;
-                        nodeToBeAdded.Next = neighborToRight;
-                        Count++;
+                        Tail.Next = nodeToBeAdded;
+                        nodeToBeAdded.Previous = Tail;
+                        Tail = nodeToBeAdded;
                     }
+                    else
+                    {
+                        currentNode.Next.Previous = nodeToBeAdded; // Changing the Previous reference of neighbour to right
+                        nodeToBeAdded.Next = currentNode.Next;     // Changing the Next reference of the node to be added to the current node
+                        nodeToBeAdded.Previous = currentNode;      // Changing the Previous reference of the node to be added to the current node
+                        currentNode.Next = nodeToBeAdded;          // Changing the Next reference of the current node to the node to be added
+                    }
+
+                    Count++;
                 }
             }
             catch (Exception ex)
@@ -328,11 +309,16 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                     {
                         if (currentNode.Value.Equals(item))
                         {
-                            if (currentNode.Next == null) // We are at tail node
+                            if (Count == 1)
+                            {
+                                Head = null;
+                                Tail = null;
+                            }
+                            else if (currentNode.Next == null) // We are at tail node
                             {
                                 // If the value happens to be part of the last node then
-                                // create a temporary node that will become the penultimate node
-                                // and nullify the refernce of the penultimate node.
+                                // create a temporary node that will become the penultimate or
+                                // neighbourToLeft node and nullify the refernce of the neighbor node.
 
                                 Node<T> neighborToLeft = currentNode.Previous;
                                 currentNode.Previous = null;

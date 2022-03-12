@@ -28,7 +28,36 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         /// <param name="item">The </param>
         public void Push(T item)
         {
-            AddHead(item);
+            try
+            {
+                Node<T> node = new Node<T>(item);
+
+                if (node.IsValid)
+                {
+                    if (Count == 0)
+                    {
+                        Head = node;    // Make the node the new Head
+                        Tail = node;    // Tail also need to point to the node
+                        Count++;        // Increase the node count
+                    }
+                    else
+                    {
+                        node.Next = Head;       // Make the new node point to old head                        
+                        Head = node;            // Make the new node the new Head
+                        Count++;                // Increase the node count
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException(ErrMsgs.Node_IsValid_IsNotValid);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -76,53 +105,6 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         #endregion
 
         #region Additional linked list functionality
-
-        /// <summary>
-        /// AddHead is an additional method available in this implementation of a double ended linked list.
-        /// The method adds a node at the head position, pushing the existing head node down in the linked list.
-        /// </summary>
-        /// <param name="value">The value of the node that needs to be added as a head.</param>
-        private void AddHead(T value)
-        {
-            AddHead(new Node<T>() { Value = value });
-        }
-
-        /// <summary>
-        /// AddHead is a method available in this implementation of a double ended linked list.
-        /// The method adds a node at the head position, pushing the existing head node down in the linked list.
-        /// </summary>
-        /// <param name="node">The node that needs to be added as a head.</param>
-        private void AddHead(Node<T> node)
-        {
-            try
-            {
-                if (node.IsValid)
-                {
-                    if (Count == 0)
-                    {
-                        Head = node;    // Make the node the new Head
-                        Tail = node;    // Tail also need to point to the node
-                        Count++;        // Increase the node count
-                    }
-                    else
-                    {
-                        node.Next = Head;       // Make the new node point to old head                        
-                        Head = node;            // Make the new node the new Head
-                        Count++;                // Increase the node count
-                    }
-                }
-                else
-                {
-                    throw new InvalidOperationException(ErrMsgs.Node_IsValid_IsNotValid);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                throw;
-            }
-        }
 
         /// <summary>
         /// AddTail is an additional method available in this implementation of a double ended linked list.
@@ -260,76 +242,26 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
 
                         while (!currentNode.Value.Equals(neighborToLeft.Value))
                         {
-                            currentNode = currentNode.Next;
+                            if (currentNode != Tail)
+                            {
+                                currentNode = currentNode.Next;
+                            }
                         }
 
-                        nodeToBeAdded.Next = currentNode.Next;
-                        currentNode.Next = nodeToBeAdded;
-                    }
-
-                    Count++;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// AddAfter is an additional method available in this implementation of a double ended linked list.
-        /// The method is used to add a node adjacent to the provided node. The adjacent node can be thought of as
-        /// the neighbour to the right of the node to be added.
-        /// </summary>
-        /// <param name="neighborToLeft">The value of the adjacent node before which a node is required to be added.</param>
-        /// <param name="itemToBeAdded">The value of the node that needs to be added.</param>
-        public void AddBefore(T neighborToRight, T itemToBeAdded)
-        {
-            AddBefore(new Node<T>() { Value = neighborToRight }, new Node<T>() { Value = itemToBeAdded });
-        }
-
-        /// <summary>
-        /// AddAfter is an additional method available in this implementation of a double ended linked list.
-        /// The method is used to add a node adjacent to the provided node. The adjacent node can be thought of as
-        /// the neighbour to the right of the node to be added.
-        /// </summary>
-        /// <param name="neighborToLeft">The value of the adjacent node before which a node is required to be added.</param>
-        /// <param name="itemToBeAdded">The value of the node that needs to be added.</param>
-        public void AddBefore(Node<T> neighborToRight, Node<T> nodeToBeAdded)
-        {
-            try
-            {
-                if (Count == 0) // If the list is empty throw an appropriate exception
-                {
-                    throw new InvalidOperationException(ErrMsgs.LinkedList_AddAfter_EmptyList);
-                }
-                else if (!this.Contains(neighborToRight.Value)) // If the list does not contain the neighbour node, throw an appropriate exception
-                {
-                    throw new InvalidOperationException(ErrMsgs.LinkedList_AddAfter_NeighborNodeNotFound);
-                }
-                else // If every condition is met then parse nodes all the way to the neighbour node and then add the new node and point appropriately
-                {
-                    if (Head.Value.Equals(neighborToRight.Value))
-                    {
-                        nodeToBeAdded.Next = Head;
-                        Head = nodeToBeAdded;
-                    }
-                    else
-                    {
-                        Node<T> currentNode = Head;
-                        while (!currentNode.Value.Equals(neighborToRight.Value))
+                        if (currentNode == Tail)
                         {
-                            currentNode = currentNode.Next;
+                            Tail.Next = nodeToBeAdded;
+                            Tail = nodeToBeAdded;
                         }
-
-                        nodeToBeAdded.Next = currentNode.Next;
-                        currentNode.Next = nodeToBeAdded;
+                        else
+                        {
+                            nodeToBeAdded.Next = currentNode.Next;
+                            currentNode.Next = nodeToBeAdded;
+                        }
                     }
 
                     Count++;
                 }
-
             }
             catch (Exception ex)
             {
