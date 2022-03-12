@@ -63,7 +63,14 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         /// <returns>The value of the head node.</returns>
         public T Peek()
         {
-            return Head.Value;
+            if (Count == 0) //If the linked list is empty, throw an error message
+            {
+                throw new InvalidOperationException(ErrMsgs.LinkedList_Peek_EmptyList);
+            }
+            else
+            {
+                return Head.Value;
+            }
         }
 
         #endregion
@@ -439,10 +446,15 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                     {
                         if (currentNode.Value.Equals(item))
                         {
+                            if (Count == 1)
+                            {
+                                Head = null;
+                                Tail = null;
+                            }
                             // If the value happens to be part of the last node then
                             // create a temporary node that will become the second to last node
                             // and release the last node
-                            if (currentNode.Next == null)
+                            else if (currentNode.Next == null)
                             {
                                 Node<T> penultimateNode = Head;
                                 while (penultimateNode.Next != currentNode)

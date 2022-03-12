@@ -229,7 +229,7 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
                     {
                         if (currentNode.Value.Equals(item))
                         {
-                            if (currentNode == Head)
+                            if (Count == 1)
                             {
                                 Head = null;
                             }
