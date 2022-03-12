@@ -249,15 +249,24 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 }
                 else // If every condition is met then parse nodes all the way to the neighbour node and then add the new node and point appropriately
                 {
-                    Node<T> currentNode = Head;
-
-                    while (currentNode.Value.Equals(neighborToLeft.Value))
+                    if (Tail.Value.Equals(neighborToLeft.Value))
                     {
-                        currentNode = currentNode.Next;
+                        Tail.Next = nodeToBeAdded;
+                        Tail = nodeToBeAdded;
+                    }
+                    else
+                    {
+                        Node<T> currentNode = Head;
+
+                        while (!currentNode.Value.Equals(neighborToLeft.Value))
+                        {
+                            currentNode = currentNode.Next;
+                        }
+
+                        nodeToBeAdded.Next = currentNode.Next;
+                        currentNode.Next = nodeToBeAdded;
                     }
 
-                    nodeToBeAdded.Next = currentNode.Next;
-                    currentNode.Next = nodeToBeAdded;
                     Count++;
                 }
             }
@@ -301,15 +310,23 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 }
                 else // If every condition is met then parse nodes all the way to the neighbour node and then add the new node and point appropriately
                 {
-                    Node<T> currentNode = Head;
-
-                    while (currentNode.Next.Equals(neighborToRight))
+                    if (Head.Value.Equals(neighborToRight.Value))
                     {
-                        currentNode = currentNode.Next;
+                        nodeToBeAdded.Next = Head;
+                        Head = nodeToBeAdded;
+                    }
+                    else
+                    {
+                        Node<T> currentNode = Head;
+                        while (!currentNode.Value.Equals(neighborToRight.Value))
+                        {
+                            currentNode = currentNode.Next;
+                        }
+
+                        nodeToBeAdded.Next = currentNode.Next;
+                        currentNode.Next = nodeToBeAdded;
                     }
 
-                    nodeToBeAdded.Next = currentNode.Next;
-                    currentNode.Next = nodeToBeAdded;
                     Count++;
                 }
 
