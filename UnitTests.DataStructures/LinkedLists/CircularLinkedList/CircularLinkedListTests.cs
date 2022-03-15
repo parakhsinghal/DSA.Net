@@ -132,11 +132,13 @@ namespace UnitTests.DataStructures.LinkedLists.CircularLinkedList
             //Arrange            
             for (int i = 0; i < range.Count; i++)
             {
-                intLinkedList.Add(range[i]);
-                foreach (var element in intLinkedList)
-                { 
-                    var temp2 = element; 
-                }                
+                intLinkedList.Add(range[i]);                              
+            }
+
+            //Adding in to test the getenumerator
+            foreach (var element in intLinkedList)
+            {
+                var temp2 = element;
             }
 
             //Act
@@ -199,8 +201,8 @@ namespace UnitTests.DataStructures.LinkedLists.CircularLinkedList
             //Act
             intLinkedList.RemoveHead();
             stringLinkedList.RemoveHead();
-            bool intCountResult = intLinkedList.Count == 1;
-            bool stringCountResult = stringLinkedList.Count == 1;
+            bool intCountResult = intLinkedList.Count == 0;
+            bool stringCountResult = stringLinkedList.Count == 0;
 
             //Assert
             Assert.IsTrue(intCountResult);

@@ -36,20 +36,19 @@ namespace DataStructures.LinkedLists.CircularLinkedList
                 {
                     if (Count == 0)
                     {
-                        Head = node;    // Make the node the new Head
-                        Tail = node;    // Tail also need to point to the node
-                        Head.Next = Tail;
-                        Tail.Next = Head;
+                        Head = node;            // Make the node the new Head
+                        Tail = node;            // Tail also need to point to the node
+                        Head.Next = Tail;       // Make the linked list circular - head references tail
+                        Tail.Next = Head;       // Make the linked list circular - tail references head
                     }
                     else
                     {
-                        Tail.Next = node;       // Make the tail point to the new node
-                        node.Next = Head;       // Make the new node point to old head                                              
+                        node.Next = Head;       // Make the new node point to old head  
                         Head = node;            // Make the new node the new Head
+                        Tail.Next = Head;       // Make the tail point to the new node
                     }
 
-                    Count++;        // Increase the node count
-                    var count = this.Count;
+                    Count++;                    // Increase the node count
                 }
                 else
                 {
@@ -65,7 +64,7 @@ namespace DataStructures.LinkedLists.CircularLinkedList
         }
 
         /// <summary>
-        /// Pop method is a standard method available on a linked list and removes the top node i.e. head.
+        /// RemoveHead method is a standard method available on a linked list and removes the top node i.e. head.
         /// The tail node in the circular linked list is appropriately pointed to the next node available.
         /// </summary>
         public void RemoveHead()
@@ -78,12 +77,22 @@ namespace DataStructures.LinkedLists.CircularLinkedList
                 }
                 else
                 {
-                    // If the count is greater than 1, point the head to the next node
-                    // If the count is equal to 1, i.e. only Head exists, point the Head to null (given by Next property)
-                    Head = Head.Next;
-                    Tail.Next = Head;
-                    Count--;
+                    if (Count == 1)
+                    {
+                        Head = null;
+                        Tail = null;
+                    }
+                    else
+                    {
+                        // If the count is greater than 1, point the head to the next node
+                        // If the count is equal to 1, i.e. only Head exists, point the Head to null (given by Next property)
+                        Head = Head.Next;
+                        Tail.Next = Head;
+                    }
+
+                    Count--;        // Decrement the counter
                 }
+
             }
             catch (Exception ex)
             {
@@ -93,7 +102,7 @@ namespace DataStructures.LinkedLists.CircularLinkedList
         }
 
         /// <summary>
-        /// Peek is a standard method available on a linked list and returns the value of the head node.
+        /// GetHead is a standard method available on a linked list and returns the value of the head node.
         /// </summary>
         /// <returns>The value of the head node.</returns>
         public T GetHead()
@@ -241,12 +250,22 @@ namespace DataStructures.LinkedLists.CircularLinkedList
 
                     Node<T> currentNode = Head;
 
-                    while (!currentNode.Value.Equals(neighborToLeft.Value))
+                    //while (!currentNode.Value.Equals(neighborToLeft.Value))
+                    //{
+                    //    if (currentNode != Tail)
+                    //    {
+                    //        currentNode = currentNode.Next;
+                    //    }
+                    //}
+
+                    for (int i = 0; i < Count; i++)
                     {
-                        if (currentNode != Tail)
+                        if (currentNode.Value.Equals(neighborToLeft.Value))
                         {
-                            currentNode = currentNode.Next;
+                            break;
                         }
+
+                        currentNode = currentNode.Next;
                     }
 
                     if (currentNode == Tail)
@@ -322,7 +341,7 @@ namespace DataStructures.LinkedLists.CircularLinkedList
                 else
                 {
                     Node<T> currentNode = Head;
-                    while (currentNode != Tail)
+                    for (int i = 0; i < Count; i++)
                     {
                         if (currentNode.Value.Equals(item))
                         {
@@ -330,6 +349,7 @@ namespace DataStructures.LinkedLists.CircularLinkedList
                         }
                         currentNode = currentNode.Next;
                     }
+                    
                     return false; // If we have reached here, the value was not found. Return false
                 }
             }
@@ -378,7 +398,7 @@ namespace DataStructures.LinkedLists.CircularLinkedList
                     // If dealing with an empty list, throw an error message
                     throw new InvalidOperationException(ErrMsgs.LinkedList_Remove_EmptyList);
                 }
-                else if (Count > 0)
+                else if (Count > 0 && Contains(item))
                 {
                     if (Count == 1)
                     {
@@ -387,9 +407,16 @@ namespace DataStructures.LinkedLists.CircularLinkedList
                     }
                     else
                     {
+                        //Parse the nodes will we reach the penultimate node to the node to be removed.
+
                         Node<T> currentNode = Head;
-                        while (!currentNode.Next.Value.Equals(item)) //Parse the nodes will we reach the penultimate node to the node to be removed.
+
+                        for (int i = 0; i < Count; i++)
                         {
+                            if (currentNode.Next.Value.Equals(item))
+                            {
+                                break;
+                            }
                             currentNode = currentNode.Next;
                         }
 
@@ -418,20 +445,13 @@ namespace DataStructures.LinkedLists.CircularLinkedList
         /// <returns></returns>
         public IEnumerator<T> GetEnumerator()
         {
-            if (Count == 1)
-            {
-                yield return Head.Value;
-            }
-            else
-            {
-                Node<T> current = Head;
-                while (current != Tail)
-                {
-                    yield return current.Value;
-                    current = current.Next;
-                }
-            }
+            Node<T> current = Head;
 
+            for (int i = 0; i < Count; i++)
+            {
+                yield return current.Value;
+                current = current.Next;
+            }
         }
 
         /// <summary>
