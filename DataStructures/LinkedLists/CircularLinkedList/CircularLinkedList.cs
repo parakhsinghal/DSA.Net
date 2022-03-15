@@ -247,17 +247,7 @@ namespace DataStructures.LinkedLists.CircularLinkedList
                 }
                 else // If every condition is met then parse nodes all the way to the neighbour node and then add the new node and point appropriately
                 {
-
                     Node<T> currentNode = Head;
-
-                    //while (!currentNode.Value.Equals(neighborToLeft.Value))
-                    //{
-                    //    if (currentNode != Tail)
-                    //    {
-                    //        currentNode = currentNode.Next;
-                    //    }
-                    //}
-
                     for (int i = 0; i < Count; i++)
                     {
                         if (currentNode.Value.Equals(neighborToLeft.Value))
