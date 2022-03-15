@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
-namespace DataStructures.LinkedLists.DoubleEndedLinkedList
+namespace DataStructures.LinkedLists.CircularLinkedList
 {
     /// <summary>
     /// The double ended linked list is a variation of the normal linked list.
@@ -12,7 +12,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
     /// certain scenarios.
     /// </summary>
     /// <typeparam name="T">The data type defined by the user at runtime.</typeparam>
-    public class DoubleEndedLinkedList<T> : ICollection<T>
+    public class CircularLinkedList<T> : ICollection<T>
     {
         public Node<T> Head { get; set; }
         public Node<T> Tail { get; set; }
@@ -23,7 +23,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         /// <summary>
         /// Add method is a standard method available on a linked list and creates a node in a linked list.
         /// The node is created in position of a new head, if the list is empty, or in place of an existing one, if 
-        /// the list is not empty.
+        /// the list is not empty. The tail node is appropriately pointed to the new node.
         /// </summary>
         /// <param name="item">The </param>
         public void Add(T item)
@@ -37,15 +37,19 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                     if (Count == 0)
                     {
                         Head = node;    // Make the node the new Head
-                        Tail = node;    // Tail also need to point to the node                        
+                        Tail = node;    // Tail also need to point to the node
+                        Head.Next = Tail;
+                        Tail.Next = Head;
                     }
                     else
                     {
-                        node.Next = Head;       // Make the new node point to old head                        
+                        Tail.Next = node;       // Make the tail point to the new node
+                        node.Next = Head;       // Make the new node point to old head                                              
                         Head = node;            // Make the new node the new Head
                     }
 
                     Count++;        // Increase the node count
+                    var count = this.Count;
                 }
                 else
                 {
@@ -61,7 +65,8 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         }
 
         /// <summary>
-        /// RemoveHead method is a standard method available on a linked list and removes the top node i.e. head.
+        /// Pop method is a standard method available on a linked list and removes the top node i.e. head.
+        /// The tail node in the circular linked list is appropriately pointed to the next node available.
         /// </summary>
         public void RemoveHead()
         {
@@ -76,6 +81,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                     // If the count is greater than 1, point the head to the next node
                     // If the count is equal to 1, i.e. only Head exists, point the Head to null (given by Next property)
                     Head = Head.Next;
+                    Tail.Next = Head;
                     Count--;
                 }
             }
@@ -87,7 +93,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         }
 
         /// <summary>
-        /// GetHead is a standard method available on a linked list and returns the value of the head node.
+        /// Peek is a standard method available on a linked list and returns the value of the head node.
         /// </summary>
         /// <returns>The value of the head node.</returns>
         public T GetHead()
@@ -107,8 +113,8 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         #region Additional linked list functionality
 
         /// <summary>
-        /// AddTail is an additional method available in this implementation of a double ended linked list.
-        /// The method adds a node at the tail position, pushing the existing tail node up in the linked list.
+        /// AddTail is an additional method available in this implementation of a circular linked list.
+        /// The method adds a node at the tail position, pushing the existing tail reference up in the linked list.
         /// </summary>
         /// <param name="value">The value of the node that needs to be added as a tail.</param>
         public void AddTail(T value)
@@ -117,8 +123,8 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         }
 
         /// <summary>
-        /// AddTail is an additional method available in this implementation of a double ended linked list.
-        /// The method adds a node at the tail position, pushing the existing tail node up in the linked list.
+        /// AddTail is an additional method available in this implementation of a circular linked list.
+        /// The method adds a node at the tail position, pushing the existing tail reference up in the linked list.
         /// </summary>
         /// <param name="value">The node that needs to be added as a tail.</param>
         public void AddTail(Node<T> node)
@@ -135,7 +141,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                     else // If the list is not empty then point existing tail's next pointer to the node and make node the new tail.
                     {
                         Tail.Next = node;
-                        Tail = node;                        
+                        Tail = node;
                     }
 
                     Count++;
@@ -184,6 +190,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                             penultimateNode = penultimateNode.Next;
                         }
                         Tail = penultimateNode;
+                        Tail.Next = Head;
                     }
 
                     // Decrement the counter
@@ -231,33 +238,27 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 }
                 else // If every condition is met then parse nodes all the way to the neighbour node and then add the new node and point appropriately
                 {
-                    if (Tail.Value.Equals(neighborToLeft.Value))
+
+                    Node<T> currentNode = Head;
+
+                    while (!currentNode.Value.Equals(neighborToLeft.Value))
+                    {
+                        if (currentNode != Tail)
+                        {
+                            currentNode = currentNode.Next;
+                        }
+                    }
+
+                    if (currentNode == Tail)
                     {
                         Tail.Next = nodeToBeAdded;
                         Tail = nodeToBeAdded;
+                        Tail.Next = Head;
                     }
                     else
                     {
-                        Node<T> currentNode = Head;
-
-                        while (!currentNode.Value.Equals(neighborToLeft.Value))
-                        {
-                            if (currentNode != Tail)
-                            {
-                                currentNode = currentNode.Next;
-                            }
-                        }
-
-                        if (currentNode == Tail)
-                        {
-                            Tail.Next = nodeToBeAdded;
-                            Tail = nodeToBeAdded;
-                        }
-                        else
-                        {
-                            nodeToBeAdded.Next = currentNode.Next;
-                            currentNode.Next = nodeToBeAdded;
-                        }
+                        nodeToBeAdded.Next = currentNode.Next;
+                        currentNode.Next = nodeToBeAdded;
                     }
 
                     Count++;
@@ -283,7 +284,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
             {
                 return false;
             }
-        }       
+        }
 
         /// <summary>
         /// Clear is a method implementation of the Clear method declared in the ICollection interface.
@@ -321,7 +322,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                 else
                 {
                     Node<T> currentNode = Head;
-                    while (currentNode != null)
+                    while (currentNode != Tail)
                     {
                         if (currentNode.Value.Equals(item))
                         {
@@ -377,54 +378,32 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
                     // If dealing with an empty list, throw an error message
                     throw new InvalidOperationException(ErrMsgs.LinkedList_Remove_EmptyList);
                 }
-                else
+                else if (Count > 0)
                 {
-                    Node<T> currentNode = Head;
-
-                    while (currentNode != null)
+                    if (Count == 1)
                     {
-                        if (currentNode.Value.Equals(item))
+                        Head = null;
+                        Tail = null;
+                    }
+                    else
+                    {
+                        Node<T> currentNode = Head;
+                        while (!currentNode.Next.Value.Equals(item)) //Parse the nodes will we reach the penultimate node to the node to be removed.
                         {
-                            if (Count == 1)
-                            {
-                                Head = null;
-                                Tail = null;
-                            }
-                            // If the value happens to be part of the last node then
-                            // create a temporary node that will become the second to last node
-                            // and release the last node
-                            else if (currentNode.Next == null)
-                            {
-                                Node<T> penultimateNode = Head;
-                                while (penultimateNode.Next != currentNode)
-                                {
-                                    penultimateNode = penultimateNode.Next;
-                                }
-                                penultimateNode.Next = null;
-                            }
-                            else
-                            {
-                                // If the value found happens to be in the between the Head and the last node
-                                // then create a temporary node that will become node that occurs before the 
-                                // node that contains the value. Then change the references appropriately
-                                Node<T> previousNode = Head;
-                                while (previousNode.Next == currentNode)
-                                {
-                                    previousNode = previousNode.Next;
-                                }
-                                previousNode.Next = currentNode.Next;
-                            }
-
-                            Count--;
-                            return true;
+                            currentNode = currentNode.Next;
                         }
 
-                        currentNode = currentNode.Next;
+                        Node<T> penultimateNode = currentNode;
+                        penultimateNode.Next = currentNode.Next;
                     }
 
-                    return false;
+                    Count--;
+                    return true;
                 }
+
+                return false;
             }
+
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
@@ -439,12 +418,20 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         /// <returns></returns>
         public IEnumerator<T> GetEnumerator()
         {
-            Node<T> current = Head;
-            while (current != null)
+            if (Count == 1)
             {
-                yield return current.Value;
-                current = current.Next;
+                yield return Head.Value;
             }
+            else
+            {
+                Node<T> current = Head;
+                while (current != Tail)
+                {
+                    yield return current.Value;
+                    current = current.Next;
+                }
+            }
+
         }
 
         /// <summary>
@@ -453,7 +440,7 @@ namespace DataStructures.LinkedLists.DoubleEndedLinkedList
         /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((System.Collections.Generic.IEnumerable<T>)this).GetEnumerator();
+            return GetEnumerator();
         }
 
         #endregion

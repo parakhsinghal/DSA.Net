@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Graphs\" />
-    <Folder Include="LinkedLists\CircularSingleEndedLinkedList\" />
     <Folder Include="LinkedLists\CircularDoublyLinkedList\" />
     <Folder Include="Queues\CircularQueue\" />
     <Folder Include="Trees\BinaryTree\" />

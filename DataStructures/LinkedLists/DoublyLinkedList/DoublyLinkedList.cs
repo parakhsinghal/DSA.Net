@@ -14,7 +14,7 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
 
         #region Standard linked list functionality
 
-        public void Push(T item)
+        public void Add(T item)
         {
             Node<T> node = new Node<T>(item);
 
@@ -49,7 +49,7 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
             }
         }
 
-        public void Pop()
+        public void RemoveHead()
         {
             try
             {
@@ -76,7 +76,7 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
 
         }
 
-        public T Peek()
+        public T GetHead()
         {
             if (Count == 0) //If the linked list is empty, throw an error message
             {
@@ -105,7 +105,7 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                 {
                     if (Count == 0) // If the linked list happens to be empty, then both head and tail will be the same.
                     {
-                        Push(node.Value);
+                        Add(node.Value);
                         Tail = node;
                     }
                     else // If the list is not empty then point existing tail's next pointer to the node and make node the new tail.
@@ -226,11 +226,6 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
             {
                 return false;
             }
-        }
-
-        public void Add(T item)
-        {
-            Push(item);
         }
 
         public void Clear()

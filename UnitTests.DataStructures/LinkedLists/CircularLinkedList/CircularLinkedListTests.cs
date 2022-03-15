@@ -5,18 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataStructures.LinkedLists.DoublyLinkedList;
+using DataStructures.LinkedLists.CircularLinkedList;
 
-namespace UnitTests.DataStructures.LinkedLists.DoublyLinkedList
+namespace UnitTests.DataStructures.LinkedLists.CircularLinkedList
 {
     [TestClass]
-    public class DoublyLinkedListTests
+    public class CircularLinkedListTests
     {
         #region Local fields, test initialization and test clean up setup
 
         //Variables declaration
-        private DoublyLinkedList<int> intLinkedList;
-        private DoublyLinkedList<string> stringLinkedList;
+        private CircularLinkedList<int> intLinkedList;
+        private CircularLinkedList<string> stringLinkedList;
 
         private readonly IConfiguration generalSection, linkedlistSection;
 
@@ -24,7 +24,7 @@ namespace UnitTests.DataStructures.LinkedLists.DoublyLinkedList
         List<string> names, fruits;
 
         //Constructor to pick up the data from the JSON file from the right sections.
-        public DoublyLinkedListTests()
+        public CircularLinkedListTests()
         {
             var configuration = new ConfigurationBuilder()
                                 .AddJsonFile("TestData.json").Build();
@@ -32,8 +32,8 @@ namespace UnitTests.DataStructures.LinkedLists.DoublyLinkedList
             generalSection = configuration.GetSection("General");
             linkedlistSection = configuration.GetSection("LinkedList");
 
-            intLinkedList = new DoublyLinkedList<int>();
-            stringLinkedList = new DoublyLinkedList<string>();
+            intLinkedList = new CircularLinkedList<int>();
+            stringLinkedList = new CircularLinkedList<string>();
         }
 
         //Test initialization with data
@@ -126,7 +126,6 @@ namespace UnitTests.DataStructures.LinkedLists.DoublyLinkedList
             Assert.IsTrue(countResult);
         }
 
-
         [TestMethod, TestCategory("Core functionality")]
         public void Add_PassedASetOfValidValues_AddsInLinkedList()
         {
@@ -134,6 +133,10 @@ namespace UnitTests.DataStructures.LinkedLists.DoublyLinkedList
             for (int i = 0; i < range.Count; i++)
             {
                 intLinkedList.Add(range[i]);
+                foreach (var element in intLinkedList)
+                { 
+                    var temp2 = element; 
+                }                
             }
 
             //Act
@@ -194,6 +197,8 @@ namespace UnitTests.DataStructures.LinkedLists.DoublyLinkedList
             stringLinkedList.Add(names[0]);
 
             //Act
+            intLinkedList.RemoveHead();
+            stringLinkedList.RemoveHead();
             bool intCountResult = intLinkedList.Count == 1;
             bool stringCountResult = stringLinkedList.Count == 1;
 

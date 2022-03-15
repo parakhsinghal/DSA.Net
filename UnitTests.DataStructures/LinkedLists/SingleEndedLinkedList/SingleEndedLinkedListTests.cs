@@ -96,112 +96,64 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
             //Assert
             Assert.IsNull(intLinkedList.Head);
             Assert.IsTrue(intLinkedList.Count == 0);
-        }
+        }              
 
         [TestMethod, TestCategory("Core functionality")]
-        public void Push_PassedANullItem_ThrowsException()
+        public void GetHead_Executed_ProvidesValueOfHead()
         {
             //Arrange
+            intLinkedList.Add(range.FirstOrDefault<int>());
+            stringLinkedList.Add(fruits.FirstOrDefault<string>());
 
             //Act
-
-            //Assert
-            Assert.ThrowsException<InvalidOperationException>(() => stringLinkedList.Push(null));
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void Push_PassedAValidValue_AddsInLinkedList()
-        {
-            //Arrange           
-            intLinkedList.Push(1);
-
-            //Act
-            bool headValueResult = intLinkedList.Head.Value > 0;
-            bool peekResult = intLinkedList.Peek() > 0;
-            bool countResult = intLinkedList.Count > 0;
-
-            //Assert
-            Assert.IsTrue(headValueResult);
-            Assert.IsTrue(peekResult);
-            Assert.IsTrue(countResult);
-        }
-
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void Push_PassedASetOfValidValues_AddsInLinkedList()
-        {
-            //Arrange            
-            for (int i = 0; i < range.Count; i++)
-            {
-                intLinkedList.Push(range[i]);
-            }
-
-            //Act
-            bool countResult = intLinkedList.Count > 0;
-            bool peekResult = intLinkedList.Peek() > 0;
-
-            //Assert
-            Assert.IsTrue(countResult);
-            Assert.IsTrue(peekResult);
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void Peek_Executed_ProvidesValueOfHead()
-        {
-            //Arrange
-            intLinkedList.Push(range.FirstOrDefault<int>());
-            stringLinkedList.Push(fruits.FirstOrDefault<string>());
-
-            //Act
-            bool intPeekResult = intLinkedList.Peek() > 0;  
-            bool stringPeekResult = stringLinkedList.Peek() == "apple";
+            bool intPeekResult = intLinkedList.GetHead() > 0;  
+            bool stringPeekResult = stringLinkedList.GetHead() == "apple";
 
             //Assert
             Assert.IsTrue(intPeekResult);
             Assert.IsNotNull(stringPeekResult);
         }
 
-
         [TestMethod, TestCategory("Core functionality")]
-        public void Peek_ExecutedOnEmptyLinkedList_ThrowsException()
+        public void GetHead_ExecutedOnEmptyLinkedList_ThrowsException()
         {
             //Arrange
 
             //Act
 
             //Assert
-            Assert.ThrowsException<InvalidOperationException>(() => intLinkedList.Peek());
+            Assert.ThrowsException<InvalidOperationException>(() => intLinkedList.GetHead());
         }
 
         [TestMethod, TestCategory("Core functionality")]
-        public void Pop_ExecutedOnEmptyLinkedList_ThrowsException()
+        public void RemoveHead_ExecutedOnEmptyLinkedList_ThrowsException()
         {
             //Arrange
 
             //Act
 
             //Assert
-            Assert.ThrowsException<InvalidOperationException>(() => intLinkedList.Pop());
-            Assert.ThrowsException<InvalidOperationException>(() => stringLinkedList.Pop());
+            Assert.ThrowsException<InvalidOperationException>(() => intLinkedList.RemoveHead());
+            Assert.ThrowsException<InvalidOperationException>(() => stringLinkedList.RemoveHead());
         }
 
-
         [TestMethod, TestCategory("Core functionality")]
-        public void Pop_ExecutedOnLinkedListWithOneNode_ProvidesResult()
+        public void RemoveHead_ExecutedOnLinkedListWithOneNode_ProvidesResult()
         {
             //Arrange
-            intLinkedList.Push(range[0]);
-            stringLinkedList.Push(names[0]);
+            intLinkedList.Add(range[0]);
+            stringLinkedList.Add(names[0]);
 
             //Act
-            bool intCountResult = intLinkedList.Count == 1;
-            bool stringCountResult = stringLinkedList.Count == 1;
+            intLinkedList.RemoveHead();
+            stringLinkedList.RemoveHead();
+            bool intCountResult = intLinkedList.Count == 0;
+            bool stringCountResult = stringLinkedList.Count == 0;
 
             //Assert
             Assert.IsTrue(intCountResult);
             Assert.IsTrue(stringCountResult);
         }
-
 
         [TestMethod, TestCategory("Core functionality")]
         public void Count_OfAnEmptyLinkedList_IsZero()
@@ -221,8 +173,8 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
         public void Count_OfALinkedListWithOneElement_IsOne()
         {
             //Arrange
-            intLinkedList.Push(range[0]);
-            stringLinkedList.Push(fruits[0]);
+            intLinkedList.Add(range[0]);
+            stringLinkedList.Add(fruits[0]);
 
             //Act
             bool intCountResult = intLinkedList.Count == 1;
@@ -276,6 +228,24 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
             Assert.IsTrue(stringCountResult);
         }
 
+        [TestMethod, TestCategory("Core functionality")]
+        public void Add_PassedASetOfValidValues_AddsInLinkedList()
+        {
+            //Arrange            
+            for (int i = 0; i < range.Count; i++)
+            {
+                intLinkedList.Add(range[i]);
+            }
+
+            //Act
+            bool countResult = intLinkedList.Count > 0;
+            bool peekResult = intLinkedList.GetHead() > 0;
+
+            //Assert
+            Assert.IsTrue(countResult);
+            Assert.IsTrue(peekResult);
+        }
+
         [TestMethod, TestCategory("ICollection functionality")]
         public void Remove_RemovalOfItemFromEmptyList_ThrowsException()
         {
@@ -294,8 +264,8 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
             //Arrange
             for (int i = 0; i < range.Count; i++)
             {
-                intLinkedList.Push(range[i]);
-                stringLinkedList.Push(fruits[i]);
+                intLinkedList.Add(range[i]);
+                stringLinkedList.Add(fruits[i]);
             }
 
             //Act
@@ -311,7 +281,7 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
         public void Remove_RemovalOfTheOnlyItemFromList_IsSuccessful()
         {
             //Arrange
-            intLinkedList.Push(range[0]);
+            intLinkedList.Add(range[0]);
 
             //Act
             bool intRemoveResult = intLinkedList.Remove(1);
@@ -330,8 +300,8 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
             //Arrange
             for (int i = 0; i < range.Count; i++)
             {
-                intLinkedList.Push(range[i]);
-                stringLinkedList.Push(fruits[i]);
+                intLinkedList.Add(range[i]);
+                stringLinkedList.Add(fruits[i]);
             }
 
             //Act
@@ -353,8 +323,8 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
             //Arrange
             for (int i = 0; i < range.Count; i++)
             {
-                intLinkedList.Push(range[i]);
-                stringLinkedList.Push(fruits[i]);
+                intLinkedList.Add(range[i]);
+                stringLinkedList.Add(fruits[i]);
             }
 
             //Act
@@ -384,8 +354,8 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
         public void Contains_SearchLinkedListWithASingleItem_ReturnsValidResult()
         {
             //Arrange
-            intLinkedList.Push(range[0]);
-            stringLinkedList.Push(names[0]);
+            intLinkedList.Add(range[0]);
+            stringLinkedList.Add(names[0]);
 
             //Act
             bool intContainsResult = intLinkedList.Contains(range[0]);
@@ -402,8 +372,8 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
             //Arrange
             for (int i = 0; i < range.Count; i++)
             {
-                intLinkedList.Push(range[i]);
-                stringLinkedList.Push(fruits[i]);
+                intLinkedList.Add(range[i]);
+                stringLinkedList.Add(fruits[i]);
             }
 
             //Act
