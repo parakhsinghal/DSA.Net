@@ -1,11 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DataStructures.LinkedLists.DoublyLinkedList;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataStructures.LinkedLists.DoublyLinkedList;
 
 namespace UnitTests.DataStructures.LinkedLists.DoublyLinkedList
 {
