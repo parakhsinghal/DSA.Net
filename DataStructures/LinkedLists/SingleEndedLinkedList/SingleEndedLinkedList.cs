@@ -15,31 +15,25 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
         public Node<T> Head { get; set; }
         public int Count { get; private set; }
 
-<<<<<<< HEAD:DataStructures/LinkedLists/SingleEndedLinkedList/SingleEndedLinkedList.cs
-        #region Standard linked list functionality
-
-=======
         public SingleEndedLinkedList()
         {
             Head = null;
             Count = 0;
         }
 
-        #region Standard linked list functionality
-
->>>>>>> dev:DataStructures/LinkedLists/SingleEndedLinkedList/LinkedList.cs
         /// <summary>
-        /// Push method is a standard method available on a linked list and creates a node in a linked list.
+        /// Add method is a standard method available on a linked list and creates a node in a linked list.
         /// The node is created in position of a new head, if the list is empty, or in place of an existing one, if 
         /// the list is not empty.
         /// </summary>
-        /// <param name="item">The </param>
-        public void Push(T item)
+        /// <param name="item">The value of the node to be added as a head.</param>
+        public void Add(T item)
         {
             Node<T> node = new Node<T>(item);
 
             try
             {
+                Node<T> node = new Node<T>(item);
                 if (node.IsValid)
                 {
                     if (Count == 0)
@@ -68,9 +62,25 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
         }
 
         /// <summary>
-        /// Pop method is a standard method available on a linked list and removes the top node i.e. head.
+        /// Peek is a standard method available on a linked list and returns the value of the head node.
         /// </summary>
-        public void Pop()
+        /// <returns>The value of the head node.</returns>
+        public T GetHead()
+        {
+            if (Count == 0) //If the linked list is empty, throw an error message
+            {
+                throw new InvalidOperationException(ErrMsgs.LinkedList_Peek_EmptyList);
+            }
+            else
+            {
+                return Head.Value;
+            }
+        }
+
+        /// <summary>
+        /// RemoveHead method is a standard method available on a linked list and removes the top node i.e. head.
+        /// </summary>
+        public void RemoveHead()
         {
             try
             {
@@ -90,128 +100,6 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
             {
                 Debug.WriteLine(ex.Message);
                 throw;
-            }
-        }
-
-        /// <summary>
-        /// Peek is a standard method available on a linked list and returns the value of the head node.
-        /// </summary>
-        /// <returns>The value of the head node.</returns>
-        public T Peek()
-        {
-<<<<<<< HEAD:DataStructures/LinkedLists/SingleEndedLinkedList/SingleEndedLinkedList.cs
-            return Head.Value;
-=======
-            if (Count == 0) //If the linked list is empty, throw an error message
-            {
-                throw new InvalidOperationException(ErrMsgs.LinkedList_Peek_EmptyList);
-            }
-            else
-            {
-                return Head.Value;
-            }
->>>>>>> dev:DataStructures/LinkedLists/SingleEndedLinkedList/LinkedList.cs
-        }
-
-        #endregion
-
-        #region ICollection implementation
-        /// <summary>
-        /// IsReadOnly is then method implementation of the IsReadOnly method declared in the ICollection interface.
-        /// The method provides information is the underlying collection is read-only in nature or not.
-        /// </summary>
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Clear is a method implementation of the Clear method declared in the ICollection interface.
-        /// /// The methods clears the members of the underlying collection.
-        /// </summary>
-        public void Clear()
-        {
-            try
-            {
-                Head = null;
-                Count = 0;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add is the method implemention of the Add method declared in the ICollection interface. 
-        /// The implementation simply calls the Push method which adds a node at the head position.
-        /// </summary>
-        /// <param name="item">The value of the node to be added as a head.</param>
-        public void Add(T item)
-        {
-            Push(item);
-        }
-
-        /// <summary>
-        /// Contains is a method implementation of the Contains method declared in the ICollection interface.
-        /// The method returns a boolean response if the value supplied as an argument is found in the linked list.
-        /// </summary>
-        /// <param name="item">The value of the node to be searched.</param>
-        /// <returns>Returns a boolean response with true if the value is found in the underlying collection.</returns>
-        public bool Contains(T item)
-        {
-            try
-            {
-                if (Count == 0)
-                {
-                    throw new InvalidOperationException(ErrMsgs.LinkedList_Contains_EmptyList);
-                }
-                else
-                {
-                    Node<T> currentNode = Head;
-                    while (currentNode != null)
-                    {
-                        if (currentNode.Value.Equals(item))
-                        {
-                            return true; // If the value is found, return true and exit the loop
-                        }
-                        currentNode = currentNode.Next;
-                    }
-                    return false; // If we have reached here, the value was not found. Return false
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                throw;
-            }
-
-        }
-
-        /// <summary>
-        /// The CopyTo method is the method implementation of the CopyTo method declared in the ICollection interface.
-        /// The method is used to copy over the values of the underlying collection to the supplied array from the index desired.
-        /// </summary>
-        /// <param name="array">The array to which the values of all the nodes need to be copied to.</param>
-        /// <param name="arrayIndex">The starting value against which the values in the linkedlist needs to be copied to the supplied array.</param>
-        /// <exception cref="ArgumentOutOfRangeException">The ArgumentOutOfRangeException is thrown if the length of the underlying collection
-        /// is a negative number or the sum of the index and the total number of values exceed the length of the array.</exception>
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            if (arrayIndex < 0 || arrayIndex + Count > array.Length)
-            {
-                throw new ArgumentOutOfRangeException(ErrMsgs.LinkedList_CopyTo_InvalidArguments);
-            }
-            else
-            {
-                foreach (T item in this)
-                {
-                    array.SetValue(item, arrayIndex++);
-                }
             }
         }
 
@@ -269,7 +157,7 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
 
                             Count--;
                             return true;
-                        }                        
+                        }
 
                         currentNode = currentNode.Next;
                     }
@@ -282,6 +170,104 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
                 Debug.WriteLine(ex.Message);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Clear is a method implementation of the Clear method declared in the ICollection interface.
+        /// /// The methods clears the members of the underlying collection.
+        /// </summary>
+        public void Clear()
+        {
+            try
+            {
+                Head = null;
+                Count = 0;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// IsReadOnly is then method implementation of the IsReadOnly method declared in the ICollection interface.
+        /// The method provides information is the underlying collection is read-only in nature or not.
+        /// </summary>
+        public bool IsReadOnly
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Contains is a method implementation of the Contains method declared in the ICollection interface.
+        /// The method returns a boolean response if the value supplied as an argument is found in the linked list.
+        /// </summary>
+        /// <param name="item">The value of the node to be searched.</param>
+        /// <returns>Returns a boolean response with true if the value is found in the underlying collection.</returns>
+        public bool Contains(T item)
+        {
+            try
+            {
+                if (Count == 0)
+                {
+                    throw new InvalidOperationException(ErrMsgs.LinkedList_Contains_EmptyList);
+                }
+                else
+                {
+                    Node<T> currentNode = Head;
+                    while (currentNode != null)
+                    {
+                        if (currentNode.Value.Equals(item))
+                        {
+                            return true; // If the value is found, return true and exit the loop
+                        }
+                        currentNode = currentNode.Next;
+                    }
+                    return false; // If we have reached here, the value was not found. Return false
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
+
+        }
+
+        /// <summary>
+        /// The CopyTo method is the method implementation of the CopyTo method declared in the ICollection interface.
+        /// The method is used to copy over the values of the underlying collection to the supplied array from the index desired.
+        /// </summary>
+        /// <param name="array">The array to which the values of all the nodes need to be copied to.</param>
+        /// <param name="arrayIndex">The starting value against which the values in the linkedlist needs to be copied to the supplied array.</param>
+        /// <exception cref="ArgumentOutOfRangeException">The ArgumentOutOfRangeException is thrown if the length of the underlying collection
+        /// is a negative number or the sum of the index and the total number of values exceed the length of the array.</exception>
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            try
+            {
+                if (arrayIndex < 0 || arrayIndex + Count > array.Length)
+                {
+                    throw new ArgumentOutOfRangeException(ErrMsgs.LinkedList_CopyTo_InvalidArguments);
+                }
+                else
+                {
+                    foreach (T item in this)
+                    {
+                        array.SetValue(item, arrayIndex++);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
+           
         }
 
         /// <summary>
@@ -308,6 +294,5 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
             return ((System.Collections.Generic.IEnumerable<T>)this).GetEnumerator();
         }
 
-        #endregion
     }
 }

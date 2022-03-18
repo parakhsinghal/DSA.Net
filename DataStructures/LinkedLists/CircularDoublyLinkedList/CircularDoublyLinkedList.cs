@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
-namespace DataStructures.LinkedLists.DoublyLinkedList
+namespace DataStructures.LinkedLists.CircularDoublyLinkedList
 {
-    public class DoublyLinkedList<T> : ICollection<T>
+    public class CircularDoublyLinkedList<T> : ICollection<T>
     {
         public Node<T> Head { get; set; }
         public Node<T> Tail { get; set; }
@@ -26,6 +26,7 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                     {
                         Head = node;    // Make the node the new Head                        
                         Tail = node;
+                        Head.Next = Head.Previous = Tail.Next = Tail.Previous = node;   //make the linked list circular
                     }
                     else
                     {
@@ -49,33 +50,6 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
             }
         }
 
-        public void Pop()
-        {
-            try
-            {
-                if (Count == 0) // If the linked list is empty, throw an error message
-                {
-                    throw new InvalidOperationException(ErrMsgs.LinkedList_RemoveHead_EmptyList);
-                }
-                else
-                {
-                    // If the count is greater than 1, point the head to the next node
-                    // If the count is equal to 1, i.e. only Head exists, point the Head to null (given by Next property)
-                    // Since this is a doubly linked list, we need to make the previous reference of the newly created head
-                    // point to null.
-                    Head = Head.Next;
-                    Head.Previous = null;
-                    Count--;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                throw;
-            }
-
-        }
-
         public void RemoveHead()
         {
             try
@@ -86,12 +60,20 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                 }
                 else
                 {
-                    // If the count is greater than 1, point the head to the next node
-                    // If the count is equal to 1, i.e. only Head exists, point the Head to null (given by Next property)
-                    // Since this is a doubly linked list, we need to make the previous reference of the newly created head
-                    // point to null.
-                    Head = Head.Next;
-                    Head.Previous = null;
+                    if (Count == 1)
+                    {
+                        Head = Tail = null;
+                    }
+                    else
+                    {
+                        // If the count is greater than 1, point the head to the next node
+                        // If the count is equal to 1, i.e. only Head exists, point the Head to null (given by Next property)
+                        // Since this is a doubly linked list, we need to make the previous reference of the newly created head
+                        // point to null.
+                        Head = Head.Next;
+                        Head.Previous = Tail;
+                    }
+
                     Count--;
                 }
             }
@@ -132,7 +114,7 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                 {
                     if (Count == 0) // If the linked list happens to be empty, then both head and tail will be the same.
                     {
-                        Add(node.Value);
+                        Head = node;
                         Tail = node;
                     }
                     else // If the list is not empty then point existing tail's next pointer to the node and make node the new tail.
@@ -140,6 +122,7 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                         Tail.Next = node;
                         node.Previous = Tail;
                         Tail = node;
+                        Tail.Next = Head;
                     }
 
                     Count++;
@@ -177,6 +160,7 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                         Tail.Previous = null;
                         tempNode.Next = null;
                         Tail = tempNode;
+                        Tail.Next = Head;
                     }
 
                     Count--; // Decrement the counter.
@@ -211,12 +195,14 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                 {
                     Node<T> currentNode = Head;
 
-                    while (!currentNode.Value.Equals(neighborToLeft.Value))
+                    for (int i = 0; i < Count; i++)
                     {
-                        if (currentNode != Tail)
+                        if (currentNode.Value.Equals(neighborToLeft.Value))
                         {
-                            currentNode = currentNode.Next;
+                            break;
                         }
+
+                        currentNode = currentNode.Next;
                     }
 
                     if (currentNode == Tail)
@@ -224,6 +210,7 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                         Tail.Next = nodeToBeAdded;
                         nodeToBeAdded.Previous = Tail;
                         Tail = nodeToBeAdded;
+                        Tail.Next = Head;
                     }
                     else
                     {
@@ -281,7 +268,7 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                 else
                 {
                     Node<T> currentNode = Head;
-                    while (currentNode != null)
+                    for (int i = 0; i < Count; i++)
                     {
                         if (currentNode.Value.Equals(item))
                         {
@@ -323,30 +310,24 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                     // If dealing with an empty list, throw an error message
                     throw new InvalidOperationException(ErrMsgs.LinkedList_Remove_EmptyList);
                 }
-                else
+                else if (Count > 0 && Contains(item))
                 {
-                    Node<T> currentNode = Head;
-
-                    while (currentNode != null) // When the list has elements
+                    if (Count == 1)
                     {
-                        if (currentNode.Value.Equals(item))
-                        {
-                            if (Count == 1)
-                            {
-                                Head = null;
-                                Tail = null;
-                            }
-                            else if (currentNode.Next == null) // We are at tail node
-                            {
-                                // If the value happens to be part of the last node then
-                                // create a temporary node that will become the penultimate or
-                                // neighbourToLeft node and nullify the refernce of the neighbor node.
+                        // If the count  = 1 and the item is cound, then implicitly we are referring to the head/tail and 
+                        // need it to be removed.
+                        Head = null;
+                        Tail = null;
+                    }
+                    else
+                    {
+                        // If we are here then the count is greater then 1 and we need to figure out the item to be removed
+                        // from the list.
+                        Node<T> currentNode = Head;
 
-                                Node<T> neighborToLeft = currentNode.Previous;
-                                currentNode.Previous = null;
-                                neighborToLeft.Next = null;
-                            }
-                            else
+                        for (int i = 0; i < Count; i++)
+                        {
+                            if (currentNode.Next.Value.Equals(item))
                             {
                                 // If the value found happens to be in the between the Head and the Tail node
                                 // then create two temporary node that will form neighbours to the node that needs to be deleted.
@@ -357,16 +338,18 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
 
                                 neighborToLeft.Next = neighborToRight;
                                 neighborToRight.Previous = neighborToLeft;
+                                break;
                             }
-
-                            Count--;
-                            return true;
+                            currentNode = currentNode.Next;
                         }
-                        currentNode = currentNode.Next;
                     }
 
-                    return false; // If we have reached here, that means that the value to be removed was not .ound
+                    Count--;
+                    return true;
                 }
+
+                return false; // If we have reached here, that means that the value to be removed was not .ound
+
             }
             catch (Exception ex)
             {
@@ -378,7 +361,8 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
         public IEnumerator<T> GetEnumerator()
         {
             Node<T> current = Head;
-            while (current != null)
+
+            for (int i = 0; i < Count; i++)
             {
                 yield return current.Value;
                 current = current.Next;

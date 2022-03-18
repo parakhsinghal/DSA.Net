@@ -3,17 +3,10 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.7" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.7" />
-    <PackageReference Include="coverlet.collector" Version="3.1.0" />
-=======
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
@@ -23,35 +16,27 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
->>>>>>> dev
+
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Arrays\" />
     <Folder Include="Graphs\" />
-<<<<<<< HEAD
     <Folder Include="LinkedLists\DoubleEndedLinkedList\" />
-    <Folder Include="LinkedLists\DoublyLinkedList\" />
+	<Folder Include="LinkedLists\DoublyLinkedList\" />
     <Folder Include="LinkedLists\SingleEndedLinkedList\" />
-=======
     <Folder Include="LinkedLists\DoublyLinkedList\" />
->>>>>>> dev
     <Folder Include="Trees\" />
     <Folder Include="Stacks\" />
     <Folder Include="Queues\" />
   </ItemGroup>
-
-<<<<<<< HEAD
-=======
   <ItemGroup>
     <ProjectReference Include="..\DataStructures\DataStructures.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <None Update="TestData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
->>>>>>> dev
 </Project>
