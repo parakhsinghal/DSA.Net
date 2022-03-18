@@ -2,51 +2,64 @@
 using System.Collections;
 using System.Collections.Generic;
 using DSA = DataStructures.LinkedLists.SingleEndedLinkedList;
+using Err = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.Stacks.LinkedListBased
 {
     public class Stack<T> : IEnumerable<T>
     {
-        private DSA.SingleEndedLinkedList<T> stack;
+        private DSA.SingleEndedLinkedList<T> backingLinkedList;
 
         public Stack()
         {
-            stack = new DSA.SingleEndedLinkedList<T>();
+            backingLinkedList = new DSA.SingleEndedLinkedList<T>();
         }
 
         public T Peek()
         {
-            throw new NotImplementedException();
+            return backingLinkedList.GetHead();
         }
 
         public void Push(T value)
         {
-            throw new NotImplementedException();
+            if (value!= null)
+            {
+                backingLinkedList.Add(value);
+            }
+            else
+            {
+                throw new ArgumentNullException(Err.Array_Push_IsValid);
+            }
         }
 
-        public void Pop()
+        public T Pop()
         {
-            throw new NotImplementedException();
+            T result = backingLinkedList.GetHead();
+            backingLinkedList.RemoveHead();
+            return result;
         }
 
         public int Count()
         {
-            throw new NotImplementedException();
+            return backingLinkedList.Count;
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            backingLinkedList.Clear();
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            foreach (var item in backingLinkedList)
+            { 
+                yield return item;
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return ((System.Collections.Generic.IEnumerable<T>)this).GetEnumerator();
         }
     }
 }

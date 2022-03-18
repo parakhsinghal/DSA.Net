@@ -23,7 +23,6 @@
     <Folder Include="Arrays\" />
     <Folder Include="Graphs\" />
     <Folder Include="Trees\" />
-    <Folder Include="Stacks\" />
     <Folder Include="Queues\" />
   </ItemGroup>
 
