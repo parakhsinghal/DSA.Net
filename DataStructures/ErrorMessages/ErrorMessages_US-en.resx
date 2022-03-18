@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Array_Push_IsValid" xml:space="preserve">
+    <value>The passed node to be added is not valid</value>
+    <comment>The error message needs to be presented when an attempt is made to add a null value to an array.</comment>
+  </data>
   <data name="LinkedList_AddAfter_EmptyList" xml:space="preserve">
     <value>The linked list is empty, hence addition of the desired element adjacent to the provided element is not possible.</value>
     <comment>The error message needs to be presented when an attempt is made to add an element adjacent to another element, when the list is empty to begin with.</comment>

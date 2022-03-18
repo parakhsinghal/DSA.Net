@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
+
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -30,9 +31,11 @@
     <Folder Include="Stacks\" />
     <Folder Include="Queues\" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\DataStructures\DataStructures.csproj" />
   </ItemGroup>
+
   <ItemGroup>
     <None Update="TestData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

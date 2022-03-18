@@ -115,6 +115,45 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
             }
         }
 
+        public void RemoveHead()
+        {
+            try
+            {
+                if (Count == 0) // If the linked list is empty, throw an error message
+                {
+                    throw new InvalidOperationException(ErrMsgs.LinkedList_RemoveHead_EmptyList);
+                }
+                else
+                {
+                    // If the count is greater than 1, point the head to the next node
+                    // If the count is equal to 1, i.e. only Head exists, point the Head to null (given by Next property)
+                    // Since this is a doubly linked list, we need to make the previous reference of the newly created head
+                    // point to null.
+                    Head = Head.Next;
+                    Head.Previous = null;
+                    Count--;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
+
+        }
+
+        public T GetHead()
+        {
+            if (Count == 0) //If the linked list is empty, throw an error message
+            {
+                throw new InvalidOperationException(ErrMsgs.LinkedList_Peek_EmptyList);
+            }
+            else
+            {
+                return Head.Value;
+            }
+        }
+
         #endregion
 
         #region Additional linked list functionality
@@ -332,6 +371,11 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                         if (currentNode.Value.Equals(item))
                         {
                             if (Count == 1)
+                            {
+                                Head = null;
+                                Tail = null;
+                            }
+                            else if (currentNode.Next == null) // We are at tail node
                             {
                                 Head = null;
                                 Tail = null;

@@ -61,6 +61,15 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The passed node to be added is not valid.
+        /// </summary>
+        public static string Array_Push_IsValid {
+            get {
+                return ResourceManager.GetString("Array_Push_IsValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The linked list is empty, hence addition of the desired element adjacent to the provided element is not possible..
         /// </summary>
         public static string LinkedList_AddAfter_EmptyList {
