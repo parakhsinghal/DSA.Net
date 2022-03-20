@@ -22,8 +22,8 @@
   <ItemGroup>
     <Folder Include="Arrays\" />
     <Folder Include="Graphs\" />
+    <Folder Include="Queues\CircularQueue\" />
     <Folder Include="Trees\" />
-    <Folder Include="Queues\" />
   </ItemGroup>
 
   <ItemGroup>

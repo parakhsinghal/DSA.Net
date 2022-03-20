@@ -149,5 +149,32 @@ namespace DataStructures.ErrorMessages {
                 return ResourceManager.GetString("Node_IsValid_IsNotValid", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The queue is already empty..
+        /// </summary>
+        public static string Queue_Dequeue_EmptyQueue {
+            get {
+                return ResourceManager.GetString("Queue_Dequeue_EmptyQueue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The index of the backing array is out of room to accmmodate the passed value..
+        /// </summary>
+        public static string Queue_Enqueue_IndexOutOfRange {
+            get {
+                return ResourceManager.GetString("Queue_Enqueue_IndexOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The passed value is null. Please pass an appropriate value..
+        /// </summary>
+        public static string Queue_Enqueue_ValueIsNotValid {
+            get {
+                return ResourceManager.GetString("Queue_Enqueue_ValueIsNotValid", resourceCulture);
+            }
+        }
     }
 }
