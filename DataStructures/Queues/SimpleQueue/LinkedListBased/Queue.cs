@@ -1,52 +1,59 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using DSA = DataStructures.LinkedLists.SingleEndedLinkedList;
+using DSA = DataStructures.LinkedLists.DoubleEndedLinkedList;
+using Err = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.Queues.SimpleQueue.LinkedListBased
 {
     public class Queue<T> : IEnumerable<T>
     {
-        private DSA.SingleEndedLinkedList<T> queue;
+        private DSA.DoubleEndedLinkedList<T> backingLinkedList;
+        public int Count { get { return backingLinkedList.Count; } set { } }
 
         public Queue()
         {
-            queue = new DSA.SingleEndedLinkedList<T>();
+            backingLinkedList = new DSA.DoubleEndedLinkedList<T>();
         }
 
         public T Peek()
         {
-            throw new NotImplementedException();
+            return backingLinkedList.GetHead();
         }
 
         public void Enqueue(T value)
         {
-            throw new NotImplementedException();
+            if (value != null)
+            {
+                backingLinkedList.AddTail(value);
+            }
+            else
+            {
+                throw new ArgumentNullException(Err.Queue_Enqueue_ValueIsNotValid);
+            }
         }
 
         public void Dequeue()
         {
-            throw new NotImplementedException();
-        }
-
-        public int Count()
-        {
-            throw new NotImplementedException();
+            backingLinkedList.RemoveHead();
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            backingLinkedList.Clear();
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            foreach (T item in backingLinkedList)
+            {
+                yield return item;
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return ((System.Collections.Generic.IEnumerable<T>)this).GetEnumerator();
         }
     }
 }

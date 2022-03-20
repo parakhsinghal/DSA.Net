@@ -94,7 +94,7 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
             //Assert
             Assert.IsNull(intLinkedList.Head);
             Assert.IsTrue(intLinkedList.Count == 0);
-        }
+        }              
 
         [TestMethod, TestCategory("Core functionality")]
         public void GetHead_Executed_ProvidesValueOfHead()
@@ -104,7 +104,7 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
             stringLinkedList.Add(fruits.FirstOrDefault<string>());
 
             //Act
-            bool intPeekResult = intLinkedList.GetHead() > 0;
+            bool intPeekResult = intLinkedList.GetHead() > 0;  
             bool stringPeekResult = stringLinkedList.GetHead() == "apple";
 
             //Assert
@@ -311,7 +311,7 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
             //Assert
             Assert.IsTrue(intRemoveResult);
             Assert.IsTrue(intCountResult);
-            Assert.IsTrue(stringRemoveResult);
+            Assert.IsTrue(stringRemoveResult);            
             Assert.IsTrue(stringCountResult);
         }
 
@@ -345,7 +345,7 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
 
             //Assert
             Assert.ThrowsException<InvalidOperationException>(() => intLinkedList.Contains(10));
-            Assert.ThrowsException<InvalidOperationException>(() => stringLinkedList.Contains("plum"));
+            Assert.ThrowsException<InvalidOperationException>(()=>stringLinkedList.Contains("plum"));
         }
 
         [TestMethod, TestCategory("ICollection functionality")]
@@ -382,7 +382,7 @@ namespace UnitTests.DataStructures.LinkedLists.SingleEndedLinkedList
             Assert.IsTrue(intContainsResult);
             Assert.IsTrue(stringContainsResult);
         }
-
+        
         #endregion
 
         #endregion

@@ -156,4 +156,16 @@
     <value>The passed node to be added is not valid.</value>
     <comment>The error message needs to be presented when an attempt is made to add a null node to a linked list.</comment>
   </data>
+  <data name="Queue_Dequeue_EmptyQueue" xml:space="preserve">
+    <value>The queue is already empty.</value>
+    <comment>The error message needs to be presented when an attempt is made to dequeue an element an empty queue.</comment>
+  </data>
+  <data name="Queue_Enqueue_IndexOutOfRange" xml:space="preserve">
+    <value>The index of the backing array is out of room to accmmodate the passed value.</value>
+    <comment>The error message needs to be presented when an attampt is made to add a value to an array backed queue which is out of range to accommodate it.</comment>
+  </data>
+  <data name="Queue_Enqueue_ValueIsNotValid" xml:space="preserve">
+    <value>The passed value is null. Please pass an appropriate value.</value>
+    <comment>The error message needs to be presented when an attempt is made to add a null value to teh backing array of a queue.</comment>
+  </data>
 </root>
