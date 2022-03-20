@@ -32,8 +32,6 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
         /// <param name="item">The value of the node to be added as a head.</param>
         public void Add(T item)
         {
-            Node<T> node = new Node<T>(item);
-
             try
             {
                 Node<T> node = new Node<T>(item);

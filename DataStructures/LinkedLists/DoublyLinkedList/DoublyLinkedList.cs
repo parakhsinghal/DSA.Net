@@ -94,9 +94,14 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
 
         public void AddTail(T value)
         {
+            AddTail(new Node<T>() { Value = value });
+        }
+
+        public void AddTail(Node<T> node)
+        {
             try
             {
-                if (Count == 0) // If the linked list is empty, throw an error message
+                if (node.IsValid)
                 {
                     if (Count == 0) // If the linked list happens to be empty, then both head and tail will be the same.
                     {
@@ -114,32 +119,13 @@ namespace DataStructures.LinkedLists.DoublyLinkedList
                 }
                 else
                 {
-                    // If the count is greater than 1, point the head to the next node
-                    // If the count is equal to 1, i.e. only Head exists, point the Head to null (given by Next property)
-                    // Since this is a doubly linked list, we need to make the previous reference of the newly created head
-                    // point to null.
-                    Head = Head.Next;
-                    Head.Previous = null;
-                    Count--;
+                    throw new InvalidOperationException(ErrMsgs.Node_IsValid_IsNotValid);
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 throw;
-            }
-
-        }
-
-        public T GetHead()
-        {
-            if (Count == 0) //If the linked list is empty, throw an error message
-            {
-                throw new InvalidOperationException(ErrMsgs.LinkedList_Peek_EmptyList);
-            }
-            else
-            {
-                return Head.Value;
             }
         }
 
