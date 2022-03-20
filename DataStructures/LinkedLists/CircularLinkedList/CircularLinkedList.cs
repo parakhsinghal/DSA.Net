@@ -23,7 +23,8 @@ namespace DataStructures.LinkedLists.CircularLinkedList
         /// <summary>
         /// Add method is a standard method available on a linked list and creates a node in a linked list.
         /// The node is created in position of a new head, if the list is empty, or in place of an existing one, if 
-        /// the list is not empty. The tail node is appropriately pointed to the new node.
+        /// the list is not empty. The tail node is appropriately pointed to the new node.<br />
+        /// Time complexity: O(1)
         /// </summary>
         /// <param name="item">The </param>
         public void Add(T item)
@@ -65,7 +66,8 @@ namespace DataStructures.LinkedLists.CircularLinkedList
 
         /// <summary>
         /// RemoveHead method is a standard method available on a linked list and removes the top node i.e. head.
-        /// The tail node in the circular linked list is appropriately pointed to the next node available.
+        /// The tail node in the circular linked list is appropriately pointed to the next node available.<br />
+        /// Time complexity: O(1)
         /// </summary>
         public void RemoveHead()
         {
@@ -102,7 +104,8 @@ namespace DataStructures.LinkedLists.CircularLinkedList
         }
 
         /// <summary>
-        /// GetHead is a standard method available on a linked list and returns the value of the head node.
+        /// GetHead is a standard method available on a linked list and returns the value of the head node.<br />
+        /// Time complexity: O(1)
         /// </summary>
         /// <returns>The value of the head node.</returns>
         public T GetHead()
@@ -123,7 +126,8 @@ namespace DataStructures.LinkedLists.CircularLinkedList
 
         /// <summary>
         /// AddTail is an additional method available in this implementation of a circular linked list.
-        /// The method adds a node at the tail position, pushing the existing tail reference up in the linked list.
+        /// The method adds a node at the tail position, pushing the existing tail reference up in the linked list.<br />
+        /// Time complexity: O(1)
         /// </summary>
         /// <param name="value">The value of the node that needs to be added as a tail.</param>
         public void AddTail(T value)
@@ -133,7 +137,8 @@ namespace DataStructures.LinkedLists.CircularLinkedList
 
         /// <summary>
         /// AddTail is an additional method available in this implementation of a circular linked list.
-        /// The method adds a node at the tail position, pushing the existing tail reference up in the linked list.
+        /// The method adds a node at the tail position, pushing the existing tail reference up in the linked list.<br />
+        /// Time complexity: O(1)
         /// </summary>
         /// <param name="value">The node that needs to be added as a tail.</param>
         public void AddTail(Node<T> node)
@@ -170,7 +175,8 @@ namespace DataStructures.LinkedLists.CircularLinkedList
         /// <summary>
         /// RemoveTail is an additional method available in this implementation of a double ended linked list.
         /// The method removes the node referenced as tail, and pusing the reference the penultimate node available 
-        /// in the linked list.
+        /// in the linked list.<br />
+        /// Time complexity: O(n)
         /// </summary>
         public void RemoveTail()
         {
@@ -229,7 +235,8 @@ namespace DataStructures.LinkedLists.CircularLinkedList
         /// <summary>
         /// AddAfter is an additional method available in this implementation of a double ended linked list.
         /// The method is used to add a node adjacent to the provided node. The adjacent node can be thought of as
-        /// the neighbour to the left of the node to be added.
+        /// the neighbour to the left of the node to be added.<br />
+        /// Time complexitY: O(n)
         /// </summary>
         /// <param name="neighborToLeft">The value of the adjacent node after which a node is required to be added.</param>
         /// <param name="itemToBeAdded">The value of the node that needs to be added.</param>
@@ -285,7 +292,8 @@ namespace DataStructures.LinkedLists.CircularLinkedList
         #region ICollection implementation
         /// <summary>
         /// IsReadOnly is then method implementation of the IsReadOnly method declared in the ICollection interface.
-        /// The method provides information is the underlying collection is read-only in nature or not.
+        /// The method provides information is the underlying collection is read-only in nature or not.<br />
+        /// Time complexity: O(1)
         /// </summary>
         public bool IsReadOnly
         {
@@ -297,7 +305,8 @@ namespace DataStructures.LinkedLists.CircularLinkedList
 
         /// <summary>
         /// Clear is a method implementation of the Clear method declared in the ICollection interface.
-        /// The methods clears the members of the underlying collection.
+        /// The methods clears the members of the underlying collection.<br />
+        /// Time comlpexity: O(1)
         /// </summary>
         public void Clear()
         {
@@ -316,7 +325,8 @@ namespace DataStructures.LinkedLists.CircularLinkedList
 
         /// <summary>
         /// Contains is a method implementation of the Contains method declared in the ICollection interface.
-        /// The method returns a boolean response if the value supplied as an argument is found in the linked list.
+        /// The method returns a boolean response if the value supplied as an argument is found in the linked list.<br />
+        /// Time complexity: O(n)
         /// </summary>
         /// <param name="item">The value of the node to be searched.</param>
         /// <returns>Returns a boolean response with true if the value is found in the underlying collection.</returns>
@@ -352,7 +362,8 @@ namespace DataStructures.LinkedLists.CircularLinkedList
 
         /// <summary>
         /// The CopyTo method is the method implementation of the CopyTo method declared in the ICollection interface.
-        /// The method is used to copy over the values of the underlying collection to the supplied array from the index desired.
+        /// The method is used to copy over the values of the underlying collection to the supplied array from the index desired.<br />
+        /// Time complexity: O(n)
         /// </summary>
         /// <param name="array">The array to which the values of all the nodes need to be copied to.</param>
         /// <param name="arrayIndex">The starting value against which the values in the linkedlist needs to be copied to the supplied array.</param>
@@ -375,7 +386,8 @@ namespace DataStructures.LinkedLists.CircularLinkedList
 
         /// <summary>
         /// Remove is a method implementation of the Remove method declaration in the ICollection interface.
-        /// Remove eliminates the supplied value from the linked list and arranges the references accordingly.
+        /// Remove eliminates the supplied value from the linked list and arranges the references accordingly.<br />
+        /// Time complexity: O(n)
         /// </summary>
         /// <param name="item">The value of the node to be removed.</param>
         /// <returns>Returns a boolean response of true if the removal was successful and false otherwise.</returns>
@@ -430,7 +442,8 @@ namespace DataStructures.LinkedLists.CircularLinkedList
 
         /// <summary>
         /// GetEnumerator is the method implementation of the GetEnumerator method in the ICollection interface.
-        /// The method provides all the values in the underlying collection.
+        /// The method provides all the values in the underlying collection.<br />
+        /// Time complexity: O(n)
         /// </summary>
         /// <returns></returns>
         public IEnumerator<T> GetEnumerator()
