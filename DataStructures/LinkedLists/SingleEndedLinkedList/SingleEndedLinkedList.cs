@@ -7,9 +7,11 @@ using ErrMsgs = DataStructures.ErrorMessages.ErrorMessages_US_en;
 namespace DataStructures.LinkedLists.SingleEndedLinkedList
 {
     /// <summary>
-    /// 
+    /// SingleEndedLinkedList is an implementation of the classical linked list data structure. 
+    /// This implementation of linked list only maintains a reference to one end of the linked list i.e. Head
+    /// and offers all the stamdard operations.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The data type of the linked list e.g. int, string, char etc.</typeparam>    
     public class SingleEndedLinkedList<T> : ICollection<T>
     {
         public Node<T> Head { get; set; }
@@ -24,7 +26,8 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
         /// <summary>
         /// Add method is a standard method available on a linked list and creates a node in a linked list.
         /// The node is created in position of a new head, if the list is empty, or in place of an existing one, if 
-        /// the list is not empty.
+        /// the list is not empty.<br />
+        /// Time complexity: O(1)
         /// </summary>
         /// <param name="item">The value of the node to be added as a head.</param>
         public void Add(T item)
@@ -62,7 +65,8 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
         }
 
         /// <summary>
-        /// Peek is a standard method available on a linked list and returns the value of the head node.
+        /// GetHead is a standard method available on a linked list and returns the value of the head node.<br />
+        /// Time complexity: O(1)
         /// </summary>
         /// <returns>The value of the head node.</returns>
         public T GetHead()
@@ -78,7 +82,8 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
         }
 
         /// <summary>
-        /// RemoveHead method is a standard method available on a linked list and removes the top node i.e. head.
+        /// RemoveHead method is a standard method available on a linked list and removes the top node i.e. head.<br />
+        /// Time complexity: O(1)
         /// </summary>
         public void RemoveHead()
         {
@@ -105,7 +110,8 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
 
         /// <summary>
         /// Remove is a method implementation of the Remove method declaration in the ICollection interface.
-        /// Remove eliminates the supplied value from the linked list and arranges the references accordingly.
+        /// Remove eliminates the supplied value from the linked list and arranges the references accordingly.<br />
+        /// Time compelxity: O(n)
         /// </summary>
         /// <param name="item">The value of the node to be removed.</param>
         /// <returns>Returns a boolean response of true if the removal was successful and false otherwise.</returns>
@@ -174,7 +180,8 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
 
         /// <summary>
         /// Clear is a method implementation of the Clear method declared in the ICollection interface.
-        /// /// The methods clears the members of the underlying collection.
+        /// The methods clears the members of the underlying collection.<br />
+        /// Time complexity: O(1)
         /// </summary>
         public void Clear()
         {
@@ -192,7 +199,8 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
 
         /// <summary>
         /// IsReadOnly is then method implementation of the IsReadOnly method declared in the ICollection interface.
-        /// The method provides information is the underlying collection is read-only in nature or not.
+        /// The method provides information is the underlying collection is read-only in nature or not.<br />
+        /// Time complexity: O(1)
         /// </summary>
         public bool IsReadOnly
         {
@@ -204,7 +212,8 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
 
         /// <summary>
         /// Contains is a method implementation of the Contains method declared in the ICollection interface.
-        /// The method returns a boolean response if the value supplied as an argument is found in the linked list.
+        /// The method returns a boolean response if the value supplied as an argument is found in the linked list.<br />
+        /// Time complexity: O(n)
         /// </summary>
         /// <param name="item">The value of the node to be searched.</param>
         /// <returns>Returns a boolean response with true if the value is found in the underlying collection.</returns>
@@ -240,7 +249,8 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
 
         /// <summary>
         /// The CopyTo method is the method implementation of the CopyTo method declared in the ICollection interface.
-        /// The method is used to copy over the values of the underlying collection to the supplied array from the index desired.
+        /// The method is used to copy over the values of the underlying collection to the supplied array from the index desired.<br />
+        /// Time complexity: O(n)
         /// </summary>
         /// <param name="array">The array to which the values of all the nodes need to be copied to.</param>
         /// <param name="arrayIndex">The starting value against which the values in the linkedlist needs to be copied to the supplied array.</param>
@@ -272,9 +282,10 @@ namespace DataStructures.LinkedLists.SingleEndedLinkedList
 
         /// <summary>
         /// GetEnumerator is the method implementation of the GetEnumerator method in the ICollection interface.
-        /// The method provides all the values in the underlying collection.
+        /// The method provides all the values in the underlying collection.<br />
+        /// Time complexity: O(n)
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns every element in the underlying linked list.</returns>
         public IEnumerator<T> GetEnumerator()
         {
             Node<T> current = Head;
