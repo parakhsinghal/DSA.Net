@@ -53,7 +53,7 @@ namespace DataStructures.LinkedLists.CircularLinkedList
                 }
                 else
                 {
-                    throw new InvalidOperationException(ErrMsgs.Node_IsValid_IsNotValid);
+                    throw new ArgumentNullException(ErrMsgs.Node_IsValid_IsNotValid);
                 }
 
             }
@@ -162,7 +162,7 @@ namespace DataStructures.LinkedLists.CircularLinkedList
                 }
                 else
                 {
-                    throw new InvalidOperationException(ErrMsgs.Node_IsValid_IsNotValid);
+                    throw new ArgumentNullException(ErrMsgs.Node_IsValid_IsNotValid);
                 }
             }
             catch (Exception ex)
