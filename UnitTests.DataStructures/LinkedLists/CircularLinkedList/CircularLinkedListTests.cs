@@ -106,7 +106,7 @@ namespace UnitTests.DataStructures.LinkedLists.CircularLinkedList
             //Act
 
             //Assert
-            Assert.ThrowsException<InvalidOperationException>(() => stringLinkedList.Add(null));
+            Assert.ThrowsException<ArgumentNullException>(() => stringLinkedList.Add(null));
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -254,7 +254,7 @@ namespace UnitTests.DataStructures.LinkedLists.CircularLinkedList
             //Act
 
             //Assert
-            Assert.ThrowsException<InvalidOperationException>(()=>stringLinkedList.AddTail(nodeToBeAdded));
+            Assert.ThrowsException<ArgumentNullException>(()=>stringLinkedList.AddTail(nodeToBeAdded));
         }
 
 
@@ -431,7 +431,7 @@ namespace UnitTests.DataStructures.LinkedLists.CircularLinkedList
             //Act
 
             //Assert
-            Assert.ThrowsException<InvalidOperationException>(() => stringLinkedList.Add(null));
+            Assert.ThrowsException<ArgumentNullException>(() => stringLinkedList.Add(null));
         }
 
         [TestMethod, TestCategory("ICollection functionality")]
