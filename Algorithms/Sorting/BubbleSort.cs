@@ -6,7 +6,7 @@ namespace Algorithms.Sorting
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class BubbleSort<T> 
+    public class BubbleSort<T>
     {
         /// <summary>
         /// 
