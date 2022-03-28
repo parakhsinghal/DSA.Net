@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Sorting\" />
     <Folder Include="Searching\" />
+	  <Folder Include="Sorting\" />
   </ItemGroup>
 
 </Project>
