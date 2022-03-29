@@ -70,6 +70,24 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insertion of a value already present in the tree is not allowed..
+        /// </summary>
+        public static string BinarySearchTree_Insert_EqualValue {
+            get {
+                return ResourceManager.GetString("BinarySearchTree_Insert_EqualValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The tree is empty. You cannot run search operation on an empty tree..
+        /// </summary>
+        public static string BinarySearchTree_Search_EmptyTree {
+            get {
+                return ResourceManager.GetString("BinarySearchTree_Search_EmptyTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The linked list is empty, hence addition of the desired element adjacent to the provided element is not possible..
         /// </summary>
         public static string LinkedList_AddAfter_EmptyList {

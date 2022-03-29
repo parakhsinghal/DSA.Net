@@ -121,6 +121,14 @@
     <value>The passed node to be added is not valid</value>
     <comment>The error message needs to be presented when an attempt is made to add a null value to an array.</comment>
   </data>
+  <data name="BinarySearchTree_Insert_EqualValue" xml:space="preserve">
+    <value>Insertion of a value already present in the tree is not allowed.</value>
+    <comment>The error message needs to be presented when an attempt is made to add a duplicate value to the binary search tree.</comment>
+  </data>
+  <data name="BinarySearchTree_Search_EmptyTree" xml:space="preserve">
+    <value>The tree is empty. You cannot run search operation on an empty tree.</value>
+    <comment>The error message needs to be presented when an attempt is made to run a searhc on an empty binary search tree.</comment>
+  </data>
   <data name="LinkedList_AddAfter_EmptyList" xml:space="preserve">
     <value>The linked list is empty, hence addition of the desired element adjacent to the provided element is not possible.</value>
     <comment>The error message needs to be presented when an attempt is made to add an element adjacent to another element, when the list is empty to begin with.</comment>
@@ -166,6 +174,6 @@
   </data>
   <data name="Queue_Enqueue_ValueIsNotValid" xml:space="preserve">
     <value>The passed value is null. Please pass an appropriate value.</value>
-    <comment>The error message needs to be presented when an attempt is made to add a null value to teh backing array of a queue.</comment>
+    <comment>The error messag needs to be presented when an attempt is made to add a null value to the backing array of a queue.</comment>
   </data>
 </root>
