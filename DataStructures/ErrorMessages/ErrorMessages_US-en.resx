@@ -121,13 +121,17 @@
     <value>The passed node to be added is not valid</value>
     <comment>The error message needs to be presented when an attempt is made to add a null value to an array.</comment>
   </data>
+  <data name="BinarySearchTree_Deletion_Empty" xml:space="preserve">
+    <value>The tree is empty. You cannot delete anything from an empty tree.</value>
+    <comment>The error message needs to be presented when an attempt is made to delete an entry from an empty tree.</comment>
+  </data>
   <data name="BinarySearchTree_Insert_EqualValue" xml:space="preserve">
     <value>Insertion of a value already present in the tree is not allowed.</value>
     <comment>The error message needs to be presented when an attempt is made to add a duplicate value to the binary search tree.</comment>
   </data>
   <data name="BinarySearchTree_Search_EmptyTree" xml:space="preserve">
     <value>The tree is empty. You cannot run search operation on an empty tree.</value>
-    <comment>The error message needs to be presented when an attempt is made to run a searhc on an empty binary search tree.</comment>
+    <comment>The error message needs to be presented when an attempt is made to run a search on an empty binary search tree.</comment>
   </data>
   <data name="LinkedList_AddAfter_EmptyList" xml:space="preserve">
     <value>The linked list is empty, hence addition of the desired element adjacent to the provided element is not possible.</value>

@@ -70,6 +70,15 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The tree is empty. You cannot delete anything from an empty tree..
+        /// </summary>
+        public static string BinarySearchTree_Deletion_Empty {
+            get {
+                return ResourceManager.GetString("BinarySearchTree_Deletion_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insertion of a value already present in the tree is not allowed..
         /// </summary>
         public static string BinarySearchTree_Insert_EqualValue {

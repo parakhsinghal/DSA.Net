@@ -100,7 +100,7 @@ namespace DataStructures.Trees.BinarySearchTree
                                 break;
 
                             // Current node's value is equal to the value that needs to be searched.
-                            default:                                
+                            default:
                                 break;
                         }
                     }
@@ -117,7 +117,7 @@ namespace DataStructures.Trees.BinarySearchTree
 
         public void InOrderTraversal(Node<T> rootNode, Action<T> action)
         {
-            if (rootNode is null || rootNode != Root|| Root is null)
+            if (rootNode is null || rootNode != Root || Root is null)
             {
                 return;
             }
@@ -126,9 +126,9 @@ namespace DataStructures.Trees.BinarySearchTree
                 InOrderTraversal(rootNode.LeftChild, action);
 
                 action(rootNode.Value);
-                
+
                 InOrderTraversal(rootNode.RightChild, action);
-            }            
+            }
         }
 
         public void PreOrderTraversal(Node<T> rootNode, Action<T> action)
@@ -155,7 +155,7 @@ namespace DataStructures.Trees.BinarySearchTree
             }
             else
             {
-                PostOrderTraversal(rootNode.LeftChild, action);               
+                PostOrderTraversal(rootNode.LeftChild, action);
 
                 PostOrderTraversal(rootNode.RightChild, action);
 
@@ -177,11 +177,70 @@ namespace DataStructures.Trees.BinarySearchTree
                 If not, nullify the parent's reference to the child and it is done.
 
                 2. Deletion of a node with a single child
+                Find out the node that we need to delete and then figure out whether the node has any children.
+                If there is one children, we need to identify if the child is the left or the right child.
                 
+                3. Deletion of a node with both left and right child
                 
                 
              */
-            throw new NotImplementedException();
+
+            // Variable declaration
+            Node<T> grandParent = new Node<T>(default);
+            Node<T> parent = new Node<T>(default);
+            Node<T> child = new Node<T>(default);
+            Node<T> nodeToBeDeleted = new Node<T>(value);
+            Node<T> current = Root;
+            bool isLeftChild = false, isRightChild = false;
+
+            // Throw an exception if the tree is empty.
+            if (Root is null)
+            {
+                throw new InvalidOperationException(Err.BinarySearchTree_Deletion_Empty);
+            }
+
+            #region Deletion of a node with no child
+
+            while (Comparer<T>.Default.Compare(current.Value, value) == 0)
+            {
+                switch (Comparer<T>.Default.Compare(current.Value, value))
+                {
+                    // Current node's value is less than the value that needs to be searched
+                    // Move to the right child.
+                    case < 0:
+                        parent = current;
+                        isRightChild = true;
+                        current = current.RightChild;
+                        break;
+
+                    // Current node's value is more than the value that needs to be searched
+                    // Move to the left child.
+                    case > 0:
+                        parent = current;
+                        isLeftChild = true;
+                        current = current.LeftChild;
+                        break;
+
+                    // Current node's value is equal to the value that needs to be searched.
+                    default:
+                        break;
+                }
+            }
+
+            if (current.LeftChild is null && current.RightChild is null)
+            {
+                if (isLeftChild)
+                {
+                    parent.LeftChild = null;
+                }
+                else if(isRightChild)
+                {
+                    parent.RightChild = null;
+                }
+            }
+
+            #endregion
+
         }
     }
 }
