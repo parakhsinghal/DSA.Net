@@ -117,7 +117,7 @@ namespace DataStructures.Trees.BinarySearchTree
 
         public void InOrderTraversal(Node<T> rootNode, Action<T> action)
         {
-            if (rootNode is null || rootNode != Root || Root is null)
+            if (rootNode is null || Root is null)
             {
                 return;
             }
@@ -133,7 +133,7 @@ namespace DataStructures.Trees.BinarySearchTree
 
         public void PreOrderTraversal(Node<T> rootNode, Action<T> action)
         {
-            if (rootNode is null || rootNode != Root || Root is null)
+            if (rootNode is null || Root is null)
             {
                 return;
             }
@@ -149,7 +149,7 @@ namespace DataStructures.Trees.BinarySearchTree
 
         public void PostOrderTraversal(Node<T> rootNode, Action<T> action)
         {
-            if (rootNode is null || rootNode != Root || Root is null)
+            if (rootNode is null || Root is null)
             {
                 return;
             }
@@ -178,18 +178,17 @@ namespace DataStructures.Trees.BinarySearchTree
 
                 2. Deletion of a node with a single child
                 Find out the node that we need to delete and then figure out whether the node has any children.
-                If there is one children, we need to identify if the child is the left or the right child.
+                Case 1: If there is one child, we need to identify if the child is the left or the right child.
+                Case 2: If the node to be deleted is the root node, then we need to put the left subtree appropriately.
                 
-                3. Deletion of a node with both left and right child
-                
-                
+                3. Deletion of a node with both left and right children
+                Find out the node that we need to delete adn then figure out if the node has two children.
+                In this case we need to figure out eh in-order successor i.e. the node that is the successor in
+                the in-order sequence to the node to be deleted adn then change the references accordingly.
              */
 
             // Variable declaration
-            Node<T> grandParent = new Node<T>(default);
             Node<T> parent = new Node<T>(default);
-            Node<T> child = new Node<T>(default);
-            Node<T> nodeToBeDeleted = new Node<T>(value);
             Node<T> current = Root;
             bool isLeftChild = false, isRightChild = false;
 
@@ -199,9 +198,14 @@ namespace DataStructures.Trees.BinarySearchTree
                 throw new InvalidOperationException(Err.BinarySearchTree_Deletion_Empty);
             }
 
+            if (Search(value) == null)
+            {
+                throw new InvalidOperationException(Err.BinarySearchTree_Deletion_NodeNotFound);
+            }
+
             #region Deletion of a node with no child
 
-            while (Comparer<T>.Default.Compare(current.Value, value) == 0)
+            while (Comparer<T>.Default.Compare(current.Value, value) != 0)
             {
                 switch (Comparer<T>.Default.Compare(current.Value, value))
                 {
@@ -210,6 +214,7 @@ namespace DataStructures.Trees.BinarySearchTree
                     case < 0:
                         parent = current;
                         isRightChild = true;
+                        isLeftChild = false;
                         current = current.RightChild;
                         break;
 
@@ -218,6 +223,7 @@ namespace DataStructures.Trees.BinarySearchTree
                     case > 0:
                         parent = current;
                         isLeftChild = true;
+                        isRightChild = false;
                         current = current.LeftChild;
                         break;
 
@@ -229,11 +235,15 @@ namespace DataStructures.Trees.BinarySearchTree
 
             if (current.LeftChild is null && current.RightChild is null)
             {
-                if (isLeftChild)
+                if (current == Root)
+                {
+                    Root = null;
+                }
+                else if (isLeftChild)
                 {
                     parent.LeftChild = null;
                 }
-                else if(isRightChild)
+                else if (isRightChild)
                 {
                     parent.RightChild = null;
                 }
@@ -241,6 +251,86 @@ namespace DataStructures.Trees.BinarySearchTree
 
             #endregion
 
+            #region Deletion of a node with a single child
+
+            else if (current.RightChild is null)
+            {
+                if (isLeftChild)    // Case 1: Where the node to be deleted has a left or right child.
+                {
+                    parent.LeftChild = current.LeftChild;
+                }
+                else if (isRightChild)
+                {
+                    parent.RightChild = current.LeftChild;
+                }
+                else if (current == Root)    // Case 2: Where the node to be deleted is a root node.
+                {
+                    Root = current.LeftChild;
+                }
+            }
+            else if (current.LeftChild is null)
+            {
+                if (isLeftChild)    // Case 1: Where the node to be deleted has a left or right child.
+                {
+                    parent.LeftChild = current.RightChild;
+                }
+                else if (isRightChild)
+                {
+                    parent.RightChild = current.RightChild;
+                }
+                else if (current == Root)    // Case 2: Where the node to be deleted is a root node.
+                {
+                    Root = current.LeftChild;
+                }
+            }
+            #endregion
+
+            #region Deletion of a node with both left and right children
+
+            else
+            {
+                Node<T> successor = FindInOrderSuccessor(current);
+
+                if (current == Root)
+                {
+                    Root = successor;
+                }
+                else if (isLeftChild)
+                {
+                    parent.LeftChild = successor;
+                }
+                else if (isRightChild)
+                {
+                    parent.RightChild = successor;
+                }
+
+                successor.LeftChild = current.LeftChild;
+            }
+
+            #endregion
+        }
+
+        private Node<T> FindInOrderSuccessor(Node<T> nodeToBeDeleted)
+        {
+            Node<T> successorParent = nodeToBeDeleted;
+            Node<T> successor = nodeToBeDeleted;
+            Node<T> current = nodeToBeDeleted.RightChild;
+
+
+            while (current != null)
+            {
+                successorParent = successor;
+                successor = current;
+                current = current.LeftChild;
+            }
+
+            if (successor != nodeToBeDeleted.RightChild)
+            {
+                successorParent.LeftChild = successor.RightChild;
+                successor.RightChild = nodeToBeDeleted.RightChild;
+            }
+
+            return successor;
         }
     }
 }

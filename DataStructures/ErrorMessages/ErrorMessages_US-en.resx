@@ -125,6 +125,10 @@
     <value>The tree is empty. You cannot delete anything from an empty tree.</value>
     <comment>The error message needs to be presented when an attempt is made to delete an entry from an empty tree.</comment>
   </data>
+  <data name="BinarySearchTree_Deletion_NodeNotFound" xml:space="preserve">
+    <value>The tree does not contain the node that is desired to be deleted.</value>
+    <comment>The error message needs to be presented when an attempt is made to delete a node from a tree that is not available in the tree.</comment>
+  </data>
   <data name="BinarySearchTree_Insert_EqualValue" xml:space="preserve">
     <value>Insertion of a value already present in the tree is not allowed.</value>
     <comment>The error message needs to be presented when an attempt is made to add a duplicate value to the binary search tree.</comment>

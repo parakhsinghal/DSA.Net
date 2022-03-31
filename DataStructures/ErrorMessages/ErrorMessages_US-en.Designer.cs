@@ -79,6 +79,15 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The tree does not contain the node that is desired to be deleted..
+        /// </summary>
+        public static string BinarySearchTree_Deletion_NodeNotFound {
+            get {
+                return ResourceManager.GetString("BinarySearchTree_Deletion_NodeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insertion of a value already present in the tree is not allowed..
         /// </summary>
         public static string BinarySearchTree_Insert_EqualValue {
