@@ -133,6 +133,10 @@
     <value>Insertion of a value already present in the tree is not allowed.</value>
     <comment>The error message needs to be presented when an attempt is made to add a duplicate value to the binary search tree.</comment>
   </data>
+  <data name="BinarySearchTree_Insert_NullValue" xml:space="preserve">
+    <value>The value intended to be inserted cannot be null.</value>
+    <comment>The error message needs to be presented when an attempt is made to insert a null value in the tree.</comment>
+  </data>
   <data name="BinarySearchTree_Search_EmptyTree" xml:space="preserve">
     <value>The tree is empty. You cannot run search operation on an empty tree.</value>
     <comment>The error message needs to be presented when an attempt is made to run a search on an empty binary search tree.</comment>

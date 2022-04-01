@@ -97,6 +97,15 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The value intended to be inserted cannot be null..
+        /// </summary>
+        public static string BinarySearchTree_Insert_NullValue {
+            get {
+                return ResourceManager.GetString("BinarySearchTree_Insert_NullValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The tree is empty. You cannot run search operation on an empty tree..
         /// </summary>
         public static string BinarySearchTree_Search_EmptyTree {

@@ -22,7 +22,6 @@
   <ItemGroup>
     <Folder Include="Arrays\" />
     <Folder Include="Graphs\" />
-    <Folder Include="Trees\" />
   </ItemGroup>
 
   <ItemGroup>

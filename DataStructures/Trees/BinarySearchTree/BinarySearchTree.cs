@@ -5,14 +5,30 @@ using Err = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.Trees.BinarySearchTree
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class BinarySearchTree<T>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public Node<T> Root { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
         public void Insert(T value)
         {
             try
             {
+                if (value is null)
+                {
+                    throw new ArgumentNullException(Err.BinarySearchTree_Insert_NullValue);
+                }
+
                 // If the root is null then create a new root
                 if (Root is null)
                 {
@@ -72,6 +88,11 @@ namespace DataStructures.Trees.BinarySearchTree
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public Node<T> Search(T value)
         {
             try
@@ -90,19 +111,27 @@ namespace DataStructures.Trees.BinarySearchTree
                             // Current node's value is less than the value that needs to be searched
                             // Move to the right child.
                             case < 0:
-                                current = current.RightChild;
+                                current = current.RightChild;                                
+                                if (current is null)
+                                {
+                                    return null;
+                                }
                                 break;
 
                             // Current node's value is more than the value that needs to be searched
                             // Move to the left child.
                             case > 0:
                                 current = current.LeftChild;
+                                if (current is null)
+                                {
+                                    return null;
+                                }
                                 break;
 
                             // Current node's value is equal to the value that needs to be searched.
                             default:
                                 break;
-                        }
+                        }                        
                     }
 
                     return current;
@@ -115,6 +144,11 @@ namespace DataStructures.Trees.BinarySearchTree
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rootNode"></param>
+        /// <param name="action"></param>
         public void InOrderTraversal(Node<T> rootNode, Action<T> action)
         {
             if (rootNode is null || Root is null)
@@ -131,6 +165,11 @@ namespace DataStructures.Trees.BinarySearchTree
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rootNode"></param>
+        /// <param name="action"></param>
         public void PreOrderTraversal(Node<T> rootNode, Action<T> action)
         {
             if (rootNode is null || Root is null)
@@ -147,6 +186,11 @@ namespace DataStructures.Trees.BinarySearchTree
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rootNode"></param>
+        /// <param name="action"></param>
         public void PostOrderTraversal(Node<T> rootNode, Action<T> action)
         {
             if (rootNode is null || Root is null)
@@ -163,6 +207,11 @@ namespace DataStructures.Trees.BinarySearchTree
             };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <exception cref="InvalidOperationException"></exception>
         public void Delete(T value)
         {
             /*
@@ -198,7 +247,7 @@ namespace DataStructures.Trees.BinarySearchTree
                 throw new InvalidOperationException(Err.BinarySearchTree_Deletion_Empty);
             }
 
-            if (Search(value) == null)
+            if (Search(value) is null)
             {
                 throw new InvalidOperationException(Err.BinarySearchTree_Deletion_NodeNotFound);
             }
@@ -252,7 +301,10 @@ namespace DataStructures.Trees.BinarySearchTree
             #endregion
 
             #region Deletion of a node with a single child
-
+            /*
+                The code for deletion of the node when it has two children has been sourced from the 
+                book "Data Structures And Algorithms In Java" by Robert Lafore (Chapter 8, Page 393)
+             */
             else if (current.RightChild is null)
             {
                 if (isLeftChild)    // Case 1: Where the node to be deleted has a left or right child.
@@ -310,6 +362,24 @@ namespace DataStructures.Trees.BinarySearchTree
             #endregion
         }
 
+        public void Clear()
+        {
+            try
+            {
+                Root = null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodeToBeDeleted"></param>
+        /// <returns></returns>
         private Node<T> FindInOrderSuccessor(Node<T> nodeToBeDeleted)
         {
             Node<T> successorParent = nodeToBeDeleted;
