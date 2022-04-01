@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataStructures.Trees.BinarySearchTree;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DataStructures.Trees.BinarySearchTree;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace UnitTests.DataStructures.Trees.BinarySearchTree
 {
@@ -15,6 +13,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
         #region Local fields, test initialization and test clean up setup
 
         BinarySearchTree<int> intTree;
+        BinarySearchTree<int> negativeIntTree;
         BinarySearchTree<uint> uintTree;
         BinarySearchTree<char> charTree;
         BinarySearchTree<string> stringTree;
@@ -28,25 +27,44 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
         private List<string> stringRange;
         private List<string> fruits;
 
-        Random random;
+        public BinarySearchTreeTests()
+        {
+            var configuration = new ConfigurationBuilder()
+                                .AddJsonFile("TestData.json").Build();
+
+            generalSection = configuration.GetSection("General");
+
+            intRange = new List<int>();
+            negativeIntRange = new List<int>();
+            uintRange = new List<uint>();
+            charRange = new List<char>();
+            stringRange = new List<string>();
+            fruits = new List<string>();
+
+            intTree = new BinarySearchTree<int>();
+            negativeIntTree = new BinarySearchTree<int>();
+            uintTree = new BinarySearchTree<uint>();
+            charTree = new BinarySearchTree<char>();
+            stringTree = new BinarySearchTree<string>();
+        }
 
         [TestInitialize]
         public void InitializeLocalFields()
-        {           
+        {
             fruits = generalSection["Fruits"].Split(',').ToList<string>();
             stringRange = generalSection["Names"].Split(',').ToList<string>();
 
             var tempCharRange = generalSection["Characters"].Split(',').ToList<string>();
-            charRange.AddRange(tempCharRange.Select(x => Convert.ToChar(x)));
-            
-            // Add 10 random numbers in array between 1 and 200
-            random = new Random();
-            for (int i = 0; i < 10; i++)
-            {
-                intRange.Add(random.Next(1, 200));
-                uintRange.Add(Convert.ToUInt32(random.Next(1, 200)));
-                negativeIntRange.Add(random.Next(-500, -1));
-            }
+            charRange.AddRange(tempCharRange.Select(item => Convert.ToChar(item)));
+
+            var tempIntRange = generalSection["RandomInts"].Split(',').ToList<string>();
+            intRange.AddRange(tempIntRange.Select(item => Convert.ToInt32(item)));
+
+            var tempNegativeIntRange = generalSection["RandomNegativeInts"].Split(',').ToList<string>();
+            negativeIntRange.AddRange(tempNegativeIntRange.Select(item => Convert.ToInt32(item)));
+
+            var tempUIntRange = generalSection["RandomUInts"].Split(',').ToList<string>();
+            uintRange.AddRange(tempUIntRange.Select(item => Convert.ToUInt32(item)));
         }
 
         [TestCleanup]
@@ -55,42 +73,85 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             intRange.Clear();
             fruits.Clear();
             intTree.Clear();
+            negativeIntTree.Clear();
             uintTree.Clear();
             charTree.Clear();
             stringTree.Clear();
         }
+
         #endregion
 
         #region Unit tests
 
-        [TestMethod,TestCategory("Core functionality")]
+        [TestMethod, TestCategory("Core functionality")]
         public void Insert_InsertNullValue_ThrowsException()
-        { 
+        {
             //Arrange
 
             //Act
 
             //Assert
+            Assert.ThrowsException<ArgumentNullException>(() => stringTree.Insert(null));
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void Insert_InsertValidRoot_IsSuccessful()
         {
             //Arrange
+            int intToBeInserted = intRange.FirstOrDefault<int>();
+            string stringToBeInserted = stringRange.FirstOrDefault<string>();
+            char charToBeInserted = charRange.FirstOrDefault<char>();
+            int negativeIntToBeInserted = negativeIntRange.FirstOrDefault<int>();
+            uint UintToBeInserted = uintRange.FirstOrDefault<uint>();
 
             //Act
+            intTree.Insert(intToBeInserted);
+            negativeIntTree.Insert(negativeIntToBeInserted);
+            stringTree.Insert(stringToBeInserted);
+            charTree.Insert(charToBeInserted);
+            uintTree.Insert(UintToBeInserted);
 
             //Assert
+            Assert.IsNotNull(intTree.Root);
+            Assert.IsTrue(intTree.Root.Value > 0);
+            Assert.IsNotNull(negativeIntTree.Root);
+            Assert.IsTrue(negativeIntTree.Root.Value < 0);
+            Assert.IsNotNull(stringTree.Root);
+            Assert.IsNotNull(charTree.Root);
+            Assert.IsNotNull(uintTree.Root);
+            Assert.IsTrue(uintTree.Root.Value > 0);
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void Insert_LoopInsertIntValues_IsSuccessful()
         {
+            //Arrange           
+
+            //Act
+            for (int i = 0; i < 10; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
+
+            //Assert
+            Assert.IsNotNull(intTree.Root);
+            Assert.IsTrue(intTree.Root.Value > 0);
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void Insert_LoopInsertNegativeIntValues_IsSuccessful()
+        {
             //Arrange
 
             //Act
+            for (int i = 0; i < 10; i++)
+            {
+                negativeIntTree.Insert(negativeIntRange[i]);
+            }
 
             //Assert
+            Assert.IsNotNull(negativeIntTree.Root);
+            Assert.IsTrue(negativeIntTree.Root.Value < 0);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -99,8 +160,14 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             //Arrange
 
             //Act
+            for (int i = 0; i < 10; i++)
+            {
+                uintTree.Insert(uintRange[i]);
+            }
 
             //Assert
+            Assert.IsNotNull(uintTree.Root);
+            Assert.IsTrue(uintTree.Root.Value > 0);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -109,8 +176,13 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             //Arrange
 
             //Act
+            foreach (char item in charRange)
+            {
+                charTree.Insert(item);
+            }
 
             //Assert
+            Assert.IsNotNull(charTree.Root);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -119,8 +191,13 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             //Arrange
 
             //Act
+            foreach (string item in stringRange)
+            {
+                stringTree.Insert(item);
+            }
 
             //Assert
+            Assert.IsNotNull(stringTree.Root);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -129,8 +206,10 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             //Arrange
 
             //Act
+            intTree.Insert(intRange.FirstOrDefault<int>());
 
             //Assert
+            Assert.ThrowsException<ArgumentException>(() => intTree.Insert(intRange.FirstOrDefault<int>()));
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -139,8 +218,10 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             //Arrange
 
             //Act
+            uintTree.Insert(uintRange.FirstOrDefault<uint>());
 
             //Assert
+            Assert.ThrowsException<ArgumentException>(() => uintTree.Insert(uintRange.FirstOrDefault<uint>()));
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -149,8 +230,10 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             //Arrange
 
             //Act
+            charTree.Insert(charRange.FirstOrDefault<char>());
 
             //Assert
+            Assert.ThrowsException<ArgumentException>(() => charTree.Insert(charRange.FirstOrDefault<char>()));
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -159,8 +242,10 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             //Arrange
 
             //Act
+            stringTree.Insert(stringRange.FirstOrDefault<string>());
 
             //Assert
+            Assert.ThrowsException<ArgumentException>(() => stringTree.Insert(stringRange.FirstOrDefault<string>()));
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -171,257 +256,399 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             //Act
 
             //Assert
+            Assert.ThrowsException<InvalidOperationException>(() => intTree.Search(intRange.FirstOrDefault<int>()));
+            Assert.ThrowsException<InvalidOperationException>(() => stringTree.Search(stringRange.FirstOrDefault<string>()));
+            Assert.ThrowsException<InvalidOperationException>(() => negativeIntTree.Search(negativeIntRange.FirstOrDefault<int>()));
+            Assert.ThrowsException<InvalidOperationException>(() => charTree.Search(charRange.FirstOrDefault<char>()));
+            Assert.ThrowsException<InvalidOperationException>(() => uintTree.Search(uintRange.FirstOrDefault<uint>()));
         }
 
         [TestMethod, TestCategory("Core functionality")]
-        public void Search_HigherValueNotAvailable_ThrowsException()
+        public void Search_HigherValueNotAvailable_ReturnsNull()
         {
             //Arrange
+            for (int i = 0; i < intRange.Count; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
+
+            for (int i = 0; i < negativeIntRange.Count; i++)
+            {
+                negativeIntTree.Insert(negativeIntRange[i]);
+            }
+
+            //Act             
+
+            //Assert
+            Assert.IsNull(intTree.Search(int.MaxValue));
+            Assert.IsNull(negativeIntTree.Search(int.MinValue));
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void Search_LesserValueNotAvailable_IsNull()
+        {
+            for (int i = 0; i < intRange.Count; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
+
+            for (int i = 0; i < negativeIntRange.Count; i++)
+            {
+                negativeIntTree.Insert(negativeIntRange[i]);
+            }
 
             //Act
 
             //Assert
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void Search_LesserValueNotAvailable_ThrowsException()
-        {
-            //Arrange
-
-            //Act
-
-            //Assert
+            Assert.IsNull(intTree.Search(int.MinValue));
+            Assert.IsNull(negativeIntTree.Search(int.MinValue));
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void Search_HighValueAvailable_IsSuccessful()
         {
             //Arrange
+            for (int i = 0; i < intRange.Count; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
 
-            //Act
+            for (int i = 0; i < negativeIntRange.Count; i++)
+            {
+                negativeIntTree.Insert(negativeIntRange[i]);
+            }
+
+            //Act             
+            Node<int> intResult = intTree.Search(intRange.Max());
+            Node<int> negativeIntResult = negativeIntTree.Search(negativeIntRange.Max());
 
             //Assert
+            Assert.IsNotNull(intResult);
+            Assert.IsTrue(intResult.Value > 0);
+            Assert.IsNotNull(negativeIntResult);
+            Assert.IsTrue(negativeIntResult.Value < 0);
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void Search_LesserValueAvailable_IsSuccesful()
         {
             //Arrange
+            for (int i = 0; i < intRange.Count; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
 
-            //Act
+            for (int i = 0; i < negativeIntRange.Count; i++)
+            {
+                negativeIntTree.Insert(negativeIntRange[i]);
+            }
 
-            //Assert
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void InOrderTraversal_ProvideNullNodeAsStartingPoint_ThrowsException()
-        {
-            //Arrange
-
-            //Act
-
-            //Assert
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void InOrderTraversal_ProvideNullRoot_ThrowsException()
-        {
-            //Arrange
-
-            //Act
+            //Act             
+            Node<int> intResult = intTree.Search(intRange.Min());
+            Node<int> negativeIntResult = negativeIntTree.Search(negativeIntRange.Min());
 
             //Assert
+            Assert.IsNotNull(intResult);
+            Assert.IsTrue(intResult.Value > 0);
+            Assert.AreEqual(intRange.Min<int>(), intResult.Value);
+            Assert.IsNotNull(negativeIntResult);
+            Assert.IsTrue(negativeIntResult.Value < 0);
+            Assert.AreEqual(negativeIntRange.Min<int>(), negativeIntResult.Value);
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void InOrderTraversal_IntTreeTraversal_IsSuccessful()
         {
             //Arrange
+            for (int i = 0; i < intRange.Count; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
 
-            //Act
-
-            //Assert
+            //Act and Assert
+            try
+            {
+                intTree.InOrderTraversal(intTree.Root, null);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+                throw;
+            }
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void InOrderTraversal_UintTreeTraversal_IsSuccessful()
         {
             //Arrange
+            for (int i = 0; i < uintRange.Count; i++)
+            {
+                uintTree.Insert(uintRange[i]);
+            }
 
-            //Act
-
-            //Assert
+            //Act and Assert
+            try
+            {
+                uintTree.InOrderTraversal(uintTree.Root, null);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+                throw;
+            }
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void InOrderTraversal_CharTreeTraversal_IsSuccessful()
         {
             //Arrange
+            for (int i = 0; i < charRange.Count; i++)
+            {
+                charTree.Insert(charRange[i]);
+            }
 
-            //Act
-
-            //Assert
+            //Act and Assert
+            try
+            {
+                charTree.InOrderTraversal(charTree.Root, null);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+                throw;
+            }
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void InOrderTraversal_StringTreeTraversal_IsSuccessful()
         {
             //Arrange
+            for (int i = 0; i < stringRange.Count; i++)
+            {
+                stringTree.Insert(stringRange[i]);
+            }
 
-            //Act
-
-            //Assert
+            //Act and Assert
+            try
+            {
+                stringTree.InOrderTraversal(stringTree.Root, null);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+                throw;
+            }
         }
 
-        [TestMethod, TestCategory("Core functionality")]
-        public void InOrderTraversal_UserDefinedObjectTreeTraversal_IsSuccessful()
-        {
-            //Arrange
+        //[TestMethod, TestCategory("Core functionality")]
+        //public void InOrderTraversal_UserDefinedObjectTreeTraversal_IsSuccessful()
+        //{
+        //    //Arrange
 
-            //Act
+        //    //Act
 
-            //Assert
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void PreOrderTraversal_ProvideNullNodeAsStartingPoint_ThrowsException()
-        {
-            //Arrange
-
-            //Act
-
-            //Assert
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void PreOrderTraversal_ProvideNullRoot_ThrowsException()
-        {
-            //Arrange
-
-            //Act
-
-            //Assert
-        }
+        //    //Assert
+        //}
 
         [TestMethod, TestCategory("Core functionality")]
         public void PreOrderTraversal_IntTreeTraversal_IsSuccessful()
         {
             //Arrange
+            for (int i = 0; i < intRange.Count; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
 
-            //Act
-
-            //Assert
+            //Act and Assert
+            try
+            {
+                intTree.PreOrderTraversal(intTree.Root, null);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+                throw;
+            }
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void PreOrderTraversal_UintTreeTraversal_IsSuccessful()
         {
             //Arrange
+            for (int i = 0; i < uintRange.Count; i++)
+            {
+                uintTree.Insert(uintRange[i]);
+            }
 
-            //Act
-
-            //Assert
+            //Act and Assert
+            try
+            {
+                uintTree.PreOrderTraversal(uintTree.Root, null);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+                throw;
+            }
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void PreOrderTraversal_CharTreeTraversal_IsSuccessful()
         {
             //Arrange
+            for (int i = 0; i < charRange.Count; i++)
+            {
+                charTree.Insert(charRange[i]);
+            }
 
-            //Act
-
-            //Assert
+            //Act and Assert
+            try
+            {
+                charTree.PreOrderTraversal(charTree.Root, null);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+                throw;
+            }
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void PreOrderTraversal_StringTreeTraversal_IsSuccessful()
         {
             //Arrange
+            for (int i = 0; i < stringRange.Count; i++)
+            {
+                stringTree.Insert(stringRange[i]);
+            }
 
-            //Act
-
-            //Assert
+            //Act and Assert
+            try
+            {
+                stringTree.PreOrderTraversal(stringTree.Root, null);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+                throw;
+            }
         }
 
-        [TestMethod, TestCategory("Core functionality")]
-        public void PreOrderTraversal_UserDefinedObjectTreeTraversal_IsSuccessful()
-        {
-            //Arrange
+        //[TestMethod, TestCategory("Core functionality")]
+        //public void PreOrderTraversal_UserDefinedObjectTreeTraversal_IsSuccessful()
+        //{
+        //    //Arrange
 
-            //Act
+        //    //Act
 
-            //Assert
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void PostOrderTraversal_ProvideNullNodeAsStartingPoint_ThrowsException()
-        {
-            //Arrange
-
-            //Act
-
-            //Assert
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void PostOrderTraversal_ProvideNullRoot_ThrowsException()
-        {
-            //Arrange
-
-            //Act
-
-            //Assert
-        }
+        //    //Assert
+        //}
 
         [TestMethod, TestCategory("Core functionality")]
         public void PostOrderTraversal_IntTreeTraversal_IsSuccessful()
         {
             //Arrange
+            for (int i = 0; i < intRange.Count; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
 
-            //Act
-
-            //Assert
+            //Act and Assert
+            try
+            {
+                intTree.PostOrderTraversal(intTree.Root, null);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+                throw;
+            }
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void PostOrderTraversal_UintTreeTraversal_IsSuccessful()
         {
             //Arrange
+            for (int i = 0; i < uintRange.Count; i++)
+            {
+                uintTree.Insert(uintRange[i]);
+            }
 
-            //Act
-
-            //Assert
+            //Act and Assert
+            try
+            {
+                uintTree.PostOrderTraversal(uintTree.Root, null);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+                throw;
+            }
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void PostOrderTraversal_CharTreeTraversal_IsSuccessful()
         {
             //Arrange
+            for (int i = 0; i < charRange.Count; i++)
+            {
+                charTree.Insert(charRange[i]);
+            }
 
-            //Act
-
-            //Assert
+            //Act and Assert
+            try
+            {
+                charTree.PostOrderTraversal(charTree.Root, null);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+                throw;
+            }
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void PostOrderTraversal_StringTreeTraversal_IsSuccessful()
         {
             //Arrange
+            for (int i = 0; i < stringRange.Count; i++)
+            {
+                stringTree.Insert(stringRange[i]);
+            }
 
-            //Act
-
-            //Assert
+            //Act and Assert
+            try
+            {
+                stringTree.PostOrderTraversal(stringTree.Root, null);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+                throw;
+            }
         }
 
-        [TestMethod, TestCategory("Core functionality")]
-        public void PostOrderTraversal_UserDefinedObjectTreeTraversal_IsSuccessful()
-        {
-            //Arrange
+        //[TestMethod, TestCategory("Core functionality")]
+        //public void PostOrderTraversal_UserDefinedObjectTreeTraversal_IsSuccessful()
+        //{
+        //    //Arrange
 
-            //Act
+        //    //Act
 
-            //Assert
-        }
+        //    //Assert
+        //}
 
         [TestMethod, TestCategory("Core functionality")]
         public void Delete_RootIsNull_ThrowsException()
@@ -431,6 +658,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             //Act
 
             //Assert
+            Assert.ThrowsException<InvalidOperationException>(() => stringTree.Delete(null));            
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -441,46 +669,153 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             //Act
 
             //Assert
+            Assert.ThrowsException<InvalidOperationException>(() => intTree.Delete(intRange.FirstOrDefault<int>()));
+            Assert.ThrowsException<InvalidOperationException>(() => uintTree.Delete(uintRange.FirstOrDefault<uint>()));
+            Assert.ThrowsException<InvalidOperationException>(() => stringTree.Delete(stringRange.FirstOrDefault<string>()));
+            Assert.ThrowsException<InvalidOperationException>(() => negativeIntTree.Delete(negativeIntRange.FirstOrDefault<int>()));
+            Assert.ThrowsException<InvalidOperationException>(() => charTree.Delete(charRange.FirstOrDefault<char>()));
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void Delete_NodeToBeDeletedDoesNotHaveChild_IsSuccessful()
         {
             //Arrange
+            intTree.Insert(50);
+            intTree.Insert(30);
+            intTree.Insert(20);
+            intTree.Insert(35);
+            intTree.Insert(60);
+            intTree.Insert(55);
+            intTree.Insert(70);
+            intTree.Insert(65);
+            intTree.Insert(80);
+
+            intTree.Delete(80);
+
+            int[] actualArray = new int[8] { 20, 30, 35, 50, 55, 60, 65, 70 };
+            int[] resultArray = new int[8];
 
             //Act
+            intTree.InOrderTraversal(intTree.Root, (item) => { resultArray.Append<int>(item); });
 
             //Assert
+            Assert.AreEqual(actualArray, resultArray);
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void Delete_RightSkewedTreeNodeToBeDeletedHasARightChild_IsSuccessful()
+        {
+            //Arrange
+            intTree.Insert(50);
+            intTree.Insert(60);
+            intTree.Insert(70);
+            intTree.Insert(80);
+            intTree.Insert(90);
+
+            intTree.Delete(70);
+
+            int[] actualArray = new int[4] { 50, 60, 80, 90 };
+            int[] resultArray = new int[4];
+
+            //Act
+            intTree.InOrderTraversal(intTree.Root, (item) => { resultArray.Append<int>(item); });
+
+            //Assert
+            Assert.AreEqual(actualArray, resultArray);
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void Delete_LeftSkewedTreeNodeToBeDeletedHasARightChild_IsSuccessful()
+        {
+            //Arrange
+            intTree.Insert(50);
+            intTree.Insert(40);
+            intTree.Insert(30);
+            intTree.Insert(20);
+            intTree.Insert(10);
+
+            intTree.Delete(30);
+
+            int[] actualArray = new int[4] { 10, 20, 40, 50 };
+            int[] resultArray = new int[4];
+
+            //Act
+            intTree.InOrderTraversal(intTree.Root, (item) => { resultArray.Append<int>(item); });
+
+            //Assert
+            Assert.AreEqual(actualArray, resultArray);
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void Delete_NodeToBeDeletedHasARightChild_IsSuccessful()
         {
             //Arrange
+            intTree.Insert(50);
+            intTree.Insert(30);
+            intTree.Insert(20);
+            intTree.Insert(35);
+            intTree.Insert(60);
+            intTree.Insert(70);
+            intTree.Insert(65);
+            intTree.Insert(80);
+            intTree.Insert(75);
+            intTree.Insert(85);
+
+            intTree.Delete(60);
 
             //Act
+            int[] actualArray = new int[9] { 20, 30, 35, 50, 65, 70, 75, 80, 85 };
+            int[] resultArray = new int[9];
 
             //Assert
+            Assert.AreEqual(actualArray, resultArray);
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void Delete_NodeToBeDeletedHasALeftChild_IsSuccessful()
         {
             //Arrange
+            intTree.Insert(50);
+            intTree.Insert(40);
+            intTree.Insert(60);
+            intTree.Insert(70);
+            intTree.Insert(55);
+            intTree.Insert(45);
+            intTree.Insert(42);
+            intTree.Insert(48);
+
+            intTree.Delete(55);
 
             //Act
+            int[] actualArray = new int[7] { 40, 42, 45, 48, 50, 60, 70 };
+            int[] resultArray = new int[7];
 
             //Assert
+            Assert.AreEqual(actualArray, resultArray);
         }
 
         [TestMethod, TestCategory("Core functionality")]
         public void Delete_NodeToBeDeletedHasTwoChildren_IsSuccessful()
         {
             //Arrange
+            intTree.Insert(50);
+            intTree.Insert(40);
+            intTree.Insert(30);
+            intTree.Insert(20);
+            intTree.Insert(60);
+            intTree.Insert(55);
+            intTree.Insert(45);
+            intTree.Insert(70);
+            intTree.Insert(80);
+
+            intTree.Delete(60);
 
             //Act
+            int[] actualArray = new int[8] { 20, 30, 40, 45, 50, 55, 70, 80 };
+            int[] resultArray = new int[8];
 
             //Assert
+            Assert.AreEqual(actualArray, resultArray);
         }
 
         #endregion

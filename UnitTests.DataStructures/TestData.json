@@ -12,7 +12,11 @@
     "FirstTenInts": "1,2,3,4,5,6,7,8,9,10",
     "Fruits": "apple,mango,grapes,pomegranate,watermelon,guava",
     "Characters": "a,z,x,r,t,h,w,p,i,m",
-    "Names": "Ram,Shyam,Suresh,Ramesh,Dinesh,Mahesh"
+    "Names": "Ram,Shyam,Suresh,Ramesh,Dinesh,Mahesh",
+    "RandomInts": "56,73,105,87,159,132,23,90,19,124",
+    "RandomNegativeInts": "-456,-87,-92,-158,-496,-106,-23,-75,-367,-276",
+    "RandomUInts": "78,99,29,156,22,13,183,96,30,85"
+
   },
   "LinkedList": 
   {
