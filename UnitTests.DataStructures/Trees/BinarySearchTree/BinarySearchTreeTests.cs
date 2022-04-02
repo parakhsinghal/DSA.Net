@@ -18,6 +18,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
         BinarySearchTree<char> charTree;
         BinarySearchTree<string> stringTree;
 
+        private readonly IConfiguration binarySearchTreeSection;
         private readonly IConfiguration generalSection;
 
         private List<int> intRange;
@@ -32,7 +33,8 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             var configuration = new ConfigurationBuilder()
                                 .AddJsonFile("TestData.json").Build();
 
-            generalSection = configuration.GetSection("General");
+            binarySearchTreeSection = configuration.GetSection("BinarySearchTree");
+            //generalSection = configuration.GetSection("General");
 
             intRange = new List<int>();
             negativeIntRange = new List<int>();
@@ -51,19 +53,19 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
         [TestInitialize]
         public void InitializeLocalFields()
         {
-            fruits = generalSection["Fruits"].Split(',').ToList<string>();
-            stringRange = generalSection["Names"].Split(',').ToList<string>();
+            fruits = binarySearchTreeSection["Fruits"].Split(',').ToList<string>();
+            stringRange = binarySearchTreeSection["Names"].Split(',').ToList<string>();
 
-            var tempCharRange = generalSection["Characters"].Split(',').ToList<string>();
+            var tempCharRange = binarySearchTreeSection["Characters"].Split(',').ToList<string>();
             charRange.AddRange(tempCharRange.Select(item => Convert.ToChar(item)));
 
-            var tempIntRange = generalSection["RandomInts"].Split(',').ToList<string>();
+            var tempIntRange = binarySearchTreeSection["RandomInts"].Split(',').ToList<string>();
             intRange.AddRange(tempIntRange.Select(item => Convert.ToInt32(item)));
 
-            var tempNegativeIntRange = generalSection["RandomNegativeInts"].Split(',').ToList<string>();
+            var tempNegativeIntRange = binarySearchTreeSection["RandomNegativeInts"].Split(',').ToList<string>();
             negativeIntRange.AddRange(tempNegativeIntRange.Select(item => Convert.ToInt32(item)));
 
-            var tempUIntRange = generalSection["RandomUInts"].Split(',').ToList<string>();
+            var tempUIntRange = binarySearchTreeSection["RandomUInts"].Split(',').ToList<string>();
             uintRange.AddRange(tempUIntRange.Select(item => Convert.ToUInt32(item)));
         }
 
@@ -365,17 +367,14 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 intTree.Insert(intRange[i]);
             }
 
-            //Act and Assert
-            try
-            {
-                intTree.InOrderTraversal(intTree.Root, null);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-                throw;
-            }
+            //Act 
+            List<int> intList = new List<int>();
+            intTree.InOrderTraversal(intTree.Root, (item) => { intList.Add(item); });
+            intRange.Sort();
+            bool result = intList.SequenceEqual<int>(intRange);
+
+            //Assert
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -387,17 +386,14 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 uintTree.Insert(uintRange[i]);
             }
 
-            //Act and Assert
-            try
-            {
-                uintTree.InOrderTraversal(uintTree.Root, null);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-                throw;
-            }
+            //Act
+            List<uint> uintList = new List<uint>();
+            uintTree.InOrderTraversal(uintTree.Root, (item) => { uintList.Add(item); });
+            uintRange.Sort();
+            bool result = uintList.SequenceEqual<uint>(uintRange);
+
+            //Assert
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -409,17 +405,14 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 charTree.Insert(charRange[i]);
             }
 
-            //Act and Assert
-            try
-            {
-                charTree.InOrderTraversal(charTree.Root, null);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-                throw;
-            }
+            //Act
+            List<char> charList = new List<char>();
+            charTree.InOrderTraversal(charTree.Root, (item) => { charList.Add(item); });
+            charRange.Sort();
+            bool result = charList.SequenceEqual<char>(charRange);
+
+            //Assert
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -431,17 +424,14 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 stringTree.Insert(stringRange[i]);
             }
 
-            //Act and Assert
-            try
-            {
-                stringTree.InOrderTraversal(stringTree.Root, null);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-                throw;
-            }
+            //Act
+            List<string> stringList = new List<string>();
+            stringTree.InOrderTraversal(stringTree.Root, (item) => { stringList.Add(item); });
+            stringRange.Sort();
+            bool result = stringList.SequenceEqual<string>(stringRange);
+
+            //Assert
+            Assert.IsTrue(result);
         }
 
         //[TestMethod, TestCategory("Core functionality")]
@@ -462,18 +452,17 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             {
                 intTree.Insert(intRange[i]);
             }
+            var tempPreOrderInts = binarySearchTreeSection["PreOrderInts"].Split(',').ToList<string>();
+            List<int> expectedPreOrderInts = new List<int>();
+            expectedPreOrderInts.AddRange(tempPreOrderInts.Select(item => Convert.ToInt32(item)));
 
-            //Act and Assert
-            try
-            {
-                intTree.PreOrderTraversal(intTree.Root, null);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-                throw;
-            }
+            //Act  
+            List<int> actualPreOrderInt = new List<int>();
+            intTree.PreOrderTraversal(intTree.Root, (item) => { actualPreOrderInt.Add(item); });
+            bool result = actualPreOrderInt.SequenceEqual<int>(expectedPreOrderInts);
+
+            //Assert
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -485,17 +474,17 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 uintTree.Insert(uintRange[i]);
             }
 
-            //Act and Assert
-            try
-            {
-                uintTree.PreOrderTraversal(uintTree.Root, null);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-                throw;
-            }
+            var tempPreOrderUInts = binarySearchTreeSection["PreOrderUInts"].Split(',').ToList<string>();
+            List<uint> expectedPreOrderUInts = new List<uint>();
+            expectedPreOrderUInts.AddRange(tempPreOrderUInts.Select(item => Convert.ToUInt32(item)));
+
+            //Act  
+            List<uint> actualPreOrderUInts = new List<uint>();
+            uintTree.PreOrderTraversal(uintTree.Root, (item) => { actualPreOrderUInts.Add(item); });
+            bool result = actualPreOrderUInts.SequenceEqual<uint>(expectedPreOrderUInts);
+
+            //Assert
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -507,17 +496,17 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 charTree.Insert(charRange[i]);
             }
 
-            //Act and Assert
-            try
-            {
-                charTree.PreOrderTraversal(charTree.Root, null);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-                throw;
-            }
+            var tempPreOrderChars = binarySearchTreeSection["PreOrderChars"].Split(',').ToList<string>();
+            List<char> expectedPreOrderChars = new List<char>();
+            expectedPreOrderChars.AddRange(tempPreOrderChars.Select(item => Convert.ToChar(item)));
+
+            //Act  
+            List<char> actualPreOrderChars = new List<char>();
+            charTree.PreOrderTraversal(charTree.Root, (item) => { actualPreOrderChars.Add(item); });
+            bool result = actualPreOrderChars.SequenceEqual<char>(expectedPreOrderChars);
+
+            //Assert
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -529,17 +518,17 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 stringTree.Insert(stringRange[i]);
             }
 
-            //Act and Assert
-            try
-            {
-                stringTree.PreOrderTraversal(stringTree.Root, null);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-                throw;
-            }
+            var tempPreOrderString = binarySearchTreeSection["PreOrderString"].Split(',').ToList<string>();
+            List<string> expectedPreOrderString = new List<string>();
+            expectedPreOrderString.AddRange(tempPreOrderString.Select(item=>item));
+
+            //Act  
+            List<string> actualPreOrderString = new List<string>();
+            stringTree.PreOrderTraversal(stringTree.Root, (item) => { actualPreOrderString.Add(item); });
+            bool result = actualPreOrderString.SequenceEqual<string>(expectedPreOrderString);
+
+            //Assert
+            Assert.IsTrue(result);
         }
 
         //[TestMethod, TestCategory("Core functionality")]
@@ -561,17 +550,18 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 intTree.Insert(intRange[i]);
             }
 
-            //Act and Assert
-            try
-            {
-                intTree.PostOrderTraversal(intTree.Root, null);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-                throw;
-            }
+            var tempPostOrderInts = binarySearchTreeSection["PostOrderInts"].Split(',').ToList<string>();
+            List<int> expectedPostOrderInts = new List<int>();
+            expectedPostOrderInts.AddRange(tempPostOrderInts.Select(item => Convert.ToInt32(item)));
+
+            //Act  
+            List<int> actualPostOrderInt = new List<int>();
+            intTree.PostOrderTraversal(intTree.Root, (item) => { actualPostOrderInt.Add(item); });
+            bool result = actualPostOrderInt.SequenceEqual<int>(expectedPostOrderInts);
+
+            //Assert
+            Assert.IsTrue(result);
+
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -583,17 +573,17 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 uintTree.Insert(uintRange[i]);
             }
 
-            //Act and Assert
-            try
-            {
-                uintTree.PostOrderTraversal(uintTree.Root, null);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-                throw;
-            }
+            var tempPostOrderUInts = binarySearchTreeSection["PostOrderUInts"].Split(',').ToList<string>();
+            List<uint> expectedPostOrderUInts = new List<uint>();
+            expectedPostOrderUInts.AddRange(tempPostOrderUInts.Select(item => Convert.ToUInt32(item)));
+
+            //Act  
+            List<uint> actualPostOrderUInts = new List<uint>();
+            uintTree.PostOrderTraversal(uintTree.Root, (item) => { actualPostOrderUInts.Add(item); });
+            bool result = actualPostOrderUInts.SequenceEqual<uint>(expectedPostOrderUInts);
+
+            //Assert
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -605,17 +595,17 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 charTree.Insert(charRange[i]);
             }
 
-            //Act and Assert
-            try
-            {
-                charTree.PostOrderTraversal(charTree.Root, null);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-                throw;
-            }
+            var tempPostOrderChars = binarySearchTreeSection["PostOrderChars"].Split(',').ToList<string>();
+            List<char> expectedPostOrderChars = new List<char>();
+            expectedPostOrderChars.AddRange(tempPostOrderChars.Select(item => Convert.ToChar(item)));
+
+            //Act  
+            List<char> actualPostOrderChars = new List<char>();
+            charTree.PostOrderTraversal(charTree.Root, (item) => { actualPostOrderChars.Add(item); });
+            bool result = actualPostOrderChars.SequenceEqual<char>(expectedPostOrderChars);
+
+            //Assert
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -627,17 +617,17 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 stringTree.Insert(stringRange[i]);
             }
 
-            //Act and Assert
-            try
-            {
-                stringTree.PostOrderTraversal(stringTree.Root, null);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-                throw;
-            }
+            var tempPostOrderString = binarySearchTreeSection["PostOrderString"].Split(',').ToList<string>();
+            List<string> expectedPostOrderString = new List<string>();
+            expectedPostOrderString.AddRange(tempPostOrderString.Select(item => item));
+
+            //Act  
+            List<string> actualPostOrderString = new List<string>();
+            stringTree.PostOrderTraversal(stringTree.Root, (item) => { actualPostOrderString.Add(item); });
+            bool result = actualPostOrderString.SequenceEqual<string>(expectedPostOrderString);
+
+            //Assert
+            Assert.IsTrue(result);
         }
 
         //[TestMethod, TestCategory("Core functionality")]
@@ -658,7 +648,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             //Act
 
             //Assert
-            Assert.ThrowsException<InvalidOperationException>(() => stringTree.Delete(null));            
+            Assert.ThrowsException<InvalidOperationException>(() => stringTree.Delete(null));
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -693,13 +683,14 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             intTree.Delete(80);
 
             int[] actualArray = new int[8] { 20, 30, 35, 50, 55, 60, 65, 70 };
-            int[] resultArray = new int[8];
+            List<int> resultList = new List<int>();
 
             //Act
-            intTree.InOrderTraversal(intTree.Root, (item) => { resultArray.Append<int>(item); });
+            intTree.InOrderTraversal(intTree.Root, (item) => { resultList.Add(item); });
+            bool result = actualArray.SequenceEqual<int>(resultList);
 
             //Assert
-            Assert.AreEqual(actualArray, resultArray);
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -715,13 +706,14 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             intTree.Delete(70);
 
             int[] actualArray = new int[4] { 50, 60, 80, 90 };
-            int[] resultArray = new int[4];
+            List<int> resultList = new List<int>();
 
             //Act
-            intTree.InOrderTraversal(intTree.Root, (item) => { resultArray.Append<int>(item); });
+            intTree.InOrderTraversal(intTree.Root, (item) => { resultList.Add(item); });
+            bool result = actualArray.SequenceEqual<int>(resultList);
 
             //Assert
-            Assert.AreEqual(actualArray, resultArray);
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -737,13 +729,14 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             intTree.Delete(30);
 
             int[] actualArray = new int[4] { 10, 20, 40, 50 };
-            int[] resultArray = new int[4];
+            List<int> resultList = new List<int>();
 
             //Act
-            intTree.InOrderTraversal(intTree.Root, (item) => { resultArray.Append<int>(item); });
+            intTree.InOrderTraversal(intTree.Root, (item) => { resultList.Add(item); });
+            bool result = actualArray.SequenceEqual<int>(resultList);
 
             //Assert
-            Assert.AreEqual(actualArray, resultArray);
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -765,10 +758,13 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
 
             //Act
             int[] actualArray = new int[9] { 20, 30, 35, 50, 65, 70, 75, 80, 85 };
-            int[] resultArray = new int[9];
+            List<int> resultList = new List<int>();
+
+            intTree.InOrderTraversal(intTree.Root, (item) => { resultList.Add(item); });
+            bool result = actualArray.SequenceEqual<int>(resultList);
 
             //Assert
-            Assert.AreEqual(actualArray, resultArray);
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -788,10 +784,13 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
 
             //Act
             int[] actualArray = new int[7] { 40, 42, 45, 48, 50, 60, 70 };
-            int[] resultArray = new int[7];
+            List<int> resultList = new List<int>();
+
+            intTree.InOrderTraversal(intTree.Root, (item) => { resultList.Add(item); });
+            bool result = actualArray.SequenceEqual<int>(resultList);
 
             //Assert
-            Assert.AreEqual(actualArray, resultArray);
+            Assert.IsTrue(result);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -812,10 +811,13 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
 
             //Act
             int[] actualArray = new int[8] { 20, 30, 40, 45, 50, 55, 70, 80 };
-            int[] resultArray = new int[8];
+            List<int> resultList = new List<int>();
+
+            intTree.InOrderTraversal(intTree.Root, (item) => { resultList.Add(item); });
+            bool result = actualArray.SequenceEqual<int>(resultList);
 
             //Assert
-            Assert.AreEqual(actualArray, resultArray);
+            Assert.IsTrue(result);
         }
 
         #endregion
