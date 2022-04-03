@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace UnitTests.Algorithms.Sorting
@@ -12,21 +11,21 @@ namespace UnitTests.Algorithms.Sorting
     {
         #region Local fields, test initialization and test clean up setup
 
-        IConfiguration bubbleSortSection;
+        IConfiguration sortSection;
 
         private int[] intRange, negativeIntRange, mixedIntRange;
         private char[] charRange;
         private string[] stringRange;
 
-        private BubbleSort<int> intBubbleSort;
-        private BubbleSort<char> charBubbleSort;
-        private BubbleSort<string> stringBubbleSort;
+        private BubbleSort<int> intSort;
+        private BubbleSort<char> charSort;
+        private BubbleSort<string> stringSort;
 
         public BubbleSortTests()
         {
             var configuration = new ConfigurationBuilder()
                                 .AddJsonFile("TestData.json").Build();
-            bubbleSortSection = configuration.GetSection("BubbleSort");
+            sortSection = configuration.GetSection("Sort");
 
             intRange = new int[10];
             negativeIntRange = new int[10];
@@ -38,24 +37,24 @@ namespace UnitTests.Algorithms.Sorting
         [TestInitialize]
         public void InitializeLocalFields()
         {
-            var tempIntRange = bubbleSortSection["RandomInts"].Split(',').ToList<string>();
+            var tempIntRange = sortSection["RandomInts"].Split(',').ToList<string>();
             intRange = tempIntRange.Select(item => Convert.ToInt32(item)).ToArray<int>();
 
-            var tempNegativeIntRange = bubbleSortSection["RandomNegativeInts"].Split(',').ToList<string>();
+            var tempNegativeIntRange = sortSection["RandomNegativeInts"].Split(',').ToList<string>();
             negativeIntRange = tempNegativeIntRange.Select(item => Convert.ToInt32(item)).ToArray<int>();
 
-            var tempMixedIntRange = bubbleSortSection["RandomMixedInts"].Split(',').ToList<string>();
+            var tempMixedIntRange = sortSection["RandomMixedInts"].Split(',').ToList<string>();
             mixedIntRange = tempMixedIntRange.Select(item => Convert.ToInt32(item)).ToArray<int>();
 
-            var tempCharRange = bubbleSortSection["RandomCharacters"].Split(',').ToList<string>();
+            var tempCharRange = sortSection["RandomCharacters"].Split(',').ToList<string>();
             charRange = tempCharRange.Select(item => Convert.ToChar(item)).ToArray<char>();
 
-            var tempStringRange = bubbleSortSection["Names"].Split(',').ToList<string>();
+            var tempStringRange = sortSection["Names"].Split(',').ToList<string>();
             stringRange = tempStringRange.Select(item => Convert.ToString(item)).ToArray<string>();
 
-            intBubbleSort = new BubbleSort<int>();
-            charBubbleSort = new BubbleSort<char>();
-            stringBubbleSort = new BubbleSort<string>();
+            intSort = new BubbleSort<int>();
+            charSort = new BubbleSort<char>();
+            stringSort = new BubbleSort<string>();
         }
 
         [TestCleanup]
@@ -68,9 +67,9 @@ namespace UnitTests.Algorithms.Sorting
             charRange = null;
             stringRange = null;
 
-            intBubbleSort = null;
-            charBubbleSort = null;
-            stringBubbleSort = null;
+            intSort = null;
+            charSort = null;
+            stringSort = null;
         }
 
         #endregion
@@ -81,11 +80,11 @@ namespace UnitTests.Algorithms.Sorting
         public void BubbleSort_PositiveIntArray_SortsSuccessfully()
         {
             //Arrange
-            var tempSortedInts = bubbleSortSection["SortedInts"].Split(',').ToArray<string>();
+            var tempSortedInts = sortSection["SortedInts"].Split(',').ToArray<string>();
             int[] expectedSortedIntArray = Array.ConvertAll(tempSortedInts, new Converter<string, int>(item => Convert.ToInt32(item)));
 
             //Act
-            int[] resultSortedIntArray = intBubbleSort.Sort(intRange);
+            int[] resultSortedIntArray = intSort.Sort(intRange);
 
             //Assert
             Assert.IsNotNull(resultSortedIntArray);
@@ -97,11 +96,11 @@ namespace UnitTests.Algorithms.Sorting
         public void BubbleSort_NegativeIntArray_SortsSuccessfully()
         {
             //Arrange
-            var tempSortedNegativeInts = bubbleSortSection["SortNegativeInts"].Split(',').ToArray<string>();
+            var tempSortedNegativeInts = sortSection["SortNegativeInts"].Split(',').ToArray<string>();
             int[] expectedSortedNegativeIntArray = Array.ConvertAll(tempSortedNegativeInts, new Converter<string, int>(item => Convert.ToInt32(item)));
 
             //Act
-            int[] resultSortedNegativeIntArray = intBubbleSort.Sort(negativeIntRange);
+            int[] resultSortedNegativeIntArray = intSort.Sort(negativeIntRange);
 
             //Assert
             Assert.IsNotNull(resultSortedNegativeIntArray);
@@ -113,11 +112,11 @@ namespace UnitTests.Algorithms.Sorting
         public void BubbleSort_RandomMixedIntArray_SortsSuccessfully()
         {
             //Arrange
-            var tempSortedMixedInts = bubbleSortSection["SortedMixedInts"].Split(',').ToArray<string>();
+            var tempSortedMixedInts = sortSection["SortedMixedInts"].Split(',').ToArray<string>();
             int[] expectedSortedMixedIntArray = Array.ConvertAll(tempSortedMixedInts, new Converter<string, int>(item => Convert.ToInt32(item)));
 
             //Act
-            int[] resultSortedMixedIntArray = intBubbleSort.Sort(mixedIntRange);
+            int[] resultSortedMixedIntArray = intSort.Sort(mixedIntRange);
 
             //Assert
             Assert.IsNotNull(resultSortedMixedIntArray);
@@ -129,11 +128,11 @@ namespace UnitTests.Algorithms.Sorting
         public void BubbleSort_CharArray_SortsSuccessfully()
         {
             //Arrange
-            var tempSortedChars = bubbleSortSection["SortedChars"].Split(',').ToArray<string>();
+            var tempSortedChars = sortSection["SortedChars"].Split(',').ToArray<string>();
             char[] expectedSortedCharArray = Array.ConvertAll(tempSortedChars, new Converter<string, char>(item => Convert.ToChar(item)));
 
             //Act
-            char[] resultSortedCharArray = charBubbleSort.Sort(charRange);
+            char[] resultSortedCharArray = charSort.Sort(charRange);
 
             //Assert
             Assert.IsNotNull(resultSortedCharArray);
@@ -142,13 +141,13 @@ namespace UnitTests.Algorithms.Sorting
         }
 
         [TestMethod, TestCategory("Core Functionality")]
-        public void BubbleSprt_StringArray_SortsSuccessfully()
+        public void BubbleSort_StringArray_SortsSuccessfully()
         {
             //Arrange
-            string[] expectedSortedStringArray = bubbleSortSection["SortedString"].Split(',');
+            string[] expectedSortedStringArray = sortSection["SortedString"].Split(',');
 
             //Act
-            string[] resultSorteStringArray = stringBubbleSort.Sort(stringRange);
+            string[] resultSorteStringArray = stringSort.Sort(stringRange);
 
             //Assert
             Assert.IsNotNull(resultSorteStringArray);
