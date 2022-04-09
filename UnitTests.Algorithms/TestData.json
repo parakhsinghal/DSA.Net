@@ -1,0 +1,23 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ],
+  "Sort": {
+    "RandomInts": "56,73,105,87,159,132,23,90,19,124",
+    "RandomNegativeInts": "-456,-87,-92,-158,-496,-106,-23,-75,-367,-276",
+    "RandomMixedInts": "-78,99,-29,-156,22,-13,183,96,-30,85",
+    "RandomCharacters": "a,z,x,r,t,h,w,p,i,m",
+    "Names": "Ram,Shyam,Suresh,Ramesh,Dinesh,Mahesh",
+    "SortedInts": "19,23,56,73,87,90,105,124,132,159",
+    "SortNegativeInts": "-496,-456,-367,-276,-158,-106,-92,-87,-75,-23",
+    "SortedMixedInts": "-156,-78,-30,-29,-13,22,85,96,99,183",
+    "SortedChars": "a,h,i,m,p,r,t,w,x,z",
+    "SortedString": "Dinesh,Mahesh,Ram,Ramesh,Shyam,Suresh"
+  }
+
+}

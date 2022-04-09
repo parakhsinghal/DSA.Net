@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Graphs\" />
-    <Folder Include="Trees\BinaryTree\" />
     <Folder Include="Trees\234Tree\" />
     <Folder Include="Trees\RedBlackTree\" />
   </ItemGroup>

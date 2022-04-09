@@ -8,17 +8,31 @@
     "**/platforms"
   ],
 
-  "General": 
-  {
+  "General": {
     "FirstTenInts": "1,2,3,4,5,6,7,8,9,10",
-    "Fruits": "apple,mango,grapes,pomegranate,watermelon,guava"
-  },
-  "Array": {},
-  "LinkedList": 
-  {
+    "Fruits": "apple,mango,grapes,pomegranate,watermelon,guava",
     "Names": "Ram,Shyam,Suresh,Ramesh,Dinesh,Mahesh"
   },
-  "Stack": {},
-  "Queue": {},
-  "Tree": {}
+  "LinkedList": {
+    "Names": "Ram,Shyam,Suresh,Ramesh,Dinesh,Mahesh"
+  },
+  "BinarySearchTree": {
+    "RandomInts": "56,73,105,87,159,132,23,90,19,124",
+    "RandomNegativeInts": "-456,-87,-92,-158,-496,-106,-23,-75,-367,-276",
+    "RandomUInts": "78,99,29,156,22,13,183,96,30,85",
+    "Characters": "a,z,x,r,t,h,w,p,i,m",
+    "Fruits": "apple,mango,grapes,pomegranate,watermelon,guava",
+    "Names": "Ram,Shyam,Suresh,Ramesh,Dinesh,Mahesh",
+    "PreOrderInts": "56,23,19,73,105,87,90,159,132,124",
+    "PostOrderInts": "19,23,90,87,124,132,159,105,73,56",
+    "PreOrderNegativeInts": "1",
+    "PostOrderNegativeInts": "1",
+    "PreOrderUInts": "78,29,22,13,30,99,96,85,156,183",
+    "PostOrderUInts": "13,22,30,29,85,96,183,156,99,78",
+    "PreOrderChars": "a,z,x,r,h,p,i,m,t,w",
+    "PostOrderChars": "m,i,p,h,w,t,r,x,z,a",
+    "PreOrderString": "Ram,Dinesh,Mahesh,Shyam,Ramesh,Suresh",
+    "PostOrderString": "Mahesh,Dinesh,Ramesh,Suresh,Shyam,Ram"
+  }
+ 
 }
