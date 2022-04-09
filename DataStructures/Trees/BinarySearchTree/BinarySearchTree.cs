@@ -16,6 +16,22 @@ namespace DataStructures.Trees.BinarySearchTree
         /// </summary>
         public Node<T> Root { get; private set; }
 
+        int leftHeight = 0, rightHeight = 0;
+
+        public int Height(Node<T> node)
+        {
+            if (node is null)
+            {
+                return 0;
+            }
+
+            int leftHeight = Height(node.LeftChild);
+            int rightHeight = Height(node.RightChild);
+
+            int result = Math.Max(leftHeight, rightHeight) +1;
+            return result;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -111,7 +127,7 @@ namespace DataStructures.Trees.BinarySearchTree
                             // Current node's value is less than the value that needs to be searched
                             // Move to the right child.
                             case < 0:
-                                current = current.RightChild;                                
+                                current = current.RightChild;
                                 if (current is null)
                                 {
                                     return null;
@@ -131,7 +147,7 @@ namespace DataStructures.Trees.BinarySearchTree
                             // Current node's value is equal to the value that needs to be searched.
                             default:
                                 break;
-                        }                        
+                        }
                     }
 
                     return current;

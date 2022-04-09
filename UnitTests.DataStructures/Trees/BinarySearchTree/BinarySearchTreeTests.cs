@@ -630,6 +630,91 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             Assert.IsTrue(result);
         }
 
+        [TestMethod, TestCategory("Core functionality")]
+        public void HeightIntTreeRightSkewed_CalculatesSuccesfully()
+        {
+            //Arrange
+            for (int i = 0; i < 10; i++)
+            {
+                intTree.Insert(i);
+            }
+
+            //Act
+            int actualHeight = intTree.Height(intTree.Root);
+            int expectedHeight = 10;
+
+            //Assert
+            Assert.AreEqual(expectedHeight, actualHeight);
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void HeightIntTreeLeftSkewed_CalculatesSuccesfully()
+        {
+            //Arrange
+            for (int i = 0; i < 10; i++)
+            {
+                intTree.Insert(-i);
+            }
+
+            //Act
+            int actualHeight = intTree.Height(intTree.Root);
+            int expectedHeight = 10;
+
+            //Assert
+            Assert.AreEqual(expectedHeight, actualHeight);
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void HeightIntTree_CalculatesSuccesfully()
+        {
+            //Arrange
+            for (int i = 0; i < intRange.Count; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
+
+            //Act
+            int actualHeight = intTree.Height(intTree.Root);
+            int expectedHeight = 6;
+
+            //Assert
+            Assert.AreEqual(expectedHeight, actualHeight);
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void HeightCharTree_CalculatesSuccesfully()
+        {
+            //Arrange
+            for (int i = 0; i < charRange.Count; i++)
+            {
+                charTree.Insert(charRange[i]);
+            }
+
+            //Act
+            int actualHeight = charTree.Height(charTree.Root);
+            int expectedHeight = 8;
+
+            //Assert
+            Assert.AreEqual(expectedHeight, actualHeight);
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void HeightStringTree_CalculatesSuccesfully()
+        {
+            //Arrange
+            for (int i = 0; i < stringRange.Count; i++)
+            {
+                stringTree.Insert(stringRange[i]);
+            }
+
+            //Act
+            int actualHeight = stringTree.Height(stringTree.Root);
+            int expectedHeight = 3;
+
+            //Assert
+            Assert.AreEqual(expectedHeight, actualHeight);
+        }
+
         //[TestMethod, TestCategory("Core functionality")]
         //public void PostOrderTraversal_UserDefinedObjectTreeTraversal_IsSuccessful()
         //{
