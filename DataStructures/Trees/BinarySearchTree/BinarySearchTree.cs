@@ -317,10 +317,7 @@ namespace DataStructures.Trees.BinarySearchTree
             #endregion
 
             #region Deletion of a node with a single child
-            /*
-                The code for deletion of the node when it has two children has been sourced from the 
-                book "Data Structures And Algorithms In Java" by Robert Lafore (Chapter 8, Page 393)
-             */
+            
             else if (current.RightChild is null)
             {
                 if (isLeftChild)    // Case 1: Where the node to be deleted has a left or right child.
@@ -354,7 +351,10 @@ namespace DataStructures.Trees.BinarySearchTree
             #endregion
 
             #region Deletion of a node with both left and right children
-
+            /*
+                The code for deletion of the node when it has two children has been sourced from the 
+                book "Data Structures And Algorithms In Java" by Robert Lafore (Chapter 8, Page 393)
+             */
             else
             {
                 Node<T> successor = FindInOrderSuccessor(current);

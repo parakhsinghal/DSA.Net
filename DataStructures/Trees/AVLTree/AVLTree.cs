@@ -64,6 +64,8 @@ namespace DataStructures.Trees.AVLTree
                                 if (current.RightChild is null)
                                 {
                                     current.RightChild = new Node<T>(value);
+                                    current.RightChild.UpdateHeightAndBalanceFactor();
+                                    Rebalance(current.RightChild);
                                     return;
                                 }
                                 else
@@ -78,6 +80,8 @@ namespace DataStructures.Trees.AVLTree
                                 if (current.LeftChild is null)
                                 {
                                     current.LeftChild = new Node<T>(value);
+                                    current.LeftChild.UpdateHeightAndBalanceFactor();
+                                    Rebalance(current.LeftChild);
                                     return;
                                 }
                                 else
@@ -246,7 +250,7 @@ namespace DataStructures.Trees.AVLTree
                 3. Deletion of a node with both left and right children
                 Find out the node that we need to delete adn then figure out if the node has two children.
                 In this case we need to figure out eh in-order successor i.e. the node that is the successor in
-                the in-order sequence to the node to be deleted adn then change the references accordingly.
+                the in-order sequence to the node to be deleted and then change the references accordingly.
              */
 
             // Variable declaration
@@ -304,33 +308,40 @@ namespace DataStructures.Trees.AVLTree
                 else if (isLeftChild)
                 {
                     parent.LeftChild = null;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = null;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
             }
 
             #endregion
 
             #region Deletion of a node with a single child
-            /*
-                The code for deletion of the node when it has two children has been sourced from the 
-                book "Data Structures And Algorithms In Java" by Robert Lafore (Chapter 8, Page 393)
-             */
+
             else if (current.RightChild is null)
             {
                 if (isLeftChild)    // Case 1: Where the node to be deleted has a left or right child.
                 {
                     parent.LeftChild = current.LeftChild;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = current.LeftChild;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
                 else if (current == Root)    // Case 2: Where the node to be deleted is a root node.
                 {
                     Root = current.LeftChild;
+                    Root.UpdateHeightAndBalanceFactor();
+                    Rebalance(Root);
                 }
             }
             else if (current.LeftChild is null)
@@ -338,20 +349,29 @@ namespace DataStructures.Trees.AVLTree
                 if (isLeftChild)    // Case 1: Where the node to be deleted has a left or right child.
                 {
                     parent.LeftChild = current.RightChild;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = current.RightChild;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
                 else if (current == Root)    // Case 2: Where the node to be deleted is a root node.
                 {
                     Root = current.LeftChild;
+                    Root.UpdateHeightAndBalanceFactor();
+                    Rebalance(Root);
                 }
             }
             #endregion
 
             #region Deletion of a node with both left and right children
-
+            /*
+                The code for deletion of the node when it has two children has been sourced from the 
+                book "Data Structures And Algorithms In Java" by Robert Lafore (Chapter 8, Page 393)
+             */
             else
             {
                 Node<T> successor = FindInOrderSuccessor(current);
@@ -363,10 +383,14 @@ namespace DataStructures.Trees.AVLTree
                 else if (isLeftChild)
                 {
                     parent.LeftChild = successor;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = successor;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
 
                 successor.LeftChild = current.LeftChild;
@@ -423,8 +447,7 @@ namespace DataStructures.Trees.AVLTree
         /// 
         /// </summary>
         /// <param name="nodeToBeRebalanced"></param>
-        /// <returns></returns>
-        private Node<T> Rebalance(Node<T> nodeToBeRebalanced)
+        private void Rebalance(Node<T> nodeToBeRebalanced)
         {
             /*
                 Pseudocode:
@@ -434,29 +457,27 @@ namespace DataStructures.Trees.AVLTree
              */
 
             // Heaviness: Right     Relationship: RR    Desired rotation: Left
-            if (nodeToBeRebalanced.BalanceFactor < -1)
+            if (nodeToBeRebalanced.BalanceFactor < -1 && nodeToBeRebalanced.RightChild.BalanceFactor != 1)
             {
-                // Heaviness: Right     Relationship: RL    Desired rotation: Right-Left
-                if (nodeToBeRebalanced.LeftChild.BalanceFactor == 1)
-                {
-                    nodeToBeRebalanced.RightChild = RotateRight(nodeToBeRebalanced.RightChild);
-                }
-
-                nodeToBeRebalanced = RotateLeft(nodeToBeRebalanced);                
+                nodeToBeRebalanced = RotateLeft(nodeToBeRebalanced);
+            }
+            // Heaviness: Right     Relationship: RL    Desired rotation: Right-Left
+            else if (nodeToBeRebalanced.BalanceFactor < -1 && nodeToBeRebalanced.LeftChild.BalanceFactor == 1)
+            {
+                nodeToBeRebalanced.RightChild = RotateRight(nodeToBeRebalanced.RightChild);
+                nodeToBeRebalanced = RotateLeft(nodeToBeRebalanced);
             }
             // Heaviness: Left      Relationship: LL   Desired rotation: Right
-            else if (nodeToBeRebalanced.BalanceFactor > 1)
+            else if (nodeToBeRebalanced.BalanceFactor > 1 && nodeToBeRebalanced.RightChild.BalanceFactor != -1)
             {
-                // Heaviness: Left      Relationship: LR    Desired rotation: Left-Right
-                if (nodeToBeRebalanced.RightChild.BalanceFactor == -1)
-                {
-                    nodeToBeRebalanced.LeftChild = RotateLeft(nodeToBeRebalanced.LeftChild);
-                }
-
                 nodeToBeRebalanced = RotateRight(nodeToBeRebalanced);
             }
-
-            return nodeToBeRebalanced;
+            // Heaviness: Left      Relationship: LR    Desired rotation: Left-Right
+            else if (nodeToBeRebalanced.BalanceFactor > 1 && nodeToBeRebalanced.RightChild.BalanceFactor == -1)
+            {
+                nodeToBeRebalanced.LeftChild = RotateLeft(nodeToBeRebalanced.LeftChild);
+                nodeToBeRebalanced = RotateRight(nodeToBeRebalanced);
+            }
         }
 
         /// <summary>
@@ -479,7 +500,7 @@ namespace DataStructures.Trees.AVLTree
 
             nodeToBeRotated.RightChild.UpdateHeightAndBalanceFactor();
             nodeToBeRotated.UpdateHeightAndBalanceFactor();
-            
+
             return nodeToBeRotated;
         }
 

@@ -1,24 +1,24 @@
-﻿using DataStructures.Trees.BinarySearchTree;
+﻿using DataStructures.Trees.AVLTree;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitTests.DataStructures.Trees.BinarySearchTree
+namespace UnitTests.DataStructures.Trees.AVLTreeTests
 {
     [TestClass]
-    public class BinarySearchTreeTests
+    public class AVLTreeTests
     {
         #region Local fields, test initialization and test clean up setup
 
-        BinarySearchTree<int> intTree;
-        BinarySearchTree<int> negativeIntTree;
-        BinarySearchTree<uint> uintTree;
-        BinarySearchTree<char> charTree;
-        BinarySearchTree<string> stringTree;
+        AVLTree<int> intTree;
+        AVLTree<int> negativeIntTree;
+        AVLTree<uint> uintTree;
+        AVLTree<char> charTree;
+        AVLTree<string> stringTree;
 
-        private readonly IConfiguration binarySearchTreeSection;
+        private readonly IConfiguration avlTreeSection;
 
         private List<int> intRange;
         private List<int> negativeIntRange;
@@ -27,12 +27,12 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
         private List<string> stringRange;
         private List<string> fruits;
 
-        public BinarySearchTreeTests()
+        public AVLTreeTests()
         {
             var configuration = new ConfigurationBuilder()
                                 .AddJsonFile("TestData.json").Build();
 
-            binarySearchTreeSection = configuration.GetSection("BinarySearchTree");
+            avlTreeSection = configuration.GetSection("AVLTree");
 
             intRange = new List<int>();
             negativeIntRange = new List<int>();
@@ -41,29 +41,29 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             stringRange = new List<string>();
             fruits = new List<string>();
 
-            intTree = new BinarySearchTree<int>();
-            negativeIntTree = new BinarySearchTree<int>();
-            uintTree = new BinarySearchTree<uint>();
-            charTree = new BinarySearchTree<char>();
-            stringTree = new BinarySearchTree<string>();
+            intTree = new AVLTree<int>();
+            negativeIntTree = new AVLTree<int>();
+            uintTree = new AVLTree<uint>();
+            charTree = new AVLTree<char>();
+            stringTree = new AVLTree<string>();
         }
 
         [TestInitialize]
         public void InitializeLocalFields()
         {
-            fruits = binarySearchTreeSection["Fruits"].Split(',').ToList<string>();
-            stringRange = binarySearchTreeSection["Names"].Split(',').ToList<string>();
+            fruits = avlTreeSection["Fruits"].Split(',').ToList<string>();
+            stringRange = avlTreeSection["Names"].Split(',').ToList<string>();
 
-            var tempCharRange = binarySearchTreeSection["Characters"].Split(',').ToList<string>();
+            var tempCharRange = avlTreeSection["Characters"].Split(',').ToList<string>();
             charRange.AddRange(tempCharRange.Select(item => Convert.ToChar(item)));
 
-            var tempIntRange = binarySearchTreeSection["RandomInts"].Split(',').ToList<string>();
+            var tempIntRange = avlTreeSection["RandomInts"].Split(',').ToList<string>();
             intRange.AddRange(tempIntRange.Select(item => Convert.ToInt32(item)));
 
-            var tempNegativeIntRange = binarySearchTreeSection["RandomNegativeInts"].Split(',').ToList<string>();
+            var tempNegativeIntRange = avlTreeSection["RandomNegativeInts"].Split(',').ToList<string>();
             negativeIntRange.AddRange(tempNegativeIntRange.Select(item => Convert.ToInt32(item)));
 
-            var tempUIntRange = binarySearchTreeSection["RandomUInts"].Split(',').ToList<string>();
+            var tempUIntRange = avlTreeSection["RandomUInts"].Split(',').ToList<string>();
             uintRange.AddRange(tempUIntRange.Select(item => Convert.ToUInt32(item)));
         }
 
@@ -450,7 +450,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             {
                 intTree.Insert(intRange[i]);
             }
-            var tempPreOrderInts = binarySearchTreeSection["PreOrderInts"].Split(',').ToList<string>();
+            var tempPreOrderInts = avlTreeSection["PreOrderInts"].Split(',').ToList<string>();
             List<int> expectedPreOrderInts = new List<int>();
             expectedPreOrderInts.AddRange(tempPreOrderInts.Select(item => Convert.ToInt32(item)));
 
@@ -472,7 +472,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 uintTree.Insert(uintRange[i]);
             }
 
-            var tempPreOrderUInts = binarySearchTreeSection["PreOrderUInts"].Split(',').ToList<string>();
+            var tempPreOrderUInts = avlTreeSection["PreOrderUInts"].Split(',').ToList<string>();
             List<uint> expectedPreOrderUInts = new List<uint>();
             expectedPreOrderUInts.AddRange(tempPreOrderUInts.Select(item => Convert.ToUInt32(item)));
 
@@ -494,7 +494,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 charTree.Insert(charRange[i]);
             }
 
-            var tempPreOrderChars = binarySearchTreeSection["PreOrderChars"].Split(',').ToList<string>();
+            var tempPreOrderChars = avlTreeSection["PreOrderChars"].Split(',').ToList<string>();
             List<char> expectedPreOrderChars = new List<char>();
             expectedPreOrderChars.AddRange(tempPreOrderChars.Select(item => Convert.ToChar(item)));
 
@@ -516,9 +516,9 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 stringTree.Insert(stringRange[i]);
             }
 
-            var tempPreOrderString = binarySearchTreeSection["PreOrderString"].Split(',').ToList<string>();
+            var tempPreOrderString = avlTreeSection["PreOrderString"].Split(',').ToList<string>();
             List<string> expectedPreOrderString = new List<string>();
-            expectedPreOrderString.AddRange(tempPreOrderString.Select(item=>item));
+            expectedPreOrderString.AddRange(tempPreOrderString.Select(item => item));
 
             //Act  
             List<string> actualPreOrderString = new List<string>();
@@ -548,7 +548,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 intTree.Insert(intRange[i]);
             }
 
-            var tempPostOrderInts = binarySearchTreeSection["PostOrderInts"].Split(',').ToList<string>();
+            var tempPostOrderInts = avlTreeSection["PostOrderInts"].Split(',').ToList<string>();
             List<int> expectedPostOrderInts = new List<int>();
             expectedPostOrderInts.AddRange(tempPostOrderInts.Select(item => Convert.ToInt32(item)));
 
@@ -571,7 +571,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 uintTree.Insert(uintRange[i]);
             }
 
-            var tempPostOrderUInts = binarySearchTreeSection["PostOrderUInts"].Split(',').ToList<string>();
+            var tempPostOrderUInts = avlTreeSection["PostOrderUInts"].Split(',').ToList<string>();
             List<uint> expectedPostOrderUInts = new List<uint>();
             expectedPostOrderUInts.AddRange(tempPostOrderUInts.Select(item => Convert.ToUInt32(item)));
 
@@ -593,7 +593,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 charTree.Insert(charRange[i]);
             }
 
-            var tempPostOrderChars = binarySearchTreeSection["PostOrderChars"].Split(',').ToList<string>();
+            var tempPostOrderChars = avlTreeSection["PostOrderChars"].Split(',').ToList<string>();
             List<char> expectedPostOrderChars = new List<char>();
             expectedPostOrderChars.AddRange(tempPostOrderChars.Select(item => Convert.ToChar(item)));
 
@@ -615,7 +615,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 stringTree.Insert(stringRange[i]);
             }
 
-            var tempPostOrderString = binarySearchTreeSection["PostOrderString"].Split(',').ToList<string>();
+            var tempPostOrderString = avlTreeSection["PostOrderString"].Split(',').ToList<string>();
             List<string> expectedPostOrderString = new List<string>();
             expectedPostOrderString.AddRange(tempPostOrderString.Select(item => item));
 
