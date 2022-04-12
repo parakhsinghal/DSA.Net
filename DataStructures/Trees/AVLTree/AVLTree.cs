@@ -14,6 +14,18 @@ namespace DataStructures.Trees.AVLTree
 
         int leftHeight = 0, rightHeight = 0;
 
+        Queue<Node<T>> queue;
+
+        public AVLTree()
+        {
+            queue = new Queue<Node<T>>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public int Height(Node<T> node)
         {
             if (node is null)
@@ -222,6 +234,38 @@ namespace DataStructures.Trees.AVLTree
 
                 action(rootNode.Value);
             };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="action"></param>
+        public void BreadthFirstTraversal(Node<T> node, Action<T> action)
+        {
+            if (node is not null)
+            {
+                action(node.Value);
+
+                if (node.LeftChild is not null)
+                {
+                    queue.Enqueue(node.LeftChild);
+                }
+
+                if (node.RightChild is not null)
+                {
+                    queue.Enqueue(node.RightChild);
+                }
+
+                if (queue.Count > 0)
+                {
+                    BreadthFirstTraversal(queue.Dequeue(), action);
+                }
+            }
+            else
+            {
+                return;
+            }
         }
 
         /// <summary>

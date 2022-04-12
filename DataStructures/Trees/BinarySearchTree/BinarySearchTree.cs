@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Collections;
 using Err = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.Trees.BinarySearchTree
@@ -18,6 +19,18 @@ namespace DataStructures.Trees.BinarySearchTree
 
         int leftHeight = 0, rightHeight = 0;
 
+        Queue<Node<T>> queue;
+
+        public BinarySearchTree()
+        {
+            queue = new Queue<Node<T>>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public int Height(Node<T> node)
         {
             if (node is null)
@@ -28,7 +41,7 @@ namespace DataStructures.Trees.BinarySearchTree
             int leftHeight = Height(node.LeftChild);
             int rightHeight = Height(node.RightChild);
 
-            int result = Math.Max(leftHeight, rightHeight) +1;
+            int result = Math.Max(leftHeight, rightHeight) + 1;
             return result;
         }
 
@@ -226,6 +239,38 @@ namespace DataStructures.Trees.BinarySearchTree
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="node"></param>
+        /// <param name="action"></param>
+        public void BreadthFirstTraversal(Node<T> node, Action<T> action)
+        {
+            if (node is not null)
+            {
+                action(node.Value);
+
+                if (node.LeftChild is not null)
+                {
+                    queue.Enqueue(node.LeftChild);
+                }
+
+                if (node.RightChild is not null)
+                {
+                    queue.Enqueue(node.RightChild);
+                }
+
+                if (queue.Count > 0)
+                {
+                    BreadthFirstTraversal(queue.Dequeue(), action);
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="value"></param>
         /// <exception cref="InvalidOperationException"></exception>
         public void Delete(T value)
@@ -317,7 +362,7 @@ namespace DataStructures.Trees.BinarySearchTree
             #endregion
 
             #region Deletion of a node with a single child
-            
+
             else if (current.RightChild is null)
             {
                 if (isLeftChild)    // Case 1: Where the node to be deleted has a left or right child.

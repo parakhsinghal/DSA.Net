@@ -629,6 +629,104 @@ namespace UnitTests.DataStructures.Trees.AVLTreeTests
         }
 
         [TestMethod, TestCategory("Core functionality")]
+        public void BreadthFirstTraversal_IntTreeTraversal_IsSuccessful()
+        {
+            //Arrange
+            for (int i = 0; i < intRange.Count; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
+
+            var tempBFSInts = avlTreeSection["BreadthFirstInts"].Split(',').ToList<string>();
+            List<int> expectedBFSInts = new List<int>();
+            expectedBFSInts.AddRange(tempBFSInts.Select(item => Convert.ToInt32(item)));
+
+            //Act  
+            List<int> actualBFSInt = new List<int>();
+            intTree.BreadthFirstTraversal(intTree.Root, (item) => { actualBFSInt.Add(item); });
+            bool result = actualBFSInt.SequenceEqual<int>(expectedBFSInts);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void BreadthFirstTraversal_UIntTreeTraversal_IsSuccessful()
+        {
+            //Arrange
+            for (int i = 0; i < uintRange.Count; i++)
+            {
+                uintTree.Insert(uintRange[i]);
+            }
+
+            var tempBFSUInts = avlTreeSection["BreadthFirstUInts"].Split(',').ToList<string>();
+            List<uint> expectedBFSUInts = new List<uint>();
+            expectedBFSUInts.AddRange(tempBFSUInts.Select(item => Convert.ToUInt32(item)));
+
+            //Act  
+            List<uint> actualBFSUInts = new List<uint>();
+            uintTree.BreadthFirstTraversal(uintTree.Root, (item) => { actualBFSUInts.Add(item); });
+            bool result = actualBFSUInts.SequenceEqual<uint>(expectedBFSUInts);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void BreadthFirstTraversal_CharTreeTraversal_IsSuccessful()
+        {
+            //Arrange
+            for (int i = 0; i < charRange.Count; i++)
+            {
+                charTree.Insert(charRange[i]);
+            }
+
+            var tempBFSChars = avlTreeSection["BreadthFirstChars"].Split(',').ToList<string>();
+            List<char> expectedBFSChars = new List<char>();
+            expectedBFSChars.AddRange(tempBFSChars.Select(item => Convert.ToChar(item)));
+
+            //Act  
+            List<char> actualBFSChars = new List<char>();
+            charTree.BreadthFirstTraversal(charTree.Root, (item) => { actualBFSChars.Add(item); });
+            bool result = actualBFSChars.SequenceEqual<char>(expectedBFSChars);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void BreadthFirstTraversal_StringTreeTraversal_IsSuccessful()
+        {
+            //Arrange
+            for (int i = 0; i < stringRange.Count; i++)
+            {
+                stringTree.Insert(stringRange[i]);
+            }
+
+            var tempBFSString = avlTreeSection["BreadthFirstString"].Split(',').ToList<string>();
+            List<string> expectedBFSString = new List<string>();
+            expectedBFSString.AddRange(tempBFSString.Select(item => item));
+
+            //Act  
+            List<string> actualBFSString = new List<string>();
+            stringTree.BreadthFirstTraversal(stringTree.Root, (item) => { actualBFSString.Add(item); });
+            bool result = actualBFSString.SequenceEqual<string>(expectedBFSString);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        //[TestMethod, TestCategory("Core functionality")]
+        //public void BreadthFirstTraversal_UserDefinedObjectTreeTraversal_IsSuccessful()
+        //{
+        //    //Arrange
+
+        //    //Act
+
+        //    //Assert
+        //}
+
+        [TestMethod, TestCategory("Core functionality")]
         public void HeightIntTreeRightSkewed_CalculatesSuccesfully()
         {
             //Arrange

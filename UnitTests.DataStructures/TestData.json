@@ -25,14 +25,19 @@
     "Names": "Ram,Shyam,Suresh,Ramesh,Dinesh,Mahesh",
     "PreOrderInts": "56,23,19,73,105,87,90,159,132,124",
     "PostOrderInts": "19,23,90,87,124,132,159,105,73,56",
+    "BreadthFirstInts": "56,23,73,19,105,87,159,90,132,124",
     "PreOrderNegativeInts": "1",
     "PostOrderNegativeInts": "1",
+    "BreadthFirstNegativeInts": "-456,-496,-87,-92,-23,-158,-75,-367,-106,-276",
     "PreOrderUInts": "78,29,22,13,30,99,96,85,156,183",
     "PostOrderUInts": "13,22,30,29,85,96,183,156,99,78",
+    "BreadthFirstUInts": "78,29,99,22,30,96,156,13,85,183",
     "PreOrderChars": "a,z,x,r,h,p,i,m,t,w",
     "PostOrderChars": "m,i,p,h,w,t,r,x,z,a",
+    "BreadthFirstChars": "a,z,x,r,h,t,p,w,i,m",
     "PreOrderString": "Ram,Dinesh,Mahesh,Shyam,Ramesh,Suresh",
-    "PostOrderString": "Mahesh,Dinesh,Ramesh,Suresh,Shyam,Ram"
+    "PostOrderString": "Mahesh,Dinesh,Ramesh,Suresh,Shyam,Ram",
+    "BreadthFirstString":"Ram,Dinesh,Shyam,Mahesh,Ramesh,Suresh"
   },
 
   "AVLTree": {
@@ -44,14 +49,19 @@
     "Names": "Ram,Shyam,Suresh,Ramesh,Dinesh,Mahesh",
     "PreOrderInts": "56,23,19,73,105,87,90,159,132,124",
     "PostOrderInts": "19,23,90,87,124,132,159,105,73,56",
+    "BreadthFirstInts": "56,23,73,19,105,87,159,90,132,124",
     "PreOrderNegativeInts": "1",
     "PostOrderNegativeInts": "1",
+    "BreadthFirstNegativeInts": "-456,-496,-87,-92,-23,-158,-75,-367,-106,-276",
     "PreOrderUInts": "78,29,22,13,30,99,96,85,156,183",
     "PostOrderUInts": "13,22,30,29,85,96,183,156,99,78",
+    "BreadthFirstUInts": "78,29,99,22,30,96,156,13,85,183",
     "PreOrderChars": "a,z,x,r,h,p,i,m,t,w",
     "PostOrderChars": "m,i,p,h,w,t,r,x,z,a",
+    "BreadthFirstChars": "a,z,x,r,h,t,p,w,i,m",
     "PreOrderString": "Ram,Dinesh,Mahesh,Shyam,Ramesh,Suresh",
-    "PostOrderString": "Mahesh,Dinesh,Ramesh,Suresh,Shyam,Ram"
+    "PostOrderString": "Mahesh,Dinesh,Ramesh,Suresh,Shyam,Ram",
+    "BreadthFirstString": "Ram,Dinesh,Shyam,Mahesh,Ramesh,Suresh"
   }
 
 }
