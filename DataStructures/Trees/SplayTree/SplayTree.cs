@@ -5,10 +5,6 @@ using Err = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.Trees.SplayTree
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
     public class SplayTree<T>
     {
 
@@ -314,6 +310,11 @@ namespace DataStructures.Trees.SplayTree
                         isRightChild = true;
                         isLeftChild = false;
                         current = current.RightChild;
+                        if (current is null)
+                        {
+                            Splay(parent);
+                            return;
+                        }
                         break;
 
                     // Current node's value is more than the value that needs to be searched
@@ -323,6 +324,11 @@ namespace DataStructures.Trees.SplayTree
                         isLeftChild = true;
                         isRightChild = false;
                         current = current.LeftChild;
+                        if (current is null)
+                        {
+                            Splay(parent);
+                            return;
+                        }
                         break;
 
                     // Current node's value is equal to the value that needs to be searched.
