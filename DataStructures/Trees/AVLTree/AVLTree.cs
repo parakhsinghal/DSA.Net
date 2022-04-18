@@ -50,7 +50,7 @@ namespace DataStructures.Trees.AVLTree
             {
                 if (value is null)
                 {
-                    throw new ArgumentNullException(Err.BinarySearchTree_Insert_NullValue);
+                    throw new ArgumentNullException(Err.AVLTree_Insert_NullValue);
                 }
 
                 // If the root is null then create a new root
@@ -104,7 +104,7 @@ namespace DataStructures.Trees.AVLTree
 
                             // The current and the value to be inserted are equal.
                             default:
-                                throw new ArgumentException(Err.BinarySearchTree_Insert_EqualValue);
+                                throw new ArgumentException(Err.AVLTree_Insert_EqualValue);
                         }
                     }
                 }
@@ -128,7 +128,7 @@ namespace DataStructures.Trees.AVLTree
             {
                 if (Root is null)
                 {
-                    throw new InvalidOperationException(Err.BinarySearchTree_Search_EmptyTree);
+                    throw new InvalidOperationException(Err.AVLTree_Search_EmptyTree);
                 }
                 else
                 {
@@ -305,12 +305,12 @@ namespace DataStructures.Trees.AVLTree
             // Throw an exception if the tree is empty.
             if (Root is null)
             {
-                throw new InvalidOperationException(Err.BinarySearchTree_Deletion_Empty);
+                throw new InvalidOperationException(Err.AVLTree_Deletion_Empty);
             }
 
             if (Search(value) is null)
             {
-                throw new InvalidOperationException(Err.BinarySearchTree_Deletion_NodeNotFound);
+                throw new InvalidOperationException(Err.AVLTree_Deletion_NodeNotFound);
             }
 
             #region Deletion of a node with no child
@@ -534,13 +534,18 @@ namespace DataStructures.Trees.AVLTree
             /*
                 Pseudocode: 
                 1. Store the node to be rotated in a temporary variable.
-                2. Update the balance factor and height of all the nodes which gets 
+                2. Preserve the node's left's right child. This needs to be later
+                   attached to the rotated node.
+                3. Update the balance factor and height of all the nodes which gets 
                    moved around.
-                3. Return the updated node.
+                4. Return the updated node.
              */
-            Node<T> temp = nodeToBeRotated;
+            Node<T> nodeBeforeRotation = nodeToBeRotated;
+            Node<T> rightChildOfLeftChild = nodeToBeRotated.LeftChild.RightChild;
+
             nodeToBeRotated = nodeToBeRotated.LeftChild;
-            nodeToBeRotated.RightChild = temp;
+            nodeToBeRotated.RightChild = nodeBeforeRotation;
+            nodeToBeRotated.RightChild.LeftChild = rightChildOfLeftChild;
 
             nodeToBeRotated.RightChild.UpdateHeightAndBalanceFactor();
             nodeToBeRotated.UpdateHeightAndBalanceFactor();
@@ -558,13 +563,18 @@ namespace DataStructures.Trees.AVLTree
             /*
                 Pseudocode: 
                 1. Store the node to be rotated in a temporary variable.
-                2. Update the balance factor and height of all the nodes which gets 
+                2. Preserve the node's left's right child. This needs to be later
+                   attached to the rotated node.
+                3. Update the balance factor and height of all the nodes which gets 
                    moved around.
-                3. Return the updated node.
+                4. Return the updated node.
              */
-            Node<T> temp = nodeToBeRotated;
+            Node<T> nodeBeforeRotation = nodeToBeRotated;
+            Node<T> leftChildOfRightChild = nodeToBeRotated.RightChild.LeftChild;
+
             nodeToBeRotated = nodeToBeRotated.RightChild;
-            nodeToBeRotated.LeftChild = temp;
+            nodeToBeRotated.LeftChild = nodeBeforeRotation;
+            nodeToBeRotated.LeftChild.RightChild = leftChildOfRightChild;
 
             nodeToBeRotated.LeftChild.UpdateHeightAndBalanceFactor();
             nodeToBeRotated.UpdateHeightAndBalanceFactor();
