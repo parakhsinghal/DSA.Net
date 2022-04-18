@@ -5,6 +5,10 @@ using Err = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.Trees.SplayTree
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class SplayTree<T>
     {
 
@@ -108,6 +112,7 @@ namespace DataStructures.Trees.SplayTree
             try
             {
                 Node<T> current = Root;
+                Node<T> parent = current;
 
                 if (Root is null)
                 {
@@ -122,9 +127,11 @@ namespace DataStructures.Trees.SplayTree
                             // Current node's value is less than the value that needs to be searched
                             // Move to the right child.
                             case < 0:
+                                parent = current;
                                 current = current.RightChild;
                                 if (current is null)
                                 {
+                                    Splay(parent);
                                     return null;
                                 }
                                 break;
@@ -132,9 +139,11 @@ namespace DataStructures.Trees.SplayTree
                             // Current node's value is more than the value that needs to be searched
                             // Move to the left child.
                             case > 0:
+                                parent = current;
                                 current = current.LeftChild;
                                 if (current is null)
                                 {
+                                    Splay(parent);
                                     return null;
                                 }
                                 break;
@@ -292,11 +301,6 @@ namespace DataStructures.Trees.SplayTree
                 throw new InvalidOperationException(Err.BinarySearchTree_Deletion_Empty);
             }
 
-            if (Search(value) is null)
-            {
-                throw new InvalidOperationException(Err.BinarySearchTree_Deletion_NodeNotFound);
-            }
-
             #region Deletion of a node with no child
 
             while (Comparer<T>.Default.Compare(current.Value, value) != 0)
@@ -403,6 +407,8 @@ namespace DataStructures.Trees.SplayTree
 
                 successor.LeftChild = current.LeftChild;
             }
+
+            Splay(parent);
 
             #endregion
         }
