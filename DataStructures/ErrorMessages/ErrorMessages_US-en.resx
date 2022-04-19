@@ -208,4 +208,20 @@
     <value>The passed value is null. Please pass an appropriate value.</value>
     <comment>The error messag needs to be presented when an attempt is made to add a null value to the backing array of a queue.</comment>
   </data>
+  <data name="SplayTree_Deletion_Empty" xml:space="preserve">
+    <value>The tree is empty. You cannot delete anything from an empty tree.</value>
+    <comment>The error message needs to be presented when an attempt is made to delete an entry from an empty tree.</comment>
+  </data>
+  <data name="SplayTree_Insert_EqualValue" xml:space="preserve">
+    <value>Insertion of a value already present in the tree is not allowed.</value>
+    <comment>The error message needs to be presented when an attempt is made to add a duplicate value to the binary search tree.</comment>
+  </data>
+  <data name="SplayTree_Insert_NullValue" xml:space="preserve">
+    <value>The value intended to be inserted cannot be null.</value>
+    <comment>The error message needs to be presented when an attempt is made to insert a null value in the tree.</comment>
+  </data>
+  <data name="SplayTree_Search_EmptyTree" xml:space="preserve">
+    <value>The tree is empty. You cannot run search operation on an empty tree.</value>
+    <comment>The error message needs to be presented when an attempt is made to run a search on an empty binary search tree.</comment>
+  </data>
 </root>

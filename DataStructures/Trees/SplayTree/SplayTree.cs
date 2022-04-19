@@ -32,7 +32,7 @@ namespace DataStructures.Trees.SplayTree
             {
                 if (value is null)
                 {
-                    throw new ArgumentNullException(Err.BinarySearchTree_Insert_NullValue);
+                    throw new ArgumentNullException(Err.SplayTree_Insert_NullValue);
                 }
 
                 // If the root is null then create a new root
@@ -85,7 +85,7 @@ namespace DataStructures.Trees.SplayTree
 
                             // The current and the value to be inserted are equal.
                             default:
-                                throw new ArgumentException(Err.BinarySearchTree_Insert_EqualValue);
+                                throw new ArgumentException(Err.SplayTree_Insert_EqualValue);
                         }
                     }
                 }
@@ -112,7 +112,7 @@ namespace DataStructures.Trees.SplayTree
 
                 if (Root is null)
                 {
-                    throw new InvalidOperationException(Err.BinarySearchTree_Search_EmptyTree);
+                    throw new InvalidOperationException(Err.SplayTree_Search_EmptyTree);
                 }
                 else
                 {
@@ -346,10 +346,12 @@ namespace DataStructures.Trees.SplayTree
                 else if (isLeftChild)
                 {
                     parent.LeftChild = null;
+                    Splay(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = null;
+                    Splay(parent);
                 }
             }
 
@@ -362,10 +364,12 @@ namespace DataStructures.Trees.SplayTree
                 if (isLeftChild)    // Case 1: Where the node to be deleted has a left or right child.
                 {
                     parent.LeftChild = current.LeftChild;
+                    Splay(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = current.LeftChild;
+                    Splay(parent);
                 }
                 else if (current == Root)    // Case 2: Where the node to be deleted is a root node.
                 {
@@ -377,10 +381,12 @@ namespace DataStructures.Trees.SplayTree
                 if (isLeftChild)    // Case 1: Where the node to be deleted has a left or right child.
                 {
                     parent.LeftChild = current.RightChild;
+                    Splay(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = current.RightChild;
+                    Splay(parent);
                 }
                 else if (current == Root)    // Case 2: Where the node to be deleted is a root node.
                 {
@@ -405,16 +411,16 @@ namespace DataStructures.Trees.SplayTree
                 else if (isLeftChild)
                 {
                     parent.LeftChild = successor;
+                    Splay(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = successor;
+                    Splay(parent);
                 }
 
                 successor.LeftChild = current.LeftChild;
             }
-
-            Splay(parent);
 
             #endregion
         }
@@ -559,6 +565,7 @@ namespace DataStructures.Trees.SplayTree
             childToBeRotated.RightChild = parent;
             parent.Parent = childToBeRotated;
         }
+
         /// <summary>
         /// 
         /// </summary>
