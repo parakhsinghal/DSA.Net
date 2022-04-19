@@ -1,24 +1,24 @@
-﻿using DataStructures.Trees.BinarySearchTree;
+﻿using DataStructures.Trees.SplayTree;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitTests.DataStructures.Trees.BinarySearchTree
+namespace UnitTests.DataStructures.Trees.SplayTreeTests
 {
     [TestClass]
-    public class BinarySearchTreeTests
+    public class SplayTreeTests
     {
         #region Local fields, test initialization and test clean up setup
 
-        BinarySearchTree<int> intTree;
-        BinarySearchTree<int> negativeIntTree;
-        BinarySearchTree<uint> uintTree;
-        BinarySearchTree<char> charTree;
-        BinarySearchTree<string> stringTree;
+        SplayTree<int> intTree;
+        SplayTree<int> negativeIntTree;
+        SplayTree<uint> uintTree;
+        SplayTree<char> charTree;
+        SplayTree<string> stringTree;
 
-        private readonly IConfiguration binarySearchTreeSection;
+        private readonly IConfiguration splayTreeSection;
 
         private List<int> intRange;
         private List<int> negativeIntRange;
@@ -27,12 +27,12 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
         private List<string> stringRange;
         private List<string> fruits;
 
-        public BinarySearchTreeTests()
+        public SplayTreeTests()
         {
             var configuration = new ConfigurationBuilder()
                                 .AddJsonFile("TestData.json").Build();
 
-            binarySearchTreeSection = configuration.GetSection("BinarySearchTree");
+            splayTreeSection = configuration.GetSection("SplayTree");
 
             intRange = new List<int>();
             negativeIntRange = new List<int>();
@@ -41,29 +41,29 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             stringRange = new List<string>();
             fruits = new List<string>();
 
-            intTree = new BinarySearchTree<int>();
-            negativeIntTree = new BinarySearchTree<int>();
-            uintTree = new BinarySearchTree<uint>();
-            charTree = new BinarySearchTree<char>();
-            stringTree = new BinarySearchTree<string>();
+            intTree = new SplayTree<int>();
+            negativeIntTree = new SplayTree<int>();
+            uintTree = new SplayTree<uint>();
+            charTree = new SplayTree<char>();
+            stringTree = new SplayTree<string>();
         }
 
         [TestInitialize]
         public void InitializeLocalFields()
         {
-            fruits = binarySearchTreeSection["Fruits"].Split(',').ToList<string>();
-            stringRange = binarySearchTreeSection["Names"].Split(',').ToList<string>();
+            fruits = splayTreeSection["Fruits"].Split(',').ToList<string>();
+            stringRange = splayTreeSection["Names"].Split(',').ToList<string>();
 
-            var tempCharRange = binarySearchTreeSection["Characters"].Split(',').ToList<string>();
+            var tempCharRange = splayTreeSection["Characters"].Split(',').ToList<string>();
             charRange.AddRange(tempCharRange.Select(item => Convert.ToChar(item)));
 
-            var tempIntRange = binarySearchTreeSection["RandomInts"].Split(',').ToList<string>();
+            var tempIntRange = splayTreeSection["RandomInts"].Split(',').ToList<string>();
             intRange.AddRange(tempIntRange.Select(item => Convert.ToInt32(item)));
 
-            var tempNegativeIntRange = binarySearchTreeSection["RandomNegativeInts"].Split(',').ToList<string>();
+            var tempNegativeIntRange = splayTreeSection["RandomNegativeInts"].Split(',').ToList<string>();
             negativeIntRange.AddRange(tempNegativeIntRange.Select(item => Convert.ToInt32(item)));
 
-            var tempUIntRange = binarySearchTreeSection["RandomUInts"].Split(',').ToList<string>();
+            var tempUIntRange = splayTreeSection["RandomUInts"].Split(',').ToList<string>();
             uintRange.AddRange(tempUIntRange.Select(item => Convert.ToUInt32(item)));
         }
 
@@ -264,47 +264,6 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
         }
 
         [TestMethod, TestCategory("Core functionality")]
-        public void Search_HigherValueNotAvailable_ReturnsNull()
-        {
-            //Arrange
-            for (int i = 0; i < intRange.Count; i++)
-            {
-                intTree.Insert(intRange[i]);
-            }
-
-            for (int i = 0; i < negativeIntRange.Count; i++)
-            {
-                negativeIntTree.Insert(negativeIntRange[i]);
-            }
-
-            //Act             
-
-            //Assert
-            Assert.IsNull(intTree.Search(int.MaxValue));
-            Assert.IsNull(negativeIntTree.Search(int.MinValue));
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void Search_LesserValueNotAvailable_IsNull()
-        {
-            for (int i = 0; i < intRange.Count; i++)
-            {
-                intTree.Insert(intRange[i]);
-            }
-
-            for (int i = 0; i < negativeIntRange.Count; i++)
-            {
-                negativeIntTree.Insert(negativeIntRange[i]);
-            }
-
-            //Act
-
-            //Assert
-            Assert.IsNull(intTree.Search(int.MinValue));
-            Assert.IsNull(negativeIntTree.Search(int.MinValue));
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
         public void Search_HighValueAvailable_IsSuccessful()
         {
             //Arrange
@@ -327,6 +286,56 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             Assert.IsTrue(intResult.Value > 0);
             Assert.IsNotNull(negativeIntResult);
             Assert.IsTrue(negativeIntResult.Value < 0);
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void Search_HigherValueNotAvailable_ReturnsNull()
+        {
+            //Arrange
+            for (int i = 0; i < intRange.Count; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
+
+            for (int i = 0; i < negativeIntRange.Count; i++)
+            {
+                negativeIntTree.Insert(negativeIntRange[i]);
+            }
+
+            //Act             
+
+            //Assert
+            Assert.IsNull(intTree.Search(int.MaxValue));
+            Assert.IsNull(negativeIntTree.Search(int.MinValue));
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void Search_HigherValueNotAvailable_SplaysTree()
+        {
+            //Arrange
+            for (int i = 0; i < intRange.Count; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
+
+            for (int i = 0; i < negativeIntRange.Count; i++)
+            {
+                negativeIntTree.Insert(negativeIntRange[i]);
+            }
+
+            //Act             
+            intTree.Search(int.MaxValue);
+            negativeIntTree.Search(int.MaxValue);
+            int expectedIntResult = intRange.Max();
+            int expectedNegativeIntResult = negativeIntRange.Max();
+            int actualIntResult = intTree.Root.Value;
+            int actualNegativeIntResult = negativeIntTree.Root.Value;
+
+            //Assert
+            Assert.IsNotNull(actualIntResult);
+            Assert.IsNotNull(actualNegativeIntResult);
+            Assert.AreEqual(expectedIntResult, actualIntResult);
+            Assert.AreEqual(expectedNegativeIntResult, actualNegativeIntResult);            
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -354,6 +363,55 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             Assert.IsNotNull(negativeIntResult);
             Assert.IsTrue(negativeIntResult.Value < 0);
             Assert.AreEqual(negativeIntRange.Min<int>(), negativeIntResult.Value);
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void Search_LesserValueNotAvailable_IsNull()
+        {
+            for (int i = 0; i < intRange.Count; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
+
+            for (int i = 0; i < negativeIntRange.Count; i++)
+            {
+                negativeIntTree.Insert(negativeIntRange[i]);
+            }
+
+            //Act
+
+            //Assert
+            Assert.IsNull(intTree.Search(int.MinValue));
+            Assert.IsNull(negativeIntTree.Search(int.MinValue));
+        }
+
+        [TestMethod, TestCategory("Core functionality")]
+        public void Search_LesserValueNotAvailable_SplaysTree()
+        {
+            //Arrange
+            for (int i = 0; i < intRange.Count; i++)
+            {
+                intTree.Insert(intRange[i]);
+            }
+
+            for (int i = 0; i < negativeIntRange.Count; i++)
+            {
+                negativeIntTree.Insert(negativeIntRange[i]);
+            }
+
+            //Act             
+            intTree.Search(int.MinValue);
+            negativeIntTree.Search(int.MinValue);
+            int expectedIntResult = intRange.Min();
+            int expectedNegativeIntResult = negativeIntRange.Min();
+            int actualIntResult = intTree.Root.Value;
+            int actualNegativeIntResult = negativeIntTree.Root.Value;
+
+            //Assert
+            Assert.IsNotNull(actualIntResult);
+            Assert.IsNotNull(actualNegativeIntResult);
+            Assert.AreEqual(expectedIntResult, actualIntResult);
+            Assert.AreEqual(expectedNegativeIntResult, actualNegativeIntResult);
         }
 
         [TestMethod, TestCategory("Core functionality")]
@@ -450,7 +508,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
             {
                 intTree.Insert(intRange[i]);
             }
-            var tempPreOrderInts = binarySearchTreeSection["PreOrderInts"].Split(',').ToList<string>();
+            var tempPreOrderInts = splayTreeSection["PreOrderInts"].Split(',').ToList<string>();
             List<int> expectedPreOrderInts = new List<int>();
             expectedPreOrderInts.AddRange(tempPreOrderInts.Select(item => Convert.ToInt32(item)));
 
@@ -472,7 +530,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 uintTree.Insert(uintRange[i]);
             }
 
-            var tempPreOrderUInts = binarySearchTreeSection["PreOrderUInts"].Split(',').ToList<string>();
+            var tempPreOrderUInts = splayTreeSection["PreOrderUInts"].Split(',').ToList<string>();
             List<uint> expectedPreOrderUInts = new List<uint>();
             expectedPreOrderUInts.AddRange(tempPreOrderUInts.Select(item => Convert.ToUInt32(item)));
 
@@ -494,7 +552,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 charTree.Insert(charRange[i]);
             }
 
-            var tempPreOrderChars = binarySearchTreeSection["PreOrderChars"].Split(',').ToList<string>();
+            var tempPreOrderChars = splayTreeSection["PreOrderChars"].Split(',').ToList<string>();
             List<char> expectedPreOrderChars = new List<char>();
             expectedPreOrderChars.AddRange(tempPreOrderChars.Select(item => Convert.ToChar(item)));
 
@@ -516,9 +574,9 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 stringTree.Insert(stringRange[i]);
             }
 
-            var tempPreOrderString = binarySearchTreeSection["PreOrderString"].Split(',').ToList<string>();
+            var tempPreOrderString = splayTreeSection["PreOrderString"].Split(',').ToList<string>();
             List<string> expectedPreOrderString = new List<string>();
-            expectedPreOrderString.AddRange(tempPreOrderString.Select(item=>item));
+            expectedPreOrderString.AddRange(tempPreOrderString.Select(item => item));
 
             //Act  
             List<string> actualPreOrderString = new List<string>();
@@ -548,7 +606,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 intTree.Insert(intRange[i]);
             }
 
-            var tempPostOrderInts = binarySearchTreeSection["PostOrderInts"].Split(',').ToList<string>();
+            var tempPostOrderInts = splayTreeSection["PostOrderInts"].Split(',').ToList<string>();
             List<int> expectedPostOrderInts = new List<int>();
             expectedPostOrderInts.AddRange(tempPostOrderInts.Select(item => Convert.ToInt32(item)));
 
@@ -571,7 +629,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 uintTree.Insert(uintRange[i]);
             }
 
-            var tempPostOrderUInts = binarySearchTreeSection["PostOrderUInts"].Split(',').ToList<string>();
+            var tempPostOrderUInts = splayTreeSection["PostOrderUInts"].Split(',').ToList<string>();
             List<uint> expectedPostOrderUInts = new List<uint>();
             expectedPostOrderUInts.AddRange(tempPostOrderUInts.Select(item => Convert.ToUInt32(item)));
 
@@ -593,7 +651,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 charTree.Insert(charRange[i]);
             }
 
-            var tempPostOrderChars = binarySearchTreeSection["PostOrderChars"].Split(',').ToList<string>();
+            var tempPostOrderChars = splayTreeSection["PostOrderChars"].Split(',').ToList<string>();
             List<char> expectedPostOrderChars = new List<char>();
             expectedPostOrderChars.AddRange(tempPostOrderChars.Select(item => Convert.ToChar(item)));
 
@@ -615,7 +673,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 stringTree.Insert(stringRange[i]);
             }
 
-            var tempPostOrderString = binarySearchTreeSection["PostOrderString"].Split(',').ToList<string>();
+            var tempPostOrderString = splayTreeSection["PostOrderString"].Split(',').ToList<string>();
             List<string> expectedPostOrderString = new List<string>();
             expectedPostOrderString.AddRange(tempPostOrderString.Select(item => item));
 
@@ -637,7 +695,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 intTree.Insert(intRange[i]);
             }
 
-            var tempBFSInts = binarySearchTreeSection["BreadthFirstInts"].Split(',').ToList<string>();
+            var tempBFSInts = splayTreeSection["BreadthFirstInts"].Split(',').ToList<string>();
             List<int> expectedBFSInts = new List<int>();
             expectedBFSInts.AddRange(tempBFSInts.Select(item => Convert.ToInt32(item)));
 
@@ -659,7 +717,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 uintTree.Insert(uintRange[i]);
             }
 
-            var tempBFSUInts = binarySearchTreeSection["BreadthFirstUInts"].Split(',').ToList<string>();
+            var tempBFSUInts = splayTreeSection["BreadthFirstUInts"].Split(',').ToList<string>();
             List<uint> expectedBFSUInts = new List<uint>();
             expectedBFSUInts.AddRange(tempBFSUInts.Select(item => Convert.ToUInt32(item)));
 
@@ -681,7 +739,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 charTree.Insert(charRange[i]);
             }
 
-            var tempBFSChars = binarySearchTreeSection["BreadthFirstChars"].Split(',').ToList<string>();
+            var tempBFSChars = splayTreeSection["BreadthFirstChars"].Split(',').ToList<string>();
             List<char> expectedBFSChars = new List<char>();
             expectedBFSChars.AddRange(tempBFSChars.Select(item => Convert.ToChar(item)));
 
@@ -703,7 +761,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
                 stringTree.Insert(stringRange[i]);
             }
 
-            var tempBFSString = binarySearchTreeSection["BreadthFirstString"].Split(',').ToList<string>();
+            var tempBFSString = splayTreeSection["BreadthFirstString"].Split(',').ToList<string>();
             List<string> expectedBFSString = new List<string>();
             expectedBFSString.AddRange(tempBFSString.Select(item => item));
 
@@ -726,91 +784,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
         //    //Assert
         //}
 
-        [TestMethod, TestCategory("Core functionality")]
-        public void HeightIntTreeRightSkewed_CalculatesSuccesfully()
-        {
-            //Arrange
-            for (int i = 0; i < 10; i++)
-            {
-                intTree.Insert(i);
-            }
-
-            //Act
-            int actualHeight = intTree.Height(intTree.Root);
-            int expectedHeight = 10;
-
-            //Assert
-            Assert.AreEqual(expectedHeight, actualHeight);
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void HeightIntTreeLeftSkewed_CalculatesSuccesfully()
-        {
-            //Arrange
-            for (int i = 0; i < 10; i++)
-            {
-                intTree.Insert(-i);
-            }
-
-            //Act
-            int actualHeight = intTree.Height(intTree.Root);
-            int expectedHeight = 10;
-
-            //Assert
-            Assert.AreEqual(expectedHeight, actualHeight);
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void HeightIntTree_CalculatesSuccesfully()
-        {
-            //Arrange
-            for (int i = 0; i < intRange.Count; i++)
-            {
-                intTree.Insert(intRange[i]);
-            }
-
-            //Act
-            int actualHeight = intTree.Height(intTree.Root);
-            int expectedHeight = 6;
-
-            //Assert
-            Assert.AreEqual(expectedHeight, actualHeight);
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void HeightCharTree_CalculatesSuccesfully()
-        {
-            //Arrange
-            for (int i = 0; i < charRange.Count; i++)
-            {
-                charTree.Insert(charRange[i]);
-            }
-
-            //Act
-            int actualHeight = charTree.Height(charTree.Root);
-            int expectedHeight = 8;
-
-            //Assert
-            Assert.AreEqual(expectedHeight, actualHeight);
-        }
-
-        [TestMethod, TestCategory("Core functionality")]
-        public void HeightStringTree_CalculatesSuccesfully()
-        {
-            //Arrange
-            for (int i = 0; i < stringRange.Count; i++)
-            {
-                stringTree.Insert(stringRange[i]);
-            }
-
-            //Act
-            int actualHeight = stringTree.Height(stringTree.Root);
-            int expectedHeight = 3;
-
-            //Assert
-            Assert.AreEqual(expectedHeight, actualHeight);
-        }
-
+       
         //[TestMethod, TestCategory("Core functionality")]
         //public void PostOrderTraversal_UserDefinedObjectTreeTraversal_IsSuccessful()
         //{
@@ -833,7 +807,7 @@ namespace UnitTests.DataStructures.Trees.BinarySearchTree
         }
 
         [TestMethod, TestCategory("Core functionality")]
-        public void Delete_ValueIsNotAvailableInTree_ThrowsException()
+        public void Delete_NullTree_ThrowsException()
         {
             //Arrange
 

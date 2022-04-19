@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Err = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
-namespace DataStructures.Trees.BinarySearchTree
+namespace DataStructures.Trees.SplayTree
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class BinarySearchTree<T>
+    public class SplayTree<T>
     {
+
         /// <summary>
         /// 
         /// </summary>
@@ -20,28 +17,9 @@ namespace DataStructures.Trees.BinarySearchTree
 
         Queue<Node<T>> queue;
 
-        public BinarySearchTree()
+        public SplayTree()
         {
             queue = new Queue<Node<T>>();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        public int Height(Node<T> node)
-        {
-            if (node is null)
-            {
-                return 0;
-            }
-
-            int leftHeight = Height(node.LeftChild);
-            int rightHeight = Height(node.RightChild);
-
-            int result = Math.Max(leftHeight, rightHeight) + 1;
-            return result;
         }
 
         /// <summary>
@@ -54,7 +32,7 @@ namespace DataStructures.Trees.BinarySearchTree
             {
                 if (value is null)
                 {
-                    throw new ArgumentNullException(Err.BinarySearchTree_Insert_NullValue);
+                    throw new ArgumentNullException(Err.SplayTree_Insert_NullValue);
                 }
 
                 // If the root is null then create a new root
@@ -79,6 +57,8 @@ namespace DataStructures.Trees.BinarySearchTree
                                 if (current.RightChild is null)
                                 {
                                     current.RightChild = new Node<T>(value);
+                                    current.RightChild.Parent = current;
+                                    Splay(current.RightChild);
                                     return;
                                 }
                                 else
@@ -93,6 +73,8 @@ namespace DataStructures.Trees.BinarySearchTree
                                 if (current.LeftChild is null)
                                 {
                                     current.LeftChild = new Node<T>(value);
+                                    current.LeftChild.Parent = current;
+                                    Splay(current.LeftChild);
                                     return;
                                 }
                                 else
@@ -103,7 +85,7 @@ namespace DataStructures.Trees.BinarySearchTree
 
                             // The current and the value to be inserted are equal.
                             default:
-                                throw new ArgumentException(Err.BinarySearchTree_Insert_EqualValue);
+                                throw new ArgumentException(Err.SplayTree_Insert_EqualValue);
                         }
                     }
                 }
@@ -125,13 +107,15 @@ namespace DataStructures.Trees.BinarySearchTree
         {
             try
             {
+                Node<T> current = Root;
+                Node<T> parent = current;
+
                 if (Root is null)
                 {
-                    throw new InvalidOperationException(Err.BinarySearchTree_Search_EmptyTree);
+                    throw new InvalidOperationException(Err.SplayTree_Search_EmptyTree);
                 }
                 else
                 {
-                    Node<T> current = Root;
                     while (!current.Value.Equals(value))
                     {
                         switch (Comparer<T>.Default.Compare(current.Value, value))
@@ -139,9 +123,11 @@ namespace DataStructures.Trees.BinarySearchTree
                             // Current node's value is less than the value that needs to be searched
                             // Move to the right child.
                             case < 0:
+                                parent = current;
                                 current = current.RightChild;
                                 if (current is null)
                                 {
+                                    Splay(parent);
                                     return null;
                                 }
                                 break;
@@ -149,9 +135,11 @@ namespace DataStructures.Trees.BinarySearchTree
                             // Current node's value is more than the value that needs to be searched
                             // Move to the left child.
                             case > 0:
+                                parent = current;
                                 current = current.LeftChild;
                                 if (current is null)
                                 {
+                                    Splay(parent);
                                     return null;
                                 }
                                 break;
@@ -162,8 +150,10 @@ namespace DataStructures.Trees.BinarySearchTree
                         }
                     }
 
-                    return current;
+                    Splay(current);
                 }
+
+                return Root;
             }
             catch (Exception ex)
             {
@@ -276,7 +266,7 @@ namespace DataStructures.Trees.BinarySearchTree
         {
             /*
                 Pseudocode:
-                There are following scenarios thaht we need to code for:
+                There are following scenarios that we need to code for:
                 1. Deletion of a node with no children
                 2. Deletion of a node with a single child
                 3. Deletion of a node with two children
@@ -307,11 +297,6 @@ namespace DataStructures.Trees.BinarySearchTree
                 throw new InvalidOperationException(Err.BinarySearchTree_Deletion_Empty);
             }
 
-            if (Search(value) is null)
-            {
-                throw new InvalidOperationException(Err.BinarySearchTree_Deletion_NodeNotFound);
-            }
-
             #region Deletion of a node with no child
 
             while (Comparer<T>.Default.Compare(current.Value, value) != 0)
@@ -325,6 +310,11 @@ namespace DataStructures.Trees.BinarySearchTree
                         isRightChild = true;
                         isLeftChild = false;
                         current = current.RightChild;
+                        if (current is null)
+                        {
+                            Splay(parent);
+                            return;
+                        }
                         break;
 
                     // Current node's value is more than the value that needs to be searched
@@ -334,6 +324,11 @@ namespace DataStructures.Trees.BinarySearchTree
                         isLeftChild = true;
                         isRightChild = false;
                         current = current.LeftChild;
+                        if (current is null)
+                        {
+                            Splay(parent);
+                            return;
+                        }
                         break;
 
                     // Current node's value is equal to the value that needs to be searched.
@@ -351,10 +346,12 @@ namespace DataStructures.Trees.BinarySearchTree
                 else if (isLeftChild)
                 {
                     parent.LeftChild = null;
+                    Splay(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = null;
+                    Splay(parent);
                 }
             }
 
@@ -367,10 +364,12 @@ namespace DataStructures.Trees.BinarySearchTree
                 if (isLeftChild)    // Case 1: Where the node to be deleted has a left or right child.
                 {
                     parent.LeftChild = current.LeftChild;
+                    Splay(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = current.LeftChild;
+                    Splay(parent);
                 }
                 else if (current == Root)    // Case 2: Where the node to be deleted is a root node.
                 {
@@ -382,10 +381,12 @@ namespace DataStructures.Trees.BinarySearchTree
                 if (isLeftChild)    // Case 1: Where the node to be deleted has a left or right child.
                 {
                     parent.LeftChild = current.RightChild;
+                    Splay(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = current.RightChild;
+                    Splay(parent);
                 }
                 else if (current == Root)    // Case 2: Where the node to be deleted is a root node.
                 {
@@ -410,10 +411,12 @@ namespace DataStructures.Trees.BinarySearchTree
                 else if (isLeftChild)
                 {
                     parent.LeftChild = successor;
+                    Splay(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = successor;
+                    Splay(parent);
                 }
 
                 successor.LeftChild = current.LeftChild;
@@ -464,6 +467,145 @@ namespace DataStructures.Trees.BinarySearchTree
             }
 
             return successor;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodeToBeSplayed"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void Splay(Node<T> nodeToBeSplayed)
+        {
+            try
+            {
+                if (nodeToBeSplayed == null || nodeToBeSplayed.Equals(Root))
+                {
+                    return;
+                }
+
+                while (!nodeToBeSplayed.Equals(Root))
+                {
+                    if (nodeToBeSplayed.Parent.Equals(Root))
+                    {
+                        if (nodeToBeSplayed.Parent.LeftChild is not null && nodeToBeSplayed.Parent.LeftChild.Equals(nodeToBeSplayed))
+                        {
+                            RotateRight(nodeToBeSplayed.Parent);
+                        }
+                        else if (nodeToBeSplayed.Parent.RightChild is not null && nodeToBeSplayed.Parent.RightChild.Equals(nodeToBeSplayed))
+                        {
+                            RotateLeft(nodeToBeSplayed.Parent);
+                        }
+                    }
+                    else if (nodeToBeSplayed == nodeToBeSplayed.Parent.LeftChild && nodeToBeSplayed.Parent == nodeToBeSplayed.Parent.Parent.LeftChild)
+                    {
+                        RotateRight(nodeToBeSplayed.Parent.Parent);
+                        RotateRight(nodeToBeSplayed.Parent);
+                    }
+                    else if (nodeToBeSplayed == nodeToBeSplayed.Parent.RightChild && nodeToBeSplayed.Parent == nodeToBeSplayed.Parent.Parent.RightChild)
+                    {
+                        RotateLeft(nodeToBeSplayed.Parent.Parent);
+                        RotateLeft(nodeToBeSplayed.Parent);
+                    }
+                    else if (nodeToBeSplayed == nodeToBeSplayed.Parent.LeftChild && nodeToBeSplayed.Parent == nodeToBeSplayed.Parent.Parent.RightChild)
+                    {
+                        RotateRight(nodeToBeSplayed.Parent);
+                        RotateLeft(nodeToBeSplayed.Parent);
+                    }
+                    else
+                    {
+                        RotateLeft(nodeToBeSplayed.Parent);
+                        RotateRight(nodeToBeSplayed.Parent);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodeToBeRotated"></param>
+        /// <returns></returns>
+        private void RotateRight(Node<T> parent)
+        {
+            /*
+                Pseudocode: 
+            
+             */
+            Node<T> childToBeRotated = parent.LeftChild;
+            if (childToBeRotated == null)
+            {
+                return;
+            }
+
+            parent.LeftChild = childToBeRotated.RightChild;
+            if (childToBeRotated.RightChild != null)
+            {
+                childToBeRotated.RightChild.Parent = parent;
+            }
+
+            childToBeRotated.Parent = parent.Parent;
+            if (parent.Equals(Root))
+            {
+                Root = childToBeRotated;
+            }
+            else if (parent == parent.Parent.LeftChild)
+            {
+                parent.Parent.LeftChild = childToBeRotated;
+            }
+            else
+            {
+                parent.Parent.RightChild = childToBeRotated;
+            }
+
+            childToBeRotated.RightChild = parent;
+            parent.Parent = childToBeRotated;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodeToBeRotated"></param>
+        /// <returns></returns>
+        private void RotateLeft(Node<T> parent)
+        {
+            /*
+                Pseudocode: 
+                
+             */
+            Node<T> childToBeRotated = parent.RightChild;
+            if (childToBeRotated == null)
+            {
+                return;
+            }
+
+            parent.RightChild = childToBeRotated.LeftChild;
+            if (childToBeRotated.LeftChild != null)
+            {
+                childToBeRotated.LeftChild.Parent = parent;
+            }
+
+            childToBeRotated.Parent = parent.Parent;
+
+            if (parent.Equals(Root))
+            {
+                Root = childToBeRotated;
+            }
+            else if (parent == parent.Parent.LeftChild)
+            {
+                parent.Parent.LeftChild = childToBeRotated;
+            }
+            else
+            {
+                parent.Parent.RightChild = childToBeRotated;
+            }
+
+            childToBeRotated.LeftChild = parent;
+            parent.Parent = childToBeRotated;
         }
     }
 }

@@ -72,6 +72,51 @@ namespace DataStructures.ErrorMessages {
         /// <summary>
         ///   Looks up a localized string similar to The tree is empty. You cannot delete anything from an empty tree..
         /// </summary>
+        public static string AVLTree_Deletion_Empty {
+            get {
+                return ResourceManager.GetString("AVLTree_Deletion_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The tree does not contain the node that is desired to be deleted..
+        /// </summary>
+        public static string AVLTree_Deletion_NodeNotFound {
+            get {
+                return ResourceManager.GetString("AVLTree_Deletion_NodeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insertion of a value already present in the tree is not allowed..
+        /// </summary>
+        public static string AVLTree_Insert_EqualValue {
+            get {
+                return ResourceManager.GetString("AVLTree_Insert_EqualValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value intended to be inserted cannot be null..
+        /// </summary>
+        public static string AVLTree_Insert_NullValue {
+            get {
+                return ResourceManager.GetString("AVLTree_Insert_NullValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The tree is empty. You cannot run search operation on an empty tree..
+        /// </summary>
+        public static string AVLTree_Search_EmptyTree {
+            get {
+                return ResourceManager.GetString("AVLTree_Search_EmptyTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The tree is empty. You cannot delete anything from an empty tree..
+        /// </summary>
         public static string BinarySearchTree_Deletion_Empty {
             get {
                 return ResourceManager.GetString("BinarySearchTree_Deletion_Empty", resourceCulture);
@@ -219,6 +264,42 @@ namespace DataStructures.ErrorMessages {
         public static string Queue_Enqueue_ValueIsNotValid {
             get {
                 return ResourceManager.GetString("Queue_Enqueue_ValueIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The tree is empty. You cannot delete anything from an empty tree..
+        /// </summary>
+        public static string SplayTree_Deletion_Empty {
+            get {
+                return ResourceManager.GetString("SplayTree_Deletion_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insertion of a value already present in the tree is not allowed..
+        /// </summary>
+        public static string SplayTree_Insert_EqualValue {
+            get {
+                return ResourceManager.GetString("SplayTree_Insert_EqualValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value intended to be inserted cannot be null..
+        /// </summary>
+        public static string SplayTree_Insert_NullValue {
+            get {
+                return ResourceManager.GetString("SplayTree_Insert_NullValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The tree is empty. You cannot run search operation on an empty tree..
+        /// </summary>
+        public static string SplayTree_Search_EmptyTree {
+            get {
+                return ResourceManager.GetString("SplayTree_Search_EmptyTree", resourceCulture);
             }
         }
     }

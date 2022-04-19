@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Err = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
-namespace DataStructures.Trees.BinarySearchTree
+namespace DataStructures.Trees.AVLTree
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class BinarySearchTree<T>
+    public class AVLTree<T>
     {
         /// <summary>
         /// 
@@ -20,7 +16,7 @@ namespace DataStructures.Trees.BinarySearchTree
 
         Queue<Node<T>> queue;
 
-        public BinarySearchTree()
+        public AVLTree()
         {
             queue = new Queue<Node<T>>();
         }
@@ -54,13 +50,14 @@ namespace DataStructures.Trees.BinarySearchTree
             {
                 if (value is null)
                 {
-                    throw new ArgumentNullException(Err.BinarySearchTree_Insert_NullValue);
+                    throw new ArgumentNullException(Err.AVLTree_Insert_NullValue);
                 }
 
                 // If the root is null then create a new root
                 if (Root is null)
                 {
                     Root = new Node<T>(value);
+                    Root.UpdateHeightAndBalanceFactor();
                     return;
                 }
                 else
@@ -79,6 +76,8 @@ namespace DataStructures.Trees.BinarySearchTree
                                 if (current.RightChild is null)
                                 {
                                     current.RightChild = new Node<T>(value);
+                                    current.RightChild.UpdateHeightAndBalanceFactor();
+                                    Rebalance(current.RightChild);
                                     return;
                                 }
                                 else
@@ -93,6 +92,8 @@ namespace DataStructures.Trees.BinarySearchTree
                                 if (current.LeftChild is null)
                                 {
                                     current.LeftChild = new Node<T>(value);
+                                    current.LeftChild.UpdateHeightAndBalanceFactor();
+                                    Rebalance(current.LeftChild);
                                     return;
                                 }
                                 else
@@ -103,7 +104,7 @@ namespace DataStructures.Trees.BinarySearchTree
 
                             // The current and the value to be inserted are equal.
                             default:
-                                throw new ArgumentException(Err.BinarySearchTree_Insert_EqualValue);
+                                throw new ArgumentException(Err.AVLTree_Insert_EqualValue);
                         }
                     }
                 }
@@ -127,7 +128,7 @@ namespace DataStructures.Trees.BinarySearchTree
             {
                 if (Root is null)
                 {
-                    throw new InvalidOperationException(Err.BinarySearchTree_Search_EmptyTree);
+                    throw new InvalidOperationException(Err.AVLTree_Search_EmptyTree);
                 }
                 else
                 {
@@ -293,7 +294,7 @@ namespace DataStructures.Trees.BinarySearchTree
                 3. Deletion of a node with both left and right children
                 Find out the node that we need to delete adn then figure out if the node has two children.
                 In this case we need to figure out eh in-order successor i.e. the node that is the successor in
-                the in-order sequence to the node to be deleted adn then change the references accordingly.
+                the in-order sequence to the node to be deleted and then change the references accordingly.
              */
 
             // Variable declaration
@@ -304,12 +305,12 @@ namespace DataStructures.Trees.BinarySearchTree
             // Throw an exception if the tree is empty.
             if (Root is null)
             {
-                throw new InvalidOperationException(Err.BinarySearchTree_Deletion_Empty);
+                throw new InvalidOperationException(Err.AVLTree_Deletion_Empty);
             }
 
             if (Search(value) is null)
             {
-                throw new InvalidOperationException(Err.BinarySearchTree_Deletion_NodeNotFound);
+                throw new InvalidOperationException(Err.AVLTree_Deletion_NodeNotFound);
             }
 
             #region Deletion of a node with no child
@@ -351,10 +352,14 @@ namespace DataStructures.Trees.BinarySearchTree
                 else if (isLeftChild)
                 {
                     parent.LeftChild = null;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = null;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
             }
 
@@ -367,14 +372,20 @@ namespace DataStructures.Trees.BinarySearchTree
                 if (isLeftChild)    // Case 1: Where the node to be deleted has a left or right child.
                 {
                     parent.LeftChild = current.LeftChild;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = current.LeftChild;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
                 else if (current == Root)    // Case 2: Where the node to be deleted is a root node.
                 {
                     Root = current.LeftChild;
+                    Root.UpdateHeightAndBalanceFactor();
+                    Rebalance(Root);
                 }
             }
             else if (current.LeftChild is null)
@@ -382,14 +393,20 @@ namespace DataStructures.Trees.BinarySearchTree
                 if (isLeftChild)    // Case 1: Where the node to be deleted has a left or right child.
                 {
                     parent.LeftChild = current.RightChild;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = current.RightChild;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
                 else if (current == Root)    // Case 2: Where the node to be deleted is a root node.
                 {
                     Root = current.LeftChild;
+                    Root.UpdateHeightAndBalanceFactor();
+                    Rebalance(Root);
                 }
             }
             #endregion
@@ -410,10 +427,14 @@ namespace DataStructures.Trees.BinarySearchTree
                 else if (isLeftChild)
                 {
                     parent.LeftChild = successor;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
                 else if (isRightChild)
                 {
                     parent.RightChild = successor;
+                    parent.UpdateHeightAndBalanceFactor();
+                    Rebalance(parent);
                 }
 
                 successor.LeftChild = current.LeftChild;
@@ -464,6 +485,101 @@ namespace DataStructures.Trees.BinarySearchTree
             }
 
             return successor;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodeToBeRebalanced"></param>
+        private void Rebalance(Node<T> nodeToBeRebalanced)
+        {
+            /*
+                Pseudocode:
+                1. Determine the kind of relationship that the node is having with the neighbour nodes - LL, RR, LR or RL.
+                2. Depending on the relationship, determine the appropriate rotation of the 
+                   child node (if applicable) and the argument node.
+             */
+
+            // Heaviness: Right     Relationship: RR    Desired rotation: Left
+            if (nodeToBeRebalanced.BalanceFactor < -1 && nodeToBeRebalanced.RightChild.BalanceFactor != 1)
+            {
+                nodeToBeRebalanced = RotateLeft(nodeToBeRebalanced);
+            }
+            // Heaviness: Right     Relationship: RL    Desired rotation: Right-Left
+            else if (nodeToBeRebalanced.BalanceFactor < -1 && nodeToBeRebalanced.LeftChild.BalanceFactor == 1)
+            {
+                nodeToBeRebalanced.RightChild = RotateRight(nodeToBeRebalanced.RightChild);
+                nodeToBeRebalanced = RotateLeft(nodeToBeRebalanced);
+            }
+            // Heaviness: Left      Relationship: LL   Desired rotation: Right
+            else if (nodeToBeRebalanced.BalanceFactor > 1 && nodeToBeRebalanced.RightChild.BalanceFactor != -1)
+            {
+                nodeToBeRebalanced = RotateRight(nodeToBeRebalanced);
+            }
+            // Heaviness: Left      Relationship: LR    Desired rotation: Left-Right
+            else if (nodeToBeRebalanced.BalanceFactor > 1 && nodeToBeRebalanced.RightChild.BalanceFactor == -1)
+            {
+                nodeToBeRebalanced.LeftChild = RotateLeft(nodeToBeRebalanced.LeftChild);
+                nodeToBeRebalanced = RotateRight(nodeToBeRebalanced);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodeToBeRotated"></param>
+        /// <returns></returns>
+        private Node<T> RotateRight(Node<T> nodeToBeRotated)
+        {
+            /*
+                Pseudocode: 
+                1. Store the node to be rotated in a temporary variable.
+                2. Preserve the node's left's right child. This needs to be later
+                   attached to the rotated node.
+                3. Update the balance factor and height of all the nodes which gets 
+                   moved around.
+                4. Return the updated node.
+             */
+            Node<T> nodeBeforeRotation = nodeToBeRotated;
+            Node<T> rightChildOfLeftChild = nodeToBeRotated.LeftChild.RightChild;
+
+            nodeToBeRotated = nodeToBeRotated.LeftChild;
+            nodeToBeRotated.RightChild = nodeBeforeRotation;
+            nodeToBeRotated.RightChild.LeftChild = rightChildOfLeftChild;
+
+            nodeToBeRotated.RightChild.UpdateHeightAndBalanceFactor();
+            nodeToBeRotated.UpdateHeightAndBalanceFactor();
+
+            return nodeToBeRotated;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodeToBeRotated"></param>
+        /// <returns></returns>
+        private Node<T> RotateLeft(Node<T> nodeToBeRotated)
+        {
+            /*
+                Pseudocode: 
+                1. Store the node to be rotated in a temporary variable.
+                2. Preserve the node's left's right child. This needs to be later
+                   attached to the rotated node.
+                3. Update the balance factor and height of all the nodes which gets 
+                   moved around.
+                4. Return the updated node.
+             */
+            Node<T> nodeBeforeRotation = nodeToBeRotated;
+            Node<T> leftChildOfRightChild = nodeToBeRotated.RightChild.LeftChild;
+
+            nodeToBeRotated = nodeToBeRotated.RightChild;
+            nodeToBeRotated.LeftChild = nodeBeforeRotation;
+            nodeToBeRotated.LeftChild.RightChild = leftChildOfRightChild;
+
+            nodeToBeRotated.LeftChild.UpdateHeightAndBalanceFactor();
+            nodeToBeRotated.UpdateHeightAndBalanceFactor();
+
+            return nodeToBeRotated;
         }
     }
 }
