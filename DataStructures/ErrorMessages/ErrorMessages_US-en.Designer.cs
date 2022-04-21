@@ -115,6 +115,33 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insertion of a duplicate element is not allowed..
+        /// </summary>
+        public static string BinaryHeap_Insert_DuplicateElement {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Insert_DuplicateElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The root cannot be obtained since the heap is empty..
+        /// </summary>
+        public static string BinaryHeap_Root_EmptyHeap {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Root_EmptyHeap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or both the supplied indexes are either less than zero or outside of the bounds of the underlying data store..
+        /// </summary>
+        public static string BinaryHeap_Swap_IndexOutOfRange {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Swap_IndexOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The tree is empty. You cannot delete anything from an empty tree..
         /// </summary>
         public static string BinarySearchTree_Deletion_Empty {

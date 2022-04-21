@@ -141,6 +141,18 @@
     <value>The tree is empty. You cannot run search operation on an empty tree.</value>
     <comment>The error message needs to be presented when an attempt is made to run a search on an empty binary search tree.</comment>
   </data>
+  <data name="BinaryHeap_Insert_DuplicateElement" xml:space="preserve">
+    <value>Insertion of a duplicate element is not allowed.</value>
+    <comment>The error message needs to be presented when an attempt is made to insert a duplicate element in the underlying binary heap.</comment>
+  </data>
+  <data name="BinaryHeap_Root_EmptyHeap" xml:space="preserve">
+    <value>The root cannot be obtained since the heap is empty.</value>
+    <comment>The error message needs to be presented when an attempt is made to access root element from an empty heap.</comment>
+  </data>
+  <data name="BinaryHeap_Swap_IndexOutOfRange" xml:space="preserve">
+    <value>One or both the supplied indexes are either less than zero or outside of the bounds of the underlying data store.</value>
+    <comment>The error message needs to be presented when an attempt is made to supply one or both the indexes that are either less than zero or greater than the count of elements of the underlying list.</comment>
+  </data>
   <data name="BinarySearchTree_Deletion_Empty" xml:space="preserve">
     <value>The tree is empty. You cannot delete anything from an empty tree.</value>
     <comment>The error message needs to be presented when an attempt is made to delete an entry from an empty tree.</comment>
