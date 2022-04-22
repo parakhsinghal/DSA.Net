@@ -124,6 +124,24 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The element that needs to be removed was not found in the heap..
+        /// </summary>
+        public static string BinaryHeap_Remove_ElementNotFound {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Remove_ElementNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The heap is empty. Element cannot be removed from an empty heap..
+        /// </summary>
+        public static string BinaryHeap_Remove_EmptyHeap {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Remove_EmptyHeap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The root cannot be obtained since the heap is empty..
         /// </summary>
         public static string BinaryHeap_Root_EmptyHeap {

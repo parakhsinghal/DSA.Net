@@ -18,7 +18,7 @@ namespace DataStructures.Trees.BinaryHeap
         /// fact that the user does not have to bother to declare the size of the collection
         /// and a list can dynamically expand itself only to the extent to accommodate newer 
         /// element(s) without pre-emptive over-expansion.</remarks>
-        private List<T> dataStore;
+        protected List<T> dataStore;
         public T Root
         {
             get
@@ -63,23 +63,58 @@ namespace DataStructures.Trees.BinaryHeap
 
         }
 
-        public T Remove(T element)
+        public void Remove(T element)
         {
-            throw new NotImplementedException();
+            /*
+                Pseudocode:
+                1. Search for the element in the list if it is available. Get the index of the element
+                   and if the element is greater than 1, then proceed, otherwise throw exception.
+                2. Since this is a heap we always remove the root and repalce the last element in the 
+                   data store with it. Becasue we have to maintain the heap property (min/max) we do the
+                   heapifydown or heapifyup operations from there, till things achieve an equilibrium.
+                   
+             */
+
+            try
+            {
+                if (Count == 0)
+                {
+                    throw new InvalidOperationException(Err.BinaryHeap_Remove_EmptyHeap);
+                }
+
+                int indexOfElementToBeDeleted = dataStore.IndexOf(element);
+                if (indexOfElementToBeDeleted < 0)
+                {
+                    throw new ArgumentException(Err.BinaryHeap_Remove_ElementNotFound);
+                }
+
+                int indexOfLastElement = Count - 1;
+
+                Swap(indexOfElementToBeDeleted, indexOfLastElement);
+
+                dataStore.RemoveAt(indexOfLastElement);
+
+                HeapifyDown(indexOfElementToBeDeleted);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
         }
 
-        private void Swap(int firstIndex, int secondIndex)
+        protected void Swap(int toBeSwapped, int swappedWith)
         {
             try
             {
-                if (firstIndex < 0 || secondIndex < 0 || firstIndex > Count || secondIndex > Count)
+                if (toBeSwapped < 0 || swappedWith < 0 || toBeSwapped > Count || swappedWith > Count)
                 {
                     throw new IndexOutOfRangeException(Err.BinaryHeap_Swap_IndexOutOfRange);
                 }
 
-                T temp = dataStore[firstIndex];
-                dataStore[firstIndex] = dataStore[secondIndex];
-                dataStore[secondIndex] = temp;
+                T temp = dataStore[toBeSwapped];
+                dataStore[toBeSwapped] = dataStore[swappedWith];
+                dataStore[swappedWith] = temp;
 
             }
             catch (Exception ex)
