@@ -145,6 +145,14 @@
     <value>Insertion of a duplicate element is not allowed.</value>
     <comment>The error message needs to be presented when an attempt is made to insert a duplicate element in the underlying binary heap.</comment>
   </data>
+  <data name="BinaryHeap_Max_EmptyHeap" xml:space="preserve">
+    <value>A maximum element cannot be obtained since the heap is empty.</value>
+    <comment>The error message needs to be presented when an attempt is made to extract a maximum element from an empty heap.</comment>
+  </data>
+  <data name="BinaryHeap_Min_EmptyHeap" xml:space="preserve">
+    <value>A minimum element cannot be obtained since the heap is empty.</value>
+    <comment>The error message needs to be presented when an attempt is made to extract a minimum element from an empty heap.</comment>
+  </data>
   <data name="BinaryHeap_Remove_ElementNotFound" xml:space="preserve">
     <value>The element that needs to be removed was not found in the heap.</value>
     <comment>The error message needs to be presented when an attempt is made to remove an element from the heap and is not found to be available in the heap.</comment>

@@ -124,6 +124,24 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A maximum element cannot be obtained since the heap is empty..
+        /// </summary>
+        public static string BinaryHeap_Max_EmptyHeap {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Max_EmptyHeap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A minimum element cannot be obtained since the heap is empty..
+        /// </summary>
+        public static string BinaryHeap_Min_EmptyHeap {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Min_EmptyHeap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The element that needs to be removed was not found in the heap..
         /// </summary>
         public static string BinaryHeap_Remove_ElementNotFound {

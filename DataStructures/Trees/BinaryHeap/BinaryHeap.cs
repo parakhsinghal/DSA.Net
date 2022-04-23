@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Err = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.Trees.BinaryHeap
@@ -19,6 +16,7 @@ namespace DataStructures.Trees.BinaryHeap
         /// and a list can dynamically expand itself only to the extent to accommodate newer 
         /// element(s) without pre-emptive over-expansion.</remarks>
         protected List<T> dataStore;
+
         public T Root
         {
             get
@@ -31,10 +29,14 @@ namespace DataStructures.Trees.BinaryHeap
                 {
                     throw new InvalidOperationException(Err.BinaryHeap_Root_EmptyHeap);
                 }
-
             }
         }
+
         public int Count { get { return dataStore.Count; } }
+
+        protected virtual T Minimum { get; set; }
+
+        protected virtual T Maximum { get; set; }
 
         public BinaryHeap()
         {
@@ -52,7 +54,7 @@ namespace DataStructures.Trees.BinaryHeap
 
                 dataStore.Add(element);
                 int indexOfInsertedElement = Count - 1;
-                HeapifyUp(indexOfInsertedElement);
+                HeapifyUpIterative(indexOfInsertedElement);
                 return true;
             }
             catch (Exception ex)
@@ -94,7 +96,7 @@ namespace DataStructures.Trees.BinaryHeap
 
                 dataStore.RemoveAt(indexOfLastElement);
 
-                HeapifyDown(indexOfElementToBeDeleted);
+                HeapifyDownIterative(indexOfElementToBeDeleted);
             }
             catch (Exception ex)
             {
@@ -125,12 +127,21 @@ namespace DataStructures.Trees.BinaryHeap
 
         }
 
-        protected virtual void HeapifyUp(int indexOfElement)
+        protected virtual void HeapifyUpIterative(int indexOfElement)
         {
             throw new NotImplementedException();
         }
 
-        protected virtual void HeapifyDown(int indexOfElement)
+        protected virtual void HeapifyUpRecursive(int indexOfElement)
+        {
+            throw new NotImplementedException();        }
+
+        protected virtual void HeapifyDownIterative(int indexOfElement)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected virtual void HeapifyDownRecursive(int indexOfElement)
         {
             throw new NotImplementedException();
         }
