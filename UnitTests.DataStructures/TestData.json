@@ -13,9 +13,11 @@
     "Fruits": "apple,mango,grapes,pomegranate,watermelon,guava",
     "Names": "Ram,Shyam,Suresh,Ramesh,Dinesh,Mahesh"
   },
+
   "LinkedList": {
     "Names": "Ram,Shyam,Suresh,Ramesh,Dinesh,Mahesh"
   },
+
   "BinarySearchTree": {
     "RandomInts": "56,73,105,87,159,132,23,90,19,124",
     "RandomNegativeInts": "-456,-87,-92,-158,-496,-106,-23,-75,-367,-276",
@@ -86,6 +88,18 @@
     "PreOrderString": "Mahesh,Dinesh,Ram,Ramesh,Suresh,Shyam",
     "PostOrderString": "Dinesh,Shyam,Suresh,Ramesh,Ram,Mahesh",
     "BreadthFirstString": "Mahesh,Dinesh,Ram,Ramesh,Suresh,Shyam"
-  }
+  },
 
+  "MaxHeap": {
+    "RandomInts": "56,73,105,87,159,132,23,90,19,124",
+    "RandomNegativeInts": "-456,-87,-92,-158,-496,-106,-23,-75,-367,-276",
+    "RandomUInts": "78,99,29,156,22,13,183,96,30,85",
+    "Characters": "a,z,x,r,t,h,w,p,i,m",
+    "Names": "Ram,Shyam,Suresh,Ramesh,Dinesh,Mahesh",
+    "ExpectedDeleteIntRoot": "132",
+    "ExpectedDeleteUIntRoot": "156",
+    "ExpectedDeleteNegativeRoot": "-75",
+    "ExpectedDeleteStringRoot": "Shyam",
+    "ExpectedDeleteCharRoot": "x"
+  }
 }

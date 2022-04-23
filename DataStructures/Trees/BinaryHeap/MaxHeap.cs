@@ -5,8 +5,18 @@ using Err = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.Trees.BinaryHeap
 {
+    /// <summary>
+    /// MaxHeap is a class derived from the BinaryHeap class. It focuses on
+    /// implementing a heap with the maximum heap property thereby, arranging 
+    /// the elements in such a way that the parents are always greater than the 
+    /// children.
+    /// </summary>
+    /// <typeparam name="T">The data type of the MaxHeap class. E.g. int, char or a user defined type.</typeparam>
     public class MaxHeap<T> : BinaryHeap<T>
     {
+        /// <summary>
+        /// Provides the minimum element in the heap.
+        /// </summary>
         protected override T Minimum
         {
             get
@@ -22,8 +32,20 @@ namespace DataStructures.Trees.BinaryHeap
             }
         }
 
+        /// <summary>
+        /// Provides the maximum element in the heap.
+        /// </summary>
         protected override T Maximum { get { return Root; } }
 
+        /// <summary>
+        /// HeapifyUp method re-arranges the elements in a heap after the insertion 
+        /// of an element restoring the heap property (min or max heap) and the 
+        /// shape property. This method does it iteratively.
+        /// </summary>
+        /// <remarks>The newly inserted element is inserted at the last of the data store
+        /// and from there moved up depending upon the heap property.</remarks>
+        /// <param name="indexOfElement">Index of the element that's been inserted and needs
+        /// to be appropriately placed in the heap to restore the heap property.</param>
         protected override void HeapifyUpIterative(int indexOfElement)
         {
             // Parent's index = (index of element inserted - 1 )/2
@@ -49,6 +71,16 @@ namespace DataStructures.Trees.BinaryHeap
             }
         }
 
+        /// <summary>
+        /// HeapifyUp method re-arranges the elements in a heap after the insertion 
+        /// of an element restoring the heap property (min or max heap) and the 
+        /// shape propertyof the heap (complete binary tree). 
+        /// This method does it recursively.
+        /// </summary>
+        /// <remarks>The newly inserted element is inserted at the last of the data store
+        /// and from there moved up depending upon the heap property.</remarks>
+        /// <param name="indexOfElement">Index of the element that's been inserted and needs
+        /// to be appropriately placed in the heap to restore the heap property.</param>
         protected override void HeapifyUpRecursive(int indexOfElement)
         {
             // Parent's index = (index of element inserted - 1 )/2
@@ -77,6 +109,18 @@ namespace DataStructures.Trees.BinaryHeap
             }
         }
 
+        /// <summary>
+        /// HeapifyDown method re-arranges the elements in a heap after the deletion
+        /// of an element, restoring the heap property (min or max heap) and the 
+        /// shape property of the heap (complete binary tree).
+        /// This method does it iteratively.
+        /// </summary>
+        /// <remarks>The element intended to be deleted is replaced with the last element
+        /// in the heap. Then this newly replaced element's index is passed to the
+        /// HeapifyDown method, to have the elements be re-arranged in order to 
+        /// restore the heap property and shape property.</remarks>
+        /// <param name="indexOfElement">Index of the element that's been deleted
+        /// and needs to be appropriately </param>
         protected override void HeapifyDownIterative(int indexOfElement)
         {
             try
@@ -115,6 +159,18 @@ namespace DataStructures.Trees.BinaryHeap
             }
         }
 
+        /// <summary>
+        /// HeapifyDown method re-arranges the elements in a heap after the deletion
+        /// of an element, restoring the heap property (min or max heap) and the 
+        /// shape property of the heap (complete binary tree).
+        /// This method does it recursively.
+        /// </summary>
+        /// <remarks>The element intended to be deleted is replaced with the last element
+        /// in the heap. Then this newly replaced element's index is passed to the
+        /// HeapifyDown method, to have the elements be re-arranged in order to 
+        /// restore the heap property and shape property.</remarks>
+        /// <param name="indexOfElement">Index of the element that's been deleted
+        /// and needs to be appropriately </param>
         protected override void HeapifyDownRecursive(int indexOfElement)
         {
             try

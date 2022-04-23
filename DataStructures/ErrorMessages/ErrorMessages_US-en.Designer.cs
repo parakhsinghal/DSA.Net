@@ -124,7 +124,16 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A maximum element cannot be obtained since the heap is empty..
+        ///   Looks up a localized string similar to The element that needs to be inserted cannot be null..
+        /// </summary>
+        public static string BinaryHeap_Insert_NullElement {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Insert_NullElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum element cannot be obtained since the heap is empty..
         /// </summary>
         public static string BinaryHeap_Max_EmptyHeap {
             get {
@@ -133,7 +142,7 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A minimum element cannot be obtained since the heap is empty..
+        ///   Looks up a localized string similar to The minimum element cannot be obtained since the heap is empty..
         /// </summary>
         public static string BinaryHeap_Min_EmptyHeap {
             get {
