@@ -115,6 +115,15 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The heap is empty. Cannot sort an empty heap..
+        /// </summary>
+        public static string BinaryHeap_GetElementsInOrder_EmptyHeap {
+            get {
+                return ResourceManager.GetString("BinaryHeap_GetElementsInOrder_EmptyHeap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insertion of a duplicate element is not allowed..
         /// </summary>
         public static string BinaryHeap_Insert_DuplicateElement {

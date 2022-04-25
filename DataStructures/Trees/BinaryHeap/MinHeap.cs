@@ -126,32 +126,64 @@ namespace DataStructures.Trees.BinaryHeap
         /// and needs to be appropriately </param>
         protected override void HeapifyDownIterative(int indexOfElement)
         {
+            /*
+                Pseudocode:
+                1. Take the index of the element and retrieve the left and the right children.
+                2. Compare the left and the right children and pick the max of the two.
+                3. Compare the aforementioned max child with the parent and if the parent is less than the
+                   child, shift the parent down and child up. 
+                4. When there will only be two elements present in the heap, the shape property will kick in
+                   i.e. the binary tree will be complete hence there will be no holes or spaces in between 
+                   the elements in underlying indexed data store. This will ensure that there will be a 
+                   root and it's left child as the only surviving members. In such condition, 
+                   compare the two and accordingly shift the larger entity up.                   
+             */
             try
             {
-                for (int i = indexOfElement; (2 * i) + 2 < Count; i++)
+                for (int i = indexOfElement; (2 * i) + 1 < Count; i++)
                 {
                     int indexOfLeftChild = 2 * i + 1;
                     int indexOfRightChild = 2 * i + 2;
 
-                    int indexOfLesserChild = 0;
+                    int indexOfLargerChild = 0;
 
-                    switch (Comparer<T>.Default.Compare(dataStore[indexOfLeftChild], dataStore[indexOfRightChild]))
+                    // When there's a left and a right child.
+                    if (indexOfLeftChild < Count && indexOfRightChild < Count &&
+                        dataStore[indexOfLeftChild] is not null && dataStore[indexOfRightChild] is not null)
                     {
-                        case > 0:       // Select right child to move up
-                            indexOfLesserChild = indexOfRightChild;
-                            break;
-                        default:        // Select left child to move up
-                            indexOfLesserChild = indexOfLeftChild;
-                            break;
+                        switch (Comparer<T>.Default.Compare(dataStore[indexOfLeftChild], dataStore[indexOfRightChild]))
+                        {
+                            case > 0:       // Select right child to move up
+                                indexOfLargerChild = indexOfRightChild;
+                                break;
+                            default:        // Select left child to move up
+                                indexOfLargerChild = indexOfLeftChild;
+                                break;
+                        }
+
+                        switch (Comparer<T>.Default.Compare(dataStore[i], dataStore[indexOfLargerChild]))
+                        {
+                            case > 0:       // Swap the child selected above with parent
+                                Swap(i, indexOfLargerChild);
+                                break;
+                            default:       // If that is not the case, come out of the switch without any swap
+                                break;
+                        }
                     }
-
-                    switch (Comparer<T>.Default.Compare(dataStore[i], dataStore[indexOfLesserChild]))
+                    // When there's only one child that remains - left child due to shape property. 
+                    // Double confirmation in the form of Count being less than the index of the left child
+                    // and greater than the index of the right child.
+                    else if (indexOfLeftChild < Count && indexOfRightChild >= Count && dataStore[indexOfLeftChild] is not null)
                     {
-                        case > 0:       // Swap the child selected above with parent
-                            Swap(i, indexOfLesserChild);
-                            break;
-                        default:       // If that is not the case then just come out of the switch without any swap
-                            break;
+                        switch (Comparer<T>.Default.Compare(dataStore[i], dataStore[indexOfLeftChild]))
+                        {
+                            case > 0:       // Swap the left child with parent
+                                Swap(i, indexOfLeftChild);
+                                break;
+                            default:       // If that is not the case, come out of the switch without any swap
+                                break;
+
+                        }
                     }
                 }
             }
@@ -178,34 +210,48 @@ namespace DataStructures.Trees.BinaryHeap
         {
             try
             {
-                if (indexOfElement < Count)
+                int indexOfLeftChild = 2 * indexOfElement + 1;
+                int indexOfRightChild = 2 * indexOfElement + 2;
+
+                int indexOfLargerChild = 0;
+
+                // When there's a left and a right child.
+                if (indexOfLeftChild < Count && indexOfRightChild < Count &&
+                    dataStore[indexOfLeftChild] is not null && dataStore[indexOfRightChild] is not null)
                 {
-                    int indexOfLeftChild = 2 * indexOfElement + 1;
-                    int indexOfRightChild = 2 * indexOfElement + 2;
-
-                    int indexOfLargerChild = 0;
-
-                    if (indexOfLeftChild < Count && indexOfRightChild < Count)
+                    switch (Comparer<T>.Default.Compare(dataStore[indexOfLeftChild], dataStore[indexOfRightChild]))
                     {
-                        switch (Comparer<T>.Default.Compare(dataStore[indexOfLeftChild], dataStore[indexOfRightChild]))
-                        {
-                            case > 0:       // Select right child to move up
-                                indexOfLargerChild = indexOfRightChild;
-                                break;
-                            default:        // Select left child to move up
-                                indexOfLargerChild = indexOfLeftChild;
-                                break;
-                        }
+                        case > 0:       // Select right child to move up
+                            indexOfLargerChild = indexOfRightChild;
+                            break;
+                        default:        // Select left child to move up
+                            indexOfLargerChild = indexOfLeftChild;
+                            break;
+                    }
 
-                        switch (Comparer<T>.Default.Compare(dataStore[indexOfElement], dataStore[indexOfLargerChild]))
-                        {
-                            case > 0:       // Swap the child selected above with parent
-                                Swap(indexOfElement, indexOfLargerChild);
-                                HeapifyDownRecursive(indexOfLargerChild);
-                                break;
-                            default:       // If that is not the case then just come out of the switch without any swap
-                                break;
-                        }
+                    switch (Comparer<T>.Default.Compare(dataStore[indexOfElement], dataStore[indexOfLargerChild]))
+                    {
+                        case > 0:       // Swap the child selected above with parent
+                            Swap(indexOfElement, indexOfLargerChild);
+                            HeapifyDownRecursive(indexOfLargerChild);
+                            break;
+                        default:       // If that is not the case, come out of the switch without any swap
+                            break;
+                    }
+                }
+                // When there's only one child that remains - left child due to shape property. 
+                // Double confirmation in the form of Count being less than the index of the left child
+                // and greater than the index of the right child.
+                // Note that we will not require any further recursive call the HeapifyDown method.
+                else if (indexOfLeftChild < Count && indexOfRightChild >= Count && dataStore[indexOfLeftChild] is not null)
+                {
+                    switch (Comparer<T>.Default.Compare(dataStore[indexOfElement], dataStore[indexOfLeftChild]))
+                    {
+                        case > 0:       // Swap the left child with parent
+                            Swap(indexOfElement, indexOfLeftChild);
+                            break;
+                        default:       // If that is not the case, come out of the switch without any swap
+                            break;
                     }
                 }
             }
@@ -214,6 +260,50 @@ namespace DataStructures.Trees.BinaryHeap
                 Debug.WriteLine(ex.Message);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// The GetElementsSorted method sorts elements available in a heap in the desired
+        /// order - ascending or desending.                 
+        /// </summary>
+        /// <remarks>*** PLEASE NOTE THAT THE HEAP GETS ELIMINATED AS PART OF THE HEAPSORT ACTIVITY. ***</remarks>
+        /// <param name="orderType">The order type - Ascending or Descending.</param>
+        /// <returns>A list of all the sorted elemets in the desired order.</returns>
+        public override List<T> GetElementsSorted(OrderType orderType)
+        {
+            try
+            {
+                if (Count == 0)
+                {
+                    throw new InvalidOperationException(Err.BinaryHeap_GetElementsInOrder_EmptyHeap);
+                }
+
+                List<T> result = new List<T>();
+
+                int elementCount = Count;
+
+                for (int i = 0; i < elementCount; i++)
+                {
+                    result.Add(Root);
+                    this.Remove(Root);
+                }
+
+                // Since minheap by default produces a descending order of elements
+                // we need to explicitly reverse the order of elements to ascending 
+                // order.
+                if (orderType == OrderType.Descending)
+                {
+                    result.Reverse();
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
+
         }
     }
 }

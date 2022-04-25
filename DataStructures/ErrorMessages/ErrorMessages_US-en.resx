@@ -141,6 +141,10 @@
     <value>The tree is empty. You cannot run search operation on an empty tree.</value>
     <comment>The error message needs to be presented when an attempt is made to run a search on an empty binary search tree.</comment>
   </data>
+  <data name="BinaryHeap_GetElementsInOrder_EmptyHeap" xml:space="preserve">
+    <value>The heap is empty. Cannot sort an empty heap.</value>
+    <comment>The error message needs to be presented when an attempt is made to sort an empty heap.</comment>
+  </data>
   <data name="BinaryHeap_Insert_DuplicateElement" xml:space="preserve">
     <value>Insertion of a duplicate element is not allowed.</value>
     <comment>The error message needs to be presented when an attempt is made to insert a duplicate element in the underlying binary heap.</comment>

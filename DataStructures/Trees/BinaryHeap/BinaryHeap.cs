@@ -66,7 +66,7 @@ namespace DataStructures.Trees.BinaryHeap
         /// <summary>
         /// Provides the maximum element in the heap.
         /// </summary>
-        protected virtual T Maximum { get; set; }        
+        protected virtual T Maximum { get; set; }
 
         /// <summary>
         /// Inserts an element into the underlying datastore.
@@ -139,13 +139,11 @@ namespace DataStructures.Trees.BinaryHeap
 
                 // Calculate the index of the element to be deleted
                 // and swap it with the last element in the heap.
-                // In the last remove the last element from the data store.
+                // Remove the last element from the data store.
                 int indexOfLastElement = Count - 1;
                 Swap(indexOfElementToBeDeleted, indexOfLastElement);
                 dataStore.RemoveAt(indexOfLastElement);
 
-                // Now perform comparision and required swaps as required 
-                // between the parent and children moving down.
                 HeapifyDownIterative(indexOfElementToBeDeleted);
             }
             catch (Exception ex)
@@ -155,12 +153,15 @@ namespace DataStructures.Trees.BinaryHeap
             }
         }
 
+        /// <summary>
+        /// Clears the contents of the heap.
+        /// </summary>
         public void Clear()
         {
-            if (dataStore.Count>0)
+            if (dataStore.Count > 0)
             {
                 dataStore.Clear();
-            }            
+            }
         }
 
         /// <summary>
@@ -219,7 +220,8 @@ namespace DataStructures.Trees.BinaryHeap
         /// to be appropriately placed in the heap to restore the heap property.</param>
         protected virtual void HeapifyUpRecursive(int indexOfElement)
         {
-            throw new NotImplementedException();        }
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// HeapifyDown method re-arranges the elements in a heap after the deletion
@@ -254,5 +256,26 @@ namespace DataStructures.Trees.BinaryHeap
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// The GetElementsSorted method sorts elements available in a heap in the desired
+        /// order - ascending or desending.                 
+        /// </summary>
+        /// <remarks>*** PLEASE NOTE THAT THE HEAP GETS ELIMINATED AS PART OF THE HEAPSORT ACTIVITY. ***</remarks>
+        /// <param name="orderType">The order type - Ascending or Descending.</param>
+        /// <returns>A list of all the sorted elemets in the desired order.</returns>        
+        public virtual List<T> GetElementsSorted(OrderType orderType)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// The order type enum - Asecnding or Descending.
+    /// </summary>
+    public enum OrderType
+    {
+        Ascending,
+        Descending
     }
 }
