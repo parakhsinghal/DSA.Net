@@ -115,6 +115,87 @@ namespace DataStructures.ErrorMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The heap is empty. Cannot sort an empty heap..
+        /// </summary>
+        public static string BinaryHeap_GetElementsInOrder_EmptyHeap {
+            get {
+                return ResourceManager.GetString("BinaryHeap_GetElementsInOrder_EmptyHeap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insertion of a duplicate element is not allowed..
+        /// </summary>
+        public static string BinaryHeap_Insert_DuplicateElement {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Insert_DuplicateElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The element that needs to be inserted cannot be null..
+        /// </summary>
+        public static string BinaryHeap_Insert_NullElement {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Insert_NullElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum element cannot be obtained since the heap is empty..
+        /// </summary>
+        public static string BinaryHeap_Max_EmptyHeap {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Max_EmptyHeap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimum element cannot be obtained since the heap is empty..
+        /// </summary>
+        public static string BinaryHeap_Min_EmptyHeap {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Min_EmptyHeap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The element that needs to be removed was not found in the heap..
+        /// </summary>
+        public static string BinaryHeap_Remove_ElementNotFound {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Remove_ElementNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The heap is empty. Element cannot be removed from an empty heap..
+        /// </summary>
+        public static string BinaryHeap_Remove_EmptyHeap {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Remove_EmptyHeap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The root cannot be obtained since the heap is empty..
+        /// </summary>
+        public static string BinaryHeap_Root_EmptyHeap {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Root_EmptyHeap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or both the supplied indexes are either less than zero or outside of the bounds of the underlying data store..
+        /// </summary>
+        public static string BinaryHeap_Swap_IndexOutOfRange {
+            get {
+                return ResourceManager.GetString("BinaryHeap_Swap_IndexOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The tree is empty. You cannot delete anything from an empty tree..
         /// </summary>
         public static string BinarySearchTree_Deletion_Empty {
