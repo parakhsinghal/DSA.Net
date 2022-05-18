@@ -383,5 +383,32 @@ namespace DataStructures.ErrorMessages {
                 return ResourceManager.GetString("SplayTree_Search_EmptyTree", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or both the arguments supplied are invalid. Please provide a valid argument(s)..
+        /// </summary>
+        public static string UnweightedGraph_AddEdge_ArgumentInvalid {
+            get {
+                return ResourceManager.GetString("UnweightedGraph_AddEdge_ArgumentInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or both the vertices provided to form an edge are not available in the list of available vertices. Please add them first before forming an edge between them..
+        /// </summary>
+        public static string UnweightedGraph_AddEdge_ArgumentNotAvailable {
+            get {
+                return ResourceManager.GetString("UnweightedGraph_AddEdge_ArgumentNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The number of vertices available in the graph are zero. Thus we cannot perform a depth first traversal along the edges..
+        /// </summary>
+        public static string UnweightedGraph_DFS_EmptyVertices {
+            get {
+                return ResourceManager.GetString("UnweightedGraph_DFS_EmptyVertices", resourceCulture);
+            }
+        }
     }
 }

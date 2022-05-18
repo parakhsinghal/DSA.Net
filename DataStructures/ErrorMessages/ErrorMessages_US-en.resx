@@ -260,4 +260,16 @@
     <value>The tree is empty. You cannot run search operation on an empty tree.</value>
     <comment>The error message needs to be presented when an attempt is made to run a search on an empty binary search tree.</comment>
   </data>
+  <data name="UnweightedGraph_AddEdge_ArgumentInvalid" xml:space="preserve">
+    <value>One or both the arguments supplied are invalid. Please provide a valid argument(s).</value>
+    <comment>The error message needs to be presented when an attempt is made to insert an invalid argument(s).</comment>
+  </data>
+  <data name="UnweightedGraph_AddEdge_ArgumentNotAvailable" xml:space="preserve">
+    <value>One or both the vertices provided to form an edge are not available in the list of available vertices. Please add them first before forming an edge between them.</value>
+    <comment>The error message needs to be presented when an attempt is made to insert an edge and either one of the supplied vertex or both are not available in the list of vertices.</comment>
+  </data>
+  <data name="UnweightedGraph_DFS_EmptyVertices" xml:space="preserve">
+    <value>The number of vertices available in the graph are zero. Thus we cannot perform a depth first traversal along the edges.</value>
+    <comment>The error message needs to be presented when an attempt is made to to traverse a graph in a Depth First manner, but the graph does not have any vertices and hence edges to traverse.</comment>
+  </data>
 </root>
