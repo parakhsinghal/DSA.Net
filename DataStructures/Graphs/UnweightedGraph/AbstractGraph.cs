@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Err = DataStructures.ErrorMessages.ErrorMessages_US_en;
 
 namespace DataStructures.Graphs.UnweightedGraph
@@ -11,7 +8,7 @@ namespace DataStructures.Graphs.UnweightedGraph
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class AbstractGraph<T>
+    public class AbstractGraph<T>
     {
         /// <summary>
         /// 
@@ -103,7 +100,7 @@ namespace DataStructures.Graphs.UnweightedGraph
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public List<T> DepthFirstTraversal(Action<T> action)
+        public void DepthFirstTraversal(Action<Vertex<T>> action)
         {
             /*
              * Pseudocode:
@@ -121,29 +118,30 @@ namespace DataStructures.Graphs.UnweightedGraph
             }
 
             Vertices[0].HasBeenVisited = true;
-            Vertex<T> startingVertex = Vertices.FirstOrDefault();
+            Vertex<T> startingVertex = Vertices[0];
+
+            action(startingVertex);
+
             Stack<Vertex<T>> stack = new Stack<Vertex<T>>();
 
             stack.Push(startingVertex);
-            startingVertex.HasBeenVisited = true;
 
             while (stack.Count > 0)
             {
-                int nextVertexIndex = GetAdjacentVertex(startingVertex);
-                Vertex<T> nextVertex = Vertices[nextVertexIndex];
+                int nextVertexIndex = GetAdjacentVertex(stack.Peek());
 
-                stack.Push(nextVertex)
-
-
-
+                if (nextVertexIndex > 0)
+                {
+                    Vertex<T> nextVertex = Vertices[nextVertexIndex];
+                    Vertices[nextVertexIndex].HasBeenVisited = true;
+                    action(nextVertex);
+                    stack.Push(nextVertex);
+                }
+                else
+                {
+                    stack.Pop();
+                }
             }
-
-
-
-
-
-
-            throw new NotImplementedException();
         }
 
         private int GetAdjacentVertex(Vertex<T> adjacentTo)
@@ -153,9 +151,9 @@ namespace DataStructures.Graphs.UnweightedGraph
 
             if (indexOfStartingVertex >= 0)
             {
-                for (int i = 0; i < edges.Length; i++)
+                for (int i = 0; i < Vertices.Count; i++)
                 {
-                    if (edges[indexOfStartingVertex, i] == 1 && Vertices[indexOfStartingVertex].HasBeenVisited == false)
+                    if (edges[indexOfStartingVertex, i] == 1 && Vertices[i].HasBeenVisited == false)
                     {
                         result = i;
                         break;
