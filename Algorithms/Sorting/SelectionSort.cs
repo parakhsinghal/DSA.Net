@@ -6,15 +6,6 @@ using System.Threading.Tasks;
 
 namespace Algorithms.Sorting
 {
-    /// <summary>
-    /// The selection sort algorithm is a sorting algorithm that sorts elements in an array in an ascending order.
-    /// The algorithm does that by traversing through all the elements in the array in two nested passes and placing the 
-    /// elements appropriately. The crux of the algorithm lies in the second pass in which the location of the smallest 
-    /// element in the sub-array is noted and then at the end of the second loop the element is appropriately
-    /// placed in the array. <br />
-    /// Time complexity: O()
-    /// </summary>
-    /// <typeparam name="T">The data type of the array.</typeparam>
     public class SelectionSort<T>
     {
         /// <summary>
@@ -23,10 +14,19 @@ namespace Algorithms.Sorting
         /// </summary>
         /// <param name="inputArray">The array that needs to be sprted.</param>
         /// <returns>A sorted array with elements arranged in ascending order.</returns>
+        /// <remarks>
+        /// The selection sort algorithm is a sorting algorithm that sorts elements in an array in an ascending order.
+        /// The algorithm does that by traversing through all the elements in the array in two nested passes and placing the 
+        /// elements appropriately. The crux of the algorithm lies in the second pass in which the location of the smallest 
+        /// element in the sub-array is noted and then at the end of the second loop the element is appropriately
+        /// placed in the array. <br />
+        /// Time complexity: O(n^2)
+        /// Space complexity: O(1) (In-place sort, non-stable sort i.e. order of elements of equal value may change their position)
+        /// </remarks>
         public T[] Sort(T[] inputArray)
         {
             int length = inputArray.Length;
-            for (uint i = 0; i < length-1; i++)
+            for (uint i = 0; i < length; i++)
             {
                 uint minIndex = i;
                 for (uint j = i + 1; j < length; j++)
