@@ -44,11 +44,7 @@ namespace Algorithms.Sorting
                         default:            // If both elements are equal then do nothing and break out of the comparison.
                             break;
                     }                    
-                }
-
-                // Process to replace the value index minIndex 
-
-                
+                }                
             }
 
             return inputArray;
