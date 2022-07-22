@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,16 +7,17 @@ using System.Threading.Tasks;
 
 namespace Algorithms.Sorting
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class MergeSort<T>
     {
         /// <summary>
         /// 
         /// </summary>
+        /// <remarks>
+        /// Time complexity: O(nlogn)
+        /// Space complexity: O(n) (non-in place sort, stable sort i.e. maintains the order of elements of equal value)
+        /// </remarks>
         /// <param name="inputArray"></param>
-        public void Sort(int[] inputArray)
+        public void Sort(T[] inputArray)
         {
             if (inputArray.Length == 1)
             {
@@ -23,35 +25,35 @@ namespace Algorithms.Sorting
             }
 
             int midIndex = inputArray.Length / 2 + inputArray.Length % 2;
-            int[] listFirstHalf = new int[midIndex];
-            int[] listSecondHalf = new int[inputArray.Length - midIndex];
-            Split(inputArray, listFirstHalf, listSecondHalf);
+            T[] firstHalfArray = new T[midIndex];
+            T[] secondHalfArray = new T[inputArray.Length - midIndex];
+            Split(inputArray, firstHalfArray, secondHalfArray);
 
-            Sort(listFirstHalf);
-            Sort(listSecondHalf);
+            Sort(firstHalfArray);
+            Sort(secondHalfArray);
 
-            Merge(inputArray, listFirstHalf, listSecondHalf);
+            Merge(inputArray, firstHalfArray, secondHalfArray);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="inputArray"></param>
-        /// <param name="listFirstHalf"></param>
-        /// <param name="listSecondHalf"></param>
-        private void Split(int[] inputArray, int[] listFirstHalf, int[] listSecondHalf)
+        /// <param name="firstHalfArray"></param>
+        /// <param name="secondHalfArray"></param>
+        private void Split(T[] inputArray, T[] firstHalfArray, T[] secondHalfArray)
         {
             int index = 0;
-            int secondHalfStartIndex = listFirstHalf.Length;
+            int secondHalfStartIndex = firstHalfArray.Length;
             for (int elements = 0; elements < inputArray.Length; elements++)
             {
                 if (index < secondHalfStartIndex)
                 {
-                    listFirstHalf[index] = inputArray[index];
+                    firstHalfArray[index] = inputArray[index];
                 }
                 else
                 {
-                    listSecondHalf[index - secondHalfStartIndex] = inputArray[index];
+                    secondHalfArray[index - secondHalfStartIndex] = inputArray[index];
                 }
                 index++;
             }
@@ -61,41 +63,41 @@ namespace Algorithms.Sorting
         /// 
         /// </summary>
         /// <param name="inputArray"></param>
-        /// <param name="listFirstHalf"></param>
-        /// <param name="listSecondHalf"></param>
-        private void Merge(int[] inputArray, int[] listFirstHalf, int[] listSecondHalf)
+        /// <param name="firstHalfArray"></param>
+        /// <param name="secondHalfArray"></param>
+        private void Merge(T[] inputArray, T[] firstHalfArray, T[] secondHalfArray)
         {
             int mergeIndex = 0;
             int firstHalfIndex = 0;
             int secondHalfIndex = 0;
 
-            while (firstHalfIndex < listFirstHalf.Length && secondHalfIndex < listSecondHalf.Length)
+            while (firstHalfIndex < firstHalfArray.Length && secondHalfIndex < secondHalfArray.Length)
             {
-                if (listFirstHalf[firstHalfIndex] < listSecondHalf[secondHalfIndex])
+                if (Comparer.Default.Compare(firstHalfArray[firstHalfIndex], secondHalfArray[secondHalfIndex]) < 0)
                 {
-                    inputArray[mergeIndex] = listFirstHalf[firstHalfIndex];
+                    inputArray[mergeIndex] = firstHalfArray[firstHalfIndex];
                     firstHalfIndex++;
                 }
-                else if (secondHalfIndex < listSecondHalf.Length)
+                else if (secondHalfIndex < secondHalfArray.Length)
                 {
-                    inputArray[mergeIndex] = listSecondHalf[secondHalfIndex];
+                    inputArray[mergeIndex] = secondHalfArray[secondHalfIndex];
                     secondHalfIndex++;
                 }
-                mergeIndex++;
+                mergeIndex++;                
             }
 
-            if (firstHalfIndex < listFirstHalf.Length)
+            if (firstHalfIndex < firstHalfArray.Length)
             {
                 while (mergeIndex < inputArray.Length)
                 {
-                    inputArray[mergeIndex++] = listFirstHalf[firstHalfIndex++];
+                    inputArray[mergeIndex++] = firstHalfArray[firstHalfIndex++];
                 }
             }
-            if (secondHalfIndex < listSecondHalf.Length)
+            if (secondHalfIndex < secondHalfArray.Length)
             {
                 while (mergeIndex < inputArray.Length)
                 {
-                    inputArray[mergeIndex++] = listSecondHalf[secondHalfIndex++];
+                    inputArray[mergeIndex++] = secondHalfArray[secondHalfIndex++];
                 }
             }
         }
